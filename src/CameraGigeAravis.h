@@ -48,6 +48,7 @@
     #include "Camera.h"
     #include "arv.h"
     #include "arvinterface.h"
+    #include "arvcamera.h"
     #include <time.h>
     #include <algorithm>
     #include "EParser.h"
