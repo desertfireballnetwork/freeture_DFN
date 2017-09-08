@@ -83,7 +83,30 @@
         for (int j = 0; j< ni; j++){
 
             const char* name = arv_get_interface_id (j);
-            if (strcmp(name,"GigEVision") == 0) {
+            cout << name << endl;
+            if (strcmp(name,"USB3Vision") == 0) {
+                //interface = arv_gv_interface_get_instance();
+                ArvCamera *cam = arv_camera_new(name);
+                //interface = arv_uv_interface_get_instance();
+                arv_interface_update_device_list(interface);
+                //int nb = arv_get_n_devices();
+
+                int nb = arv_interface_get_n_devices(interface);
+                cout << nb << endl;
+
+                for(int i = 0; i < nb; i++){
+
+                    pair<int,string> c;
+                    c.first = i;
+                    //const char* str = arv_get_device_id(i);
+                    const char* str = arv_interface_get_device_id(interface,i);
+                    const char* addr = arv_interface_get_device_address(interface,i);
+                    std::string s = str;
+                    c.second = "NAME[" + s + "] SDK[ARAVIS] IP: " + addr;
+                    camerasList.push_back(c);
+                }
+            }
+            else if (strcmp(name,"GigEVision") == 0) {
                 interface = arv_gv_interface_get_instance();
                 arv_interface_update_device_list(interface);
                 //int nb = arv_get_n_devices();
