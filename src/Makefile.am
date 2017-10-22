@@ -29,7 +29,7 @@
 bin_PROGRAMS		= freeture
 freeture_SOURCES	= EImgBitDepth.h EParser.h EParser.cpp ECamSdkType.h \
 			EDetMeth.h Base64.h Camera.h AcqThread.h AcqThread.cpp \
-			CameraVideo.h CameraGigeAravis.h CameraGigeAravis.cpp \
+			CameraVideo.h CameraAravis.h CameraAravis.cpp \
 			CameraFrames.h CameraGigePylon.h CameraGigePylon.cpp CameraV4l2.cpp CameraV4l2.h \
 			SMTPClient.h CameraGigeTis.h CameraGigeTis.cpp Circle.h CameraWindows.h CameraWindows.cpp \
 			CfgLoader.h CfgParam.h Conversion.h DetThread.h Detection.h \

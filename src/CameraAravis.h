@@ -1,4 +1,4 @@
-/*                      CameraGigeAravis.h
+/*                      CameraAravis.h
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 *
@@ -24,7 +24,7 @@
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
-* \file    CameraGigeAravis.h
+* \file    CameraAravis.h
 * \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
 * \version 1.0
 * \date    21/01/2015
@@ -70,7 +70,7 @@
     using namespace cv;
     using namespace std;
 
-    class CameraGigeAravis: public Camera{
+    class CameraAravis: public Camera{
 
         private:
 
@@ -82,7 +82,7 @@
 
                     Init(){
 
-                        logger.add_attribute("ClassName", boost::log::attributes::constant<std::string>("CameraGigeAravis"));
+                        logger.add_attribute("ClassName", boost::log::attributes::constant<std::string>("CameraAravis"));
 
                     }
 
@@ -111,11 +111,11 @@
 
         public :
 
-            CameraGigeAravis(bool shift);
+            CameraAravis(bool shift);
 
-            CameraGigeAravis();
+            CameraAravis();
 
-            ~CameraGigeAravis();
+            ~CameraAravis();
 
             vector<pair<int,string>> getCamerasList();
 

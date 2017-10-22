@@ -256,8 +256,8 @@ bool Device::createDevicesWith(CamSdkType sdk) {
                 #ifdef LINUX
                     //cout << "Trying to create ARAVIS device" << endl;
                     //cout << mShiftBits << endl;
-                    //mCam = new CameraGigeAravis();
-                    mCam = new CameraGigeAravis(mShiftBits);
+                    //mCam = new CameraAravis();
+                    mCam = new CameraAravis(mShiftBits);
                 #endif
             }
 

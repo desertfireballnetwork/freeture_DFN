@@ -59,7 +59,7 @@
 #include "EParser.h"
 #include "Conversion.h"
 #include "Camera.h"
-#include "CameraGigeAravis.h"
+#include "CameraAravis.h"
 #include "CameraGigePylon.h"
 #include "CameraGigeTis.h"
 #include "CameraVideo.h"

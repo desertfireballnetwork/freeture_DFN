@@ -1,5 +1,5 @@
 /*
-                        CameraGigeAravis.cpp
+                        CameraAravis.cpp
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 *
@@ -26,7 +26,7 @@
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
-* \file    CameraGigeAravis.cpp
+* \file    CameraAravis.cpp
 * \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
 * \version 1.0
 * \date    16/05/2016
@@ -34,14 +34,14 @@
 *          https://wiki.gnome.org/action/show/Projects/Aravis?action=show&redirect=Aravis
 */
 
-#include "CameraGigeAravis.h"
+#include "CameraAravis.h"
 
 #ifdef LINUX
 
-    boost::log::sources::severity_logger< LogSeverityLevel >  CameraGigeAravis::logger;
-    CameraGigeAravis::Init CameraGigeAravis::initializer;
+    boost::log::sources::severity_logger< LogSeverityLevel >  CameraAravis::logger;
+    CameraAravis::Init CameraAravis::initializer;
 
-    CameraGigeAravis::CameraGigeAravis(bool shift):
+    CameraAravis::CameraAravis(bool shift):
     camera(NULL), mWidth(0), mHeight(0), fps(0), gainMin(0.0), gainMax(0.0),
     payload(0), exposureMin(0), exposureMax(0), gain(0), exp(0), nbCompletedBuffers(0),
     nbFailures(0), nbUnderruns(0), frameCounter(0), shiftBitsImage(shift), stream(NULL) {
@@ -50,7 +50,7 @@
         mInputDeviceType = CAMERA;
     }
 
-    CameraGigeAravis::CameraGigeAravis():
+    CameraAravis::CameraAravis():
     camera(NULL), mWidth(0), mHeight(0), fps(0), gainMin(0.0), gainMax(0.0),
     payload(0), exposureMin(0), exposureMax(0), gain(0), exp(0), nbCompletedBuffers(0),
     nbFailures(0), nbUnderruns(0), frameCounter(0), shiftBitsImage(false), stream(NULL) {
@@ -59,7 +59,7 @@
         mInputDeviceType = CAMERA;
     }
 
-    CameraGigeAravis::~CameraGigeAravis(){
+    CameraAravis::~CameraAravis(){
 
         if(stream != NULL)
             g_object_unref(stream);
@@ -69,7 +69,7 @@
 
     }
 
-    vector<pair<int,string>> CameraGigeAravis::getCamerasList() {
+    vector<pair<int,string>> CameraAravis::getCamerasList() {
 
         vector<pair<int,string>> camerasList;
 
@@ -131,7 +131,7 @@
 
     }
 
-    bool CameraGigeAravis::listCameras(){
+    bool CameraAravis::listCameras(){
 
         ArvInterface *interface;
         //arv_update_device_list();
@@ -165,7 +165,7 @@
 
     }
 
-    bool CameraGigeAravis::createDevice(int id){
+    bool CameraAravis::createDevice(int id){
 
         string deviceName;
 
@@ -184,7 +184,7 @@
         return true;
     }
 
-    bool CameraGigeAravis::setSize(int width, int height, bool customSize) {
+    bool CameraAravis::setSize(int width, int height, bool customSize) {
 
         if(customSize) {
 
@@ -209,7 +209,7 @@
 
     }
 
-    bool CameraGigeAravis::getDeviceNameById(int id, string &device){
+    bool CameraAravis::getDeviceNameById(int id, string &device){
 
         arv_update_device_list();
 
@@ -230,7 +230,7 @@
 
     }
 
-    bool CameraGigeAravis::grabInitialization(){
+    bool CameraAravis::grabInitialization(){
 
         frameCounter = 0;
 
@@ -402,9 +402,9 @@
 
     }
 
-    void CameraGigeAravis::grabCleanse(){}
+    void CameraAravis::grabCleanse(){}
 
-    bool CameraGigeAravis::acqStart(){
+    bool CameraAravis::acqStart(){
 
         BOOST_LOG_SEV(logger, notification) << "Set camera to CONTINUOUS MODE";
         arv_camera_set_acquisition_mode(camera, ARV_ACQUISITION_MODE_CONTINUOUS);
@@ -419,7 +419,7 @@
 
     }
 
-    void CameraGigeAravis::acqStop(){
+    void CameraAravis::acqStop(){
 
         arv_stream_get_statistics(stream, &nbCompletedBuffers, &nbFailures, &nbUnderruns);
 
@@ -445,7 +445,7 @@
 
     }
 
-    bool CameraGigeAravis::grabImage(Frame &newFrame){
+    bool CameraAravis::grabImage(Frame &newFrame){
 
         ArvBuffer *arv_buffer;
         //exp = arv_camera_get_exposure_time(camera);
@@ -581,7 +581,7 @@
     }
 
 
-    bool CameraGigeAravis::grabSingleImage(Frame &frame, int camID){
+    bool CameraAravis::grabSingleImage(Frame &frame, int camID){
 
         bool res = false;
 
@@ -853,7 +853,7 @@
 
     }
 
-    void CameraGigeAravis::saveGenicamXml(string p){
+    void CameraAravis::saveGenicamXml(string p){
 
         const char *xml;
 
@@ -874,7 +874,7 @@
     }
 
     //https://github.com/GNOME/aravis/blob/b808d34691a18e51eee72d8cac6cfa522a945433/src/arvtool.c
-    void CameraGigeAravis::getAvailablePixelFormats() {
+    void CameraAravis::getAvailablePixelFormats() {
 
         ArvGc *genicam;
         ArvDevice *device;
@@ -938,7 +938,7 @@
 
     }
 
-    void CameraGigeAravis::getExposureBounds(double &eMin, double &eMax){
+    void CameraAravis::getExposureBounds(double &eMin, double &eMax){
 
         double exposureMin = 0.0;
         double exposureMax = 0.0;
@@ -950,13 +950,13 @@
 
     }
 
-    double CameraGigeAravis::getExposureTime(){
+    double CameraAravis::getExposureTime(){
 
         return arv_camera_get_exposure_time(camera);
 
     }
 
-    void CameraGigeAravis::getGainBounds(int &gMin, int &gMax){
+    void CameraAravis::getGainBounds(int &gMin, int &gMax){
 
         double gainMin = 0.0;
         double gainMax = 0.0;
@@ -968,7 +968,7 @@
 
     }
 
-    bool CameraGigeAravis::getPixelFormat(CamPixFmt &format){
+    bool CameraAravis::getPixelFormat(CamPixFmt &format){
 
         ArvPixelFormat pixFormat = arv_camera_get_pixel_format(camera);
 
@@ -998,7 +998,7 @@
     }
 
 
-    bool CameraGigeAravis::getFrameSize(int &w, int &h) {
+    bool CameraAravis::getFrameSize(int &w, int &h) {
 
         if(camera != NULL) {
 
@@ -1013,7 +1013,7 @@
 
     }
 
-    bool CameraGigeAravis::getFPS(double &value){
+    bool CameraAravis::getFPS(double &value){
 
         if(camera != NULL) {
 
@@ -1026,13 +1026,13 @@
 
     }
 
-    string CameraGigeAravis::getModelName(){
+    string CameraAravis::getModelName(){
 
         return arv_camera_get_model_name(camera);
 
     }
 
-    bool CameraGigeAravis::setExposureTime(double val){
+    bool CameraAravis::setExposureTime(double val){
 
         double expMin, expMax;
 
@@ -1059,7 +1059,7 @@
         return false;
     }
 
-    bool CameraGigeAravis::setGain(int val){
+    bool CameraAravis::setGain(int val){
 
         double gMin, gMax;
 
@@ -1088,7 +1088,7 @@
 
     }
 
-    bool CameraGigeAravis::setFPS(double fps){
+    bool CameraAravis::setFPS(double fps){
 
         if (camera != NULL){
 
@@ -1102,7 +1102,7 @@
 
     }
 
-    bool CameraGigeAravis::setPixelFormat(CamPixFmt depth){
+    bool CameraAravis::setPixelFormat(CamPixFmt depth){
 
         if (camera != NULL){
 
