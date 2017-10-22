@@ -83,11 +83,12 @@
         for (int j = 0; j< ni; j++){
 
             const char* name = arv_get_interface_id (j);
-            cout << name << endl;
+            cout << "Name interface: " << name << endl;
             if (strcmp(name,"USB3Vision") == 0) {
                 //interface = arv_gv_interface_get_instance();
+                cout << "instanciating new camera" << endl;
                 ArvCamera *cam = arv_camera_new(name);
-                //interface = arv_uv_interface_get_instance();
+                interface = arv_uv_interface_get_instance();
                 arv_interface_update_device_list(interface);
                 //int nb = arv_get_n_devices();
 
@@ -247,7 +248,22 @@
         BOOST_LOG_SEV(logger, notification) << "Camera gain bound min : " << gainMin;
         BOOST_LOG_SEV(logger, notification) << "Camera gain bound max : " << gainMax;
 
-        if(arv_camera_is_gv_device (camera)) {
+        if(arv_camera_is_uv_device (camera)) {
+
+            // http://www.baslerweb.com/media/documents/AW00064902000%20Control%20Packet%20Timing%20With%20Delays.pdf
+            // https://github.com/GNOME/aravis/blob/06ac777fc6d98783680340f1c3f3ea39d2780974/src/arvcamera.c
+
+            // Configure the inter packet delay to insert between each packet for the current stream
+            // channel. This can be used as a crude flow-control mechanism if the application or the network
+            // infrastructure cannot keep up with the packets coming from the device.
+            //arv_camera_uv_set_packet_delay (camera, 4000);
+
+            // Specifies the stream packet size, in bytes, to send on the selected channel for a GVSP transmitter
+            // or specifies the maximum packet size supported by a GVSP receiver.
+            // arv_camera_uv_set_packet_size (camera, 1488);
+
+        }
+        else if(arv_camera_is_gv_device (camera)) {
 
             // http://www.baslerweb.com/media/documents/AW00064902000%20Control%20Packet%20Timing%20With%20Delays.pdf
             // https://github.com/GNOME/aravis/blob/06ac777fc6d98783680340f1c3f3ea39d2780974/src/arvcamera.c
@@ -263,8 +279,8 @@
 
         }
 
-        packetsize = arv_camera_gv_get_packet_size(camera);
-        BOOST_LOG_SEV(logger, notification) << "Camera packet size : " << packetsize;
+        // packetsize = arv_camera_gv_get_packet_size(camera);
+        // BOOST_LOG_SEV(logger, notification) << "Camera packet size : " << packetsize;
 
         arv_camera_set_frame_rate(camera, 30);
 
@@ -294,7 +310,7 @@
         cout << "Gain            : " << gain                                << endl;
         cout << "Fps             : " << fps                                 << endl;
         cout << "Type            : " << capsString                         << endl;
-        cout << "Packet Size     : " << arv_camera_gv_get_packet_size(camera) << endl;
+        // cout << "Packet Size     : " << arv_camera_gv_get_packet_size(camera) << endl;
 
         cout << endl;
 
@@ -627,11 +643,25 @@
         cout << "Gain            : " << gain                                << endl;
         cout << "Fps             : " << fps                                 << endl;
         cout << "Type            : " << capsString                         << endl;
-        cout << "Packet Size     : " << arv_camera_gv_get_packet_size(camera) << endl;
+        // cout << "Packet Size     : " << arv_camera_gv_get_packet_size(camera) << endl;
 
         cout << endl;
 
-        if(arv_camera_is_gv_device (camera)) {
+	if (arv_camera_is_uv_device (camera)) {
+
+            // http://www.baslerweb.com/media/documents/AW00064902000%20Control%20Packet%20Timing%20With%20Delays.pdf
+            // https://github.com/GNOME/aravis/blob/06ac777fc6d98783680340f1c3f3ea39d2780974/src/arvcamera.c
+
+            // Configure the inter packet delay to insert between each packet for the current stream
+            // channel. This can be used as a crude flow-control mechanism if the application or the network
+            // infrastructure cannot keep up with the packets coming from the device.
+            // arv_camera_uv_set_packet_delay (camera, 4000);
+
+            // Specifies the stream packet size, in bytes, to send on the selected channel for a GVSP transmitter
+            // or specifies the maximum packet size supported by a GVSP receiver.
+            arv_camera_uv_set_bandwidth (camera, 0);
+        }
+        else if(arv_camera_is_gv_device (camera)) {
 
             // http://www.baslerweb.com/media/documents/AW00064902000%20Control%20Packet%20Timing%20With%20Delays.pdf
             // https://github.com/GNOME/aravis/blob/06ac777fc6d98783680340f1c3f3ea39d2780974/src/arvcamera.c

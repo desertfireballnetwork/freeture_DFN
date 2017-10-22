@@ -69,7 +69,7 @@ Fits3D::Fits3D(CamPixFmt depth, int imgHeight, int imgWidth, int numberOfImages,
     }
 
     kPROGRAM    = "FreeTure";
-    kCREATOR    = "FRIPON";
+    kCREATOR    = "FreeTure";
     kCRPIX1     = imgWidth/2;
     kCRPIX2     = imgHeight/2;
 
@@ -143,7 +143,7 @@ bool Fits3D::writeKeywords(){
         26. GAINDB      = 400                                       / detector gain
         27. SATURATE    = 4095                                      / saturation value
         28. PROGRAM     = 'FreeTure v0.1'                           / name of the acquisition software
-        29. CREATOR     = 'FRIPON TEAM'                             / http://fripon.org
+        29. CREATOR     = 'FreeTure'                                / http://fripon.org
         30. BZERO       = 0
         31. BSCALE      = 1
         32. RADESYS     = 'ICRS'

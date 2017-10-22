@@ -256,8 +256,8 @@ bool Device::createDevicesWith(CamSdkType sdk) {
                 #ifdef LINUX
                     cout << "Trying to create ARAVIS device" << endl;
                     cout << mShiftBits << endl;
-                    mCam = new CameraGigeAravis();
-                    //mCam = new CameraGigeAravis(mShiftBits);
+                    //mCam = new CameraGigeAravis();
+                    mCam = new CameraGigeAravis(mShiftBits);
                 #endif
             }
 
@@ -387,6 +387,7 @@ void Device::listDevices(bool printInfos) {
         
         createDevicesWith(ARAVIS);
         listCams = mCam->getCamerasList();
+        cout << "Found " << listCams.size() << " cameras" << endl;
         for(int i = 0; i < listCams.size(); i++) {
             elem.first = mNbDev; elem.second = ARAVIS;
             subElem.first = listCams.at(i).first; subElem.second = elem;
