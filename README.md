@@ -3,7 +3,7 @@
 
 *A Free software to capTure meteors*
 
-`FreeTure` is a free open source (GPL license) meteor detection software used to monitor the sky with GigE all-sky cameras to detect and record falling stars and fireball.
+`FreeTure` is a free open source (GPL license) meteor detection software used to monitor the sky with all-sky cameras to detect and record meteors and fireballs.
 
 It is portable and cross-platform (Linux, Windows)
 
@@ -12,8 +12,9 @@ The project home page is http://fripon.org
 Features
 --------
 
-- Support GigE cameras (Tested with Basler acA1300-30gm and DMK23G445)
-- Support usb 2.0 cameras (Tested with stk1160 and Pinnacle Dazzle DVC 100 video grabber, DMx 31AU03.AS)
+- Supports GigE cameras (Tested with Basler acA1300-30gm and DMK23G445)
+- Supports USB 2.0 cameras (Tested with stk1160 and Pinnacle Dazzle DVC 100 video grabber, DMx 31AU03.AS)
+- Supports USB 3.0 cameras through Aravis 0.5+ (Tested with Point Grey/FLIR BFLY-U3-23S6M-C)
 - Internal computation of sun ephemeris
 - Night and daytime (experimental) meteor detection modes
 - Fits format in output https://en.wikipedia.org/wiki/FITS

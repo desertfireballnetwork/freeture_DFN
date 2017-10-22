@@ -14,16 +14,46 @@ Simple install procedure
   [ Become root if necessary ]
   % make install			   # install FreeTure
 
+
+Debian install
+==============
+
+Dependencies from standard repos
+------------
+Not sure it needs all of that, need to sort out
+
+`sudo apt-get install autoconf intltool python-gobject-dev gobject-introspection gtk-doc-tools libgstreamer0.10-dev python-gst0.10-dev libxml2-dev libcfitsio-dev libboost-dev libopencv-dev python-opencv v4l-utils libglib2.0-dev libudev1 libssl-dev libusb-dev libaudit-dev libusb-1.0-0-dev libudev-dev libv4l-dev libgstreamer-plugins-base1.0-dev libgtk-3-devlibgtk-3-dev libnotify-dev gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly gstreamer0.10-tools`
+
+`libghc-gtksourceview2-dev gobject-introspection gtk-doc-tools libgstreamer0.10-dev python-gst0.10-dev gobject-introspection gtk-doc-tools libgstreamer0.10-dev python-gst0.10-dev  gtk-3.0 gstreamer1.0-plugins-bad`
+
+
+Aravis
+------
+from version 5: Aravis support USB3
+Tested with ARAVIS_0_5_10
+
+Get and compile from https://github.com/AravisProject/aravis/
+
+Point Grey (FLIR) note about Aravis:
+https://www.ptgrey.com/tan/1084
+
+Might need to run:
+`gst-inspect-1.0 bayer2rgb`
+
+
+Freeture
+--------
+
+Fripon version: `git clone https://github.com/fripon/freeture.git`
+
+DFN version: `git clone https://github.com/hdevillepoix/freeture.git`
+
+Classic GNU build, except might need `./configure ARV_CFLAGS='-I/usr/local/include/aravis-0.6/' ARV_LIBS='-L/usr/local/lib/ -laravis-0.5 -lm`
+
+
+
 The Details
 ===========
 
-Complete information about installing FreeTure and related libraries can be found 
-in the file:
-
- docs/reference/...
-
-Or online at:
-
- http://
-
+More doc on the github wiki: https://github.com/fripon/freeture/wiki
 
