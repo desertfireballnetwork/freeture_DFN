@@ -83,17 +83,16 @@
         for (int j = 0; j< ni; j++){
 
             const char* name = arv_get_interface_id (j);
-            cout << "Name interface: " << name << endl;
+            //cout << "Name interface: " << name << endl;
             if (strcmp(name,"USB3Vision") == 0) {
-                //interface = arv_gv_interface_get_instance();
-                cout << "instanciating new camera" << endl;
+                // cout << "instanciating new camera" << endl;
                 ArvCamera *cam = arv_camera_new(name);
                 interface = arv_uv_interface_get_instance();
                 arv_interface_update_device_list(interface);
                 //int nb = arv_get_n_devices();
 
                 int nb = arv_interface_get_n_devices(interface);
-                cout << nb << endl;
+                // cout << nb << endl;
 
                 for(int i = 0; i < nb; i++){
 
