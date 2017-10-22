@@ -112,6 +112,7 @@ CfgParam::CfgParam(string cfgFilePath) {
     param.mail.MAIL_DETECTION_ENABLED = false;
 
     param.station.STATION_NAME = "STATION";
+    param.station.TELESCOP = "TELESCOP";
     param.station.SITEELEV = 0.0;
     param.station.SITELAT = 0.0;
     param.station.SITELONG = 0.0;

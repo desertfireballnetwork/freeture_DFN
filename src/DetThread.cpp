@@ -365,7 +365,12 @@ bool DetThread::buildEventDataDirectory(){
     path p(mdp.DATA_PATH);
 
     // Create data directory for the current day.
-    string fp = mdp.DATA_PATH + mStationName + "_" + YYYYMMDD +"/";
+    //string fp = mdp.DATA_PATH + mStationName + "_" + YYYYMMDD +"/";
+    
+    string ISO_YYYYMMDD = YYYYMMDD.substr(0,4) + "-" + YYYYMMDD.substr(4,2)+ "-" + YYYYMMDD.substr(6,2);
+    string fp = mdp.DATA_PATH + ISO_YYYYMMDD + "_" + mstp.TELESCOP + "_" + "video" +"/";
+
+
     path p0(fp);
 
     // Events directory.

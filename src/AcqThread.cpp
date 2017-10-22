@@ -620,7 +620,9 @@ void AcqThread::selectNextAcquisitionSchedule(TimeDate::Date date){
 bool AcqThread::buildAcquisitionDirectory(string YYYYMMDD){
 
     namespace fs = boost::filesystem;
-    string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    string ISO_YYYYMMDD = YYYYMMDD.substr(0,4) + "-" + YYYYMMDD.substr(4,2)+ "-" + YYYYMMDD.substr(6,2);
+    cout << ISO_YYYYMMDD << endl;
+    string root = mdp.DATA_PATH + ISO_YYYYMMDD + "_" + mstp.TELESCOP + "_" + "video" +"/";
 
     string subDir = "captures/";
     string finalPath = root + subDir;

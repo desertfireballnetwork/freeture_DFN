@@ -116,7 +116,10 @@ bool StackThread::buildStackDataDirectory(TimeDate::Date date){
 
     namespace fs = boost::filesystem;
     string YYYYMMDD = TimeDate::getYYYYMMDD(date);
-    string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    //string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    string ISO_YYYYMMDD = YYYYMMDD.substr(0,4) + "-" + YYYYMMDD.substr(4,2)+ "-" + YYYYMMDD.substr(6,2);
+    string root = mdp.DATA_PATH + ISO_YYYYMMDD + "_" + mstp.TELESCOP + "_" + "video" +"/";
+
     string subDir = "stacks/";
     string finalPath = root + subDir;
     completeDataPath = finalPath;

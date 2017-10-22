@@ -323,8 +323,11 @@
             return false;
 
         }
+        //if (ARV_IS_UV_STREAM(stream)){
 
-        if (ARV_IS_GV_STREAM(stream)){
+        //}
+        //else
+        if (ARV_IS_GV_STREAM(stream) || ARV_IS_UV_STREAM(stream)){
 
             bool            arv_option_auto_socket_buffer   = true;
             bool            arv_option_no_packet_resend     = true;
