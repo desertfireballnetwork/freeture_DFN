@@ -599,7 +599,7 @@
 
         if(frame.mWidth > 0 && frame.mHeight > 0) {
 
-            arv_camera_set_region(camera, 0, 0,frame.mWidth,frame.mHeight);
+            arv_camera_set_region(camera, 420, 60,frame.mWidth,frame.mHeight);
             arv_camera_get_region (camera, NULL, NULL, &mWidth, &mHeight);
 
         }else{
