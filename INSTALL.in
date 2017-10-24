@@ -46,7 +46,7 @@ Aravis
 from version 5: Aravis support USB3
 Tested with ARAVIS_0_5_10
 
-Get and compile from https://github.com/AravisProject/aravis/
+git clone `https://github.com/AravisProject/aravis.git`
 
 `./autogen.sh or ./configure`
 
