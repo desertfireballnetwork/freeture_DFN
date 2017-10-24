@@ -146,6 +146,11 @@ struct cameraParam{
     int         ACQ_DAY_GAIN;
     int         ACQ_HEIGHT;
     int         ACQ_WIDTH;
+    //bool ACQ_ROI_CUSTOM;
+    //int ACQ_ROI_WIDTH;
+    //int ACQ_ROI_HEIGHT;
+    int ACQ_X0;
+    int ACQ_Y0;
     int         EXPOSURE_CONTROL_FREQUENCY;
     bool        EXPOSURE_CONTROL_SAVE_IMAGE;
     bool        EXPOSURE_CONTROL_SAVE_INFOS;
