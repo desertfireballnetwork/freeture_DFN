@@ -15,16 +15,30 @@ Simple install procedure
   % make install			   # install FreeTure
 
 
-Debian install
+Debian install DFN camera
 ==============
 
 Dependencies from standard repos
 ------------
-Not sure it needs all of that, need to sort out
 
-`sudo apt-get install autoconf intltool python-gobject-dev gobject-introspection gtk-doc-tools libgstreamer0.10-dev python-gst0.10-dev libxml2-dev libcfitsio-dev libboost-dev libopencv-dev python-opencv v4l-utils libglib2.0-dev libudev1 libssl-dev libusb-dev libaudit-dev libusb-1.0-0-dev libudev-dev libv4l-dev libgstreamer-plugins-base1.0-dev libgtk-3-devlibgtk-3-dev libnotify-dev gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly gstreamer0.10-tools`
+Dev install:
+`sudo apt-get install git autoconf intltool python-gobject-dev gobject-introspection gtk-doc-tools libxml2-dev libcfitsio-dev libboost-dev libopencv-dev python-opencv v4l-utils libglib2.0-dev libudev1 libssl-dev libusb-dev libaudit-dev libusb-1.0-0-dev libudev-dev libv4l-dev libgstreamer-plugins-base1.0-dev  libnotify-dev`
+Need to get 65.4 MB of archives.
+After this operation, 266 MB of additional disk space will be used.
 
-`libghc-gtksourceview2-dev gobject-introspection gtk-doc-tools libgstreamer0.10-dev python-gst0.10-dev gobject-introspection gtk-doc-tools libgstreamer0.10-dev python-gst0.10-dev  gtk-3.0 gstreamer1.0-plugins-bad`
+Remote production install:
+`sudo apt-get install intltool gobject-introspection gtk-doc-tools libcfitsio-dev python-opencv v4l-utils libudev1`
+
+Gstreamer 0.10 has been removed from standard repos from Debian 9 (Stretch), therefore those libraries are not available any more: 
+`gstreamer0.10-tools libgstreamer0.10-dev python-gst0.10-dev libgtk-3-devlibgtk-3-dev gstreamer0.10-plugins-good gstreamer0.10-plugins-bad`
+
+Install their Jessie version:
+`cd ~/down`
+`wget http://ftp.kr.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-0_0.10.36-1.5_amd64.deb http://ftp.kr.debian.org/debian/pool/main/g/gstreamer0.10/gir1.2-gstreamer-0.10_0.10.36-1.5_amd64.deb http://ftp.hk.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-dev_0.10.36-1.5_amd64.deb`
+`dpkg -i *gstreamer*.deb`
+
+Additional libraries are required to get full functionality from Aravis, but are not required for FreeTure to work (viewer...):
+`gobject-introspection gtk-doc-tools libghc-gtksourceview2-dev gtk-3.0`
 
 
 Aravis
@@ -34,11 +48,35 @@ Tested with ARAVIS_0_5_10
 
 Get and compile from https://github.com/AravisProject/aravis/
 
+`./autogen.sh or ./configure`
+
+  Build USB support:            yes
+  Build packet socket support:  yes
+  Build viewer:                 no
+  Build gstreamer plugin:       yes
+  Build gstreamer-0.10 plugin:  no
+  Build with fast heartbeat:    no
+  Build with address sanatizer: no
+
+`make && make install`
+
+Executables `arv-tool`and `arv-test` should show the camera:
+`arv-test-0.6`
+Testing device 'Blackfly BFLY-U3-23S6M' from 'Point Grey Research'
+(process:28108): Aravis-CRITICAL **: arv_xml_schema_validate: assertion 'schema->priv->valid_ctxt != NULL' failed
+(process:28108): Aravis-CRITICAL **: arv_xml_schema_validate: assertion 'schema->priv->valid_ctxt != NULL' failed
+Genicam: FAILED Invalid Genicam XML data
+Sensor size read: 1920 1200
+
+`arv-tool-0.6`
+PointGrey-00F908F7 (USB3)
+
 Point Grey (FLIR) note about Aravis:
 https://www.ptgrey.com/tan/1084
 
-Might need to run:
+Might need to run (not required on DFN camera systems):
 `gst-inspect-1.0 bayer2rgb`
+
 
 
 Freeture
@@ -48,8 +86,7 @@ Fripon version: `git clone https://github.com/fripon/freeture.git`
 
 DFN version: `git clone https://github.com/hdevillepoix/freeture.git`
 
-Classic GNU build, except might need `./configure ARV_CFLAGS='-I/usr/local/include/aravis-0.6/' ARV_LIBS='-L/usr/local/lib/ -laravis-0.5 -lm`
-
+Classic GNU build, except might need `./configure ARV_CFLAGS='-I/usr/local/include/aravis-0.6/' ARV_LIBS='-L/usr/local/lib/ -laravis-0.5 -lm` (not on DFN systems)
 
 
 The Details
