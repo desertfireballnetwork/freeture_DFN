@@ -30,7 +30,7 @@
 * \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
 * \version 1.0
 * \date    16/05/2016
-* \brief   Use Aravis library to pilot GigE Cameras.
+* \brief   Use Aravis library to pilot GigE and USB 3 Cameras.
 *          https://wiki.gnome.org/action/show/Projects/Aravis?action=show&redirect=Aravis
 */
 
@@ -188,7 +188,7 @@
 
         if(customSize) {
 
-            arv_camera_set_region(camera, 0, 0,width,height);
+            arv_camera_set_region(camera, 420, 60,width,height);
             arv_camera_get_region (camera, NULL, NULL, &mWidth, &mHeight);
             BOOST_LOG_SEV(logger, notification) << "Camera region size : " << mWidth << "x" << mHeight;
 

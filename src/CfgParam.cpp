@@ -83,6 +83,11 @@ CfgParam::CfgParam(string cfgFilePath) {
     param.camInput.ACQ_NIGHT_GAIN = 0;
     param.camInput.ACQ_RES_CUSTOM_SIZE = false;
     param.camInput.ACQ_WIDTH = 640;
+    param.camInput.ACQ_ROI_CUSTOM = false;
+    param.camInput.ACQ_ROI_WIDTH = 640;
+    param.camInput.ACQ_ROI_HEIGHT = 480;
+    param.camInput.ACQ_ROI_X0 = 0;
+    param.camInput.ACQ_ROI_Y0 = 0;
     param.camInput.ephem.EPHEMERIS_ENABLED = false;
     param.camInput.ephem.SUNRISE_DURATION = 3600;
     vector<int>sunrisetime, sunsettime;
@@ -473,6 +478,100 @@ void CfgParam::loadCamParam() {
 
             param.camInput.ACQ_HEIGHT = 480;
             param.camInput.ACQ_WIDTH = 640;
+
+        }
+    }
+
+    //-------------------------------------------------------------------
+    
+    /*
+        param.camInput.ACQ_ROI_CUSTOM = false;
+    param.camInput.ACQ_ROI_WIDTH = 640;
+    param.camInput.ACQ_ROI_HEIGHT = 480;
+    param.camInput.ACQ_ROI_X0 = 0;
+    param.camInput.ACQ_ROI_Y0 = 0;
+    
+    # Use custom region of interest
+ACQ_ROI_CUSTOM = true
+# Region of interest origin coordinates
+ACQ_ROI_ORIGIN = 420x60
+# Size of region of interest
+ACQ_ROI_SIZE = 1080x1080
+
+*/
+
+
+    if(!cfg.Get("ACQ_ROI_CUSTOM", param.camInput.ACQ_ROI_CUSTOM)) {
+        param.camInput.errormsg.push_back("- ACQ_ROI_CUSTOM : Fail to get value.");
+        e = true;
+    }else{
+
+        if(param.camInput.ACQ_RES_CUSTOM_SIZE) {
+
+            string acq_roi_origin;
+            string acq_roi_size;
+            if(!cfg.Get("ACQ_ROI_ORIGIN", acq_roi_origin) || !cfg.Get("ACQ_ROI_SIZE", acq_roi_size)) {
+                param.camInput.errormsg.push_back("- ACQ_ROI_ORIGIN : Fail to get value.");
+                e = true;
+            }else {
+
+                if(acq_roi_origin.find("x") != std::string::npos) {
+
+                    string roi_x0 = acq_roi_origin.substr(0,acq_roi_origin.find("x"));
+                    string roi_y0 = acq_roi_origin.substr(acq_roi_origin.find("x")+1,string::npos);
+                    int mSizeWidth = atoi(roi_x0.c_str());
+                    int mSizeHeight = atoi(roi_y0.c_str());
+
+                    if(mSizeHeight <= 0) {
+                        param.camInput.errormsg.push_back("- ACQ_ROI_ORIGIN : Y0 value is not correct.");
+                        e = true;
+                    }else{
+                        param.camInput.ACQ_ROI_Y0 = mSizeHeight;
+                    }
+
+                    if(mSizeWidth <= 0) {
+                        param.camInput.errormsg.push_back("- ACQ_ROI_ORIGIN : X0 value is not correct.");
+                        e = true;
+                    }else{
+                        param.camInput.ACQ_ROI_X0 = mSizeWidth;
+                    }
+
+                }else {
+                    param.camInput.errormsg.push_back("- ACQ_ROI_ORIGIN : Format is not correct. It must be : X0xY0.");
+                    e = true;
+                }
+
+                if(acq_roi_size.find("x") != std::string::npos) {
+
+                    string width = acq_roi_size.substr(0,acq_roi_size.find("x"));
+                    string height = acq_roi_size.substr(acq_roi_size.find("x")+1,string::npos);
+                    int mSizeWidth = atoi(width.c_str());
+                    int mSizeHeight = atoi(height.c_str());
+
+                    if(mSizeHeight <= 0) {
+                        param.camInput.errormsg.push_back("- ACQ_ROI_SIZE : Height value is not correct.");
+                        e = true;
+                    }else{
+                        param.camInput.ACQ_HEIGHT = mSizeHeight;
+                    }
+
+                    if(mSizeWidth <= 0) {
+                        param.camInput.errormsg.push_back("- ACQ_ROI_SIZE : Width value is not correct.");
+                        e = true;
+                    }else{
+                        param.camInput.ACQ_WIDTH = mSizeWidth;
+                    }
+
+                }else {
+                    param.camInput.errormsg.push_back("- ACQ_ROI_SIZE : Format is not correct. It must be : WxH.");
+                    e = true;
+                }
+            }
+        }else {
+            param.camInput.ACQ_ROI_WIDTH = param.camInput.ACQ_WIDTH;
+            param.camInput.ACQ_ROI_HEIGHT = param.camInput.ACQ_HEIGHT;
+            param.camInput.ACQ_ROI_X0 = 0;
+            param.camInput.ACQ_ROI_Y0 = 0;
 
         }
     }
