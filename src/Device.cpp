@@ -61,6 +61,8 @@ Device::Device(cameraParam cp, framesParam fp, videoParam vp, int cid) {
     mCustomSize = cp.ACQ_RES_CUSTOM_SIZE;
     mSizeWidth = cp.ACQ_WIDTH;
     mSizeHeight = cp.ACQ_HEIGHT;
+    mX0 = cp.ACQ_X0;
+    mY0 = cp.ACQ_Y0;
     mDeviceType = UNDEFINED_INPUT_TYPE;
     mvp = vp;
     mfp = fp;
@@ -624,7 +626,7 @@ bool Device::runSingleCapture(Frame &img) {
 
 bool Device::setCameraSize() {
 
-    if(!mCam->setSize(mSizeWidth, mSizeHeight, mCustomSize)) {
+    if(!mCam->setSize(mSizeWidth, mSizeHeight, mX0, mY0, mCustomSize)) {
         BOOST_LOG_SEV(logger, fail) << "Fail to set camera size.";
         return false;
     }

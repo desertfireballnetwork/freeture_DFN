@@ -251,6 +251,8 @@ class Camera {
 
         virtual bool setSize(int width, int height, bool customSize) {return false;};
 
+        virtual bool setSize(int width, int height, int x0, int y0, bool customSize) {return false;};
+
         /**
         * Set device's format.
         *

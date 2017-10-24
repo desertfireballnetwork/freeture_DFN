@@ -345,6 +345,10 @@
         return true;
     }
 
+    bool CameraV4l2::setSize(int width, int height, int x0, int y0, bool customSize) {
+        CameraV4l2::setSize(width, height, customSize);
+    }
+
     // if customSize = true --> set width and height values passed in argument
     // if customSize = false --> set maximum size
     bool CameraV4l2::setSize() {

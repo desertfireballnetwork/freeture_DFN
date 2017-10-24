@@ -208,6 +208,25 @@
         return true;
 
     }
+    
+    
+    bool CameraAravis::setSize(int width, int height, int x0, int y0, bool customSize) {
+
+        if(customSize) {
+
+            arv_camera_set_region(camera, x0, y0, width, height);
+            arv_camera_get_region (camera, NULL, NULL, &mWidth, &mHeight);
+            BOOST_LOG_SEV(logger, notification) << "Camera region size : " << mWidth << "x" << mHeight;
+
+        // Default is maximum size
+        }else {
+            CameraAravis::setSize(width, height, false);
+        }
+
+        return true;
+
+    }
+    
 
     bool CameraAravis::getDeviceNameById(int id, string &device){
 
@@ -599,7 +618,7 @@
 
         if(frame.mWidth > 0 && frame.mHeight > 0) {
 
-            arv_camera_set_region(camera, 420, 60,frame.mWidth,frame.mHeight);
+            arv_camera_set_region(camera, 0, 0,frame.mWidth,frame.mHeight);
             arv_camera_get_region (camera, NULL, NULL, &mWidth, &mHeight);
 
         }else{

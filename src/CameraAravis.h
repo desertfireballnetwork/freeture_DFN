@@ -163,6 +163,8 @@
 
             bool setSize(int width, int height, bool customSize);
 
+            bool setSize(int width, int height, int x0, int y0, bool customSize);
+
             void getAvailablePixelFormats();
 
     };

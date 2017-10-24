@@ -679,6 +679,10 @@
 
     }
 
+    bool CameraGigeTis::setSize(int width, int height, int x0, int y0, bool customSize) {
+        CameraGigeTis::setSize(width, height, customSize);
+    }
+
     void CameraGigeTis::acqStop() {
 
         m_pGrabber->stopLive();

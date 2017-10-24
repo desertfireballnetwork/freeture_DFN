@@ -85,6 +85,10 @@ bool CameraWindows::setSize(int width, int height, bool customSize) {
 
 }
 
+bool CameraWindows::setSize(int width, int height, int x0, int y0, bool customSize) {
+    CameraWindows::setSize(width, height, customSize);
+}
+
  bool  CameraWindows::grabSingleImage(Frame &frame, int camID) {
 
     int numDevices = mVideoInput.listDevices(true);

@@ -122,6 +122,8 @@ class CameraFrames: public Camera {
 
         bool setSize(int width, int height, bool customSize) {return true;};
 
+        bool setSize(int width, int height, int x0, int y0, bool customSize) {return true;};
+
         bool getCameraName();
 
 };

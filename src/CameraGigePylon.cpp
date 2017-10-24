@@ -520,6 +520,10 @@ bool CameraGigePylon::setSize(int width, int height, bool customSize) {
 
 }
 
+bool CameraGigePylon::setSize(int width, int height, int x0, int y0, bool customSize) {
+    CameraGigePylon::setSize(width, height, customSize);
+}
+
 bool CameraGigePylon::grabSingleImage(Frame &frame, int camID){
 
     try {
