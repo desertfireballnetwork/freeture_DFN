@@ -109,6 +109,8 @@ class Device {
         bool        mCustomSize;
         int         mSizeWidth;
         int         mSizeHeight;
+        int         mX0;
+        int         mY0;
         int         mNightExposure;
         int         mNightGain;
         int         mDayExposure;
