@@ -291,6 +291,9 @@ int main(int argc, const char ** argv){
                 delete device;
 
             device->getSupportedPixelFormats();
+            double min_exp, max_exp;
+            getCameraExposureBounds(double &min_exp, double &max_exp);
+            cout << "Exposure bounds : [ " << min_exp/1000. << " , " << max_exp/1000. << " ] ms " << endl ;
             delete device;
 
         }else if(vm.count("mode")){
