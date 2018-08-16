@@ -60,6 +60,7 @@
 #include "Conversion.h"
 #include "Camera.h"
 #include "CameraGigeAravis.h"
+#include "CameraUsbAravis.h"
 #include "CameraGigePylon.h"
 #include "CameraGigeTis.h"
 #include "CameraVideo.h"

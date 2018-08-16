@@ -152,6 +152,7 @@ bool Device::createCamera() {
                 mCam->grabCleanse();
                 return false;
             }
+	    
             return true;
         }
 
@@ -260,6 +261,16 @@ bool Device::createDevicesWith(CamSdkType sdk) {
 
             break;
 
+        case ARAVIS_USB :
+
+            {
+                #ifdef LINUX
+                    mCam = new CameraUsbAravis(mShiftBits);
+                #endif
+            }
+
+            break;
+
         case PYLONGIGE :
 
             {
@@ -305,6 +316,7 @@ InputDeviceType Device::getDeviceType(CamSdkType t) {
         case V4L2 :
         case VIDEOINPUT :
         case ARAVIS :
+        case ARAVIS_USB :
         case PYLONGIGE :
         case TIS :
             return CAMERA;
@@ -384,6 +396,19 @@ void Device::listDevices(bool printInfos) {
         listCams = mCam->getCamerasList();
         for(int i = 0; i < listCams.size(); i++) {
             elem.first = mNbDev; elem.second = ARAVIS;
+            subElem.first = listCams.at(i).first; subElem.second = elem;
+            mDevices.push_back(subElem);
+            if(printInfos) cout << "[" << mNbDev << "]    " << listCams.at(i).second << endl;
+            mNbDev++;
+        }
+        delete mCam;
+
+        // ARAVIS_USB
+
+        createDevicesWith(ARAVIS_USB);
+        listCams = mCam->getCamerasList();
+        for(int i = 0; i < listCams.size(); i++) {
+            elem.first = mNbDev; elem.second = ARAVIS_USB;
             subElem.first = listCams.at(i).first; subElem.second = elem;
             mDevices.push_back(subElem);
             if(printInfos) cout << "[" << mNbDev << "]    " << listCams.at(i).second << endl;

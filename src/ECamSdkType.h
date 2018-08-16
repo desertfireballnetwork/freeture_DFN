@@ -36,6 +36,7 @@ enum CamSdkType{
     FRAMESDIR,
     V4L2,
     VIDEOINPUT,
+    ARAVIS_USB,
     UNKNOWN
 
 };
