@@ -288,10 +288,15 @@ int main(int argc, const char ** argv){
             device->listDevices(false);
 
             if(!device->createCamera(devID, true))
-                delete device;
-
-            device->getSupportedPixelFormats();
-            delete device;
+              {
+		delete device;
+	      }
+	    else
+	      {
+		device->getSupportedPixelFormats();
+		// delete device; MC: commented out - there must be some bug in destructor.
+		// it shouts like: (process:11022): GLib-GObject-CRITICAL **: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+	      }
 
         }else if(vm.count("mode")){
 
