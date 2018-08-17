@@ -22,7 +22,7 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      16/05/2016
+*   Last modified:      14/08/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
@@ -149,9 +149,9 @@
         string deviceName;
 
         if(!getDeviceNameById(id, deviceName))
-            return false;
+          return false;
 
-        camera = arv_camera_new(deviceName.c_str());
+        camera = arv_camera_new(deviceName.c_str());	
 
         if(camera == NULL){
 
@@ -210,7 +210,42 @@
     }
 
     bool CameraUsbAravis::grabInitialization(){
+      //saveGenicamXml("./");
 
+      guint bandwidth;
+      gboolean isUV, isGV, isCam;
+
+      // MCu: need to get ArvDevice to be get more complete access to camera features
+      ArvDevice *ad;
+      ad = arv_camera_get_device( camera );
+
+#if FALSE
+      isCam = ARV_IS_CAMERA (camera);
+      std::cout << "ARV_IS_CAMERA returned " << isCam << std::endl;
+
+      isUV = ARV_IS_UV_DEVICE( ad );
+      std::cout << "ARV_IS_UV_DEVICE returned " << isUV << std::endl;
+      
+#endif
+      
+      bandwidth = arv_device_get_integer_feature_value (ad, "DeviceLinkThroughputLimit");
+      BOOST_LOG_SEV(logger, notification) << "arv device Camera USB bandwidth limit : " << bandwidth;
+      //      std::cout << "arv device Camera USB bandwidth limit : " << bandwidth;
+      
+#if FALSE
+      isUV = arv_camera_is_uv_device( camera );
+      std::cout << "arv_camera_is_uv_device returned " << isUV << std::endl;
+      if( isUV )
+	{
+	  bandwidth = arv_camera_uv_get_bandwidth (camera);
+	  BOOST_LOG_SEV(logger, notification) << "Camera USB bandwidth limit : " << bandwidth;
+	  std::cout << "Camera USB bandwidth limit : " << bandwidth;
+	  exit (0 );
+	}
+      bandwidth = arv_camera_uv_get_bandwidth (camera);
+      BOOST_LOG_SEV(logger, notification) << "Camera USB bandwidth limit : " << bandwidth;
+      std::cout << "Camera USB bandwidth limit : " << bandwidth;
+#endif	
         frameCounter = 0;
 
         payload = arv_camera_get_payload (camera);
@@ -226,11 +261,16 @@
         BOOST_LOG_SEV(logger, notification) << "Camera gain bound min : " << gainMin;
         BOOST_LOG_SEV(logger, notification) << "Camera gain bound max : " << gainMax;
 
-        arv_camera_set_frame_rate(camera, 30);
+	double min, max;
+	// this ain't work arv_camera_get_frame_rate_bounds(camera, &min, &max);
+	arv_device_get_float_feature_bounds (ad, "AcquisitionFrameRate", &min, &max);
 
-        fps = arv_camera_get_frame_rate(camera);
-        BOOST_LOG_SEV(logger, notification) << "Camera frame rate : " << fps;
-
+	// arv_camera_set_frame_rate(camera, 32); // MCu: here is hardcoded (was 30 FPS)
+	//                                           but setFPS() is called later from AcqThread::prepareAcquisitionOnDevice()
+	bool retVal = setFPS( 30 );
+	
+	BOOST_LOG_SEV(logger, notification) << "Camera frame rate bounds min : " << min << "  max : " << max;
+   	
         capsString = arv_pixel_format_to_gst_caps_string(pixFormat);
         BOOST_LOG_SEV(logger, notification) << "Camera format : " << capsString;
 
@@ -257,6 +297,7 @@
 
         cout << endl;
 
+	
         // Create a new stream object. Open stream on Camera.
         stream = arv_camera_create_stream(camera, NULL, NULL);
 
@@ -388,7 +429,13 @@
 
                         //t3 = (((double)getTickCount() - t3)/getTickFrequency())*1000;
                         //cout << "> Time shift : " << t3 << endl;
-                    }
+                    } else if(pixFormat == ARV_PIXEL_FORMAT_MONO_16){
+
+                        //BOOST_LOG_SEV(logger, normal) << "Creating Mat 16 bits ...";
+                        image = Mat(mHeight, mWidth, CV_16UC1, buffer_data);
+                        imgDepth = MONO16;
+                        saturateVal = 4095;
+		    }
 
                     //BOOST_LOG_SEV(logger, normal) << "Creating frame object ...";
                     newFrame = Frame(image, gain, exp, acquisitionDate);
@@ -805,6 +852,10 @@
 
                 break;
 
+	    case ARV_PIXEL_FORMAT_MONO_16 :
+	        format = MONO16;
+	        break;
+
             default :
 
                 return false;
@@ -907,11 +958,14 @@
 
     }
 
-    bool CameraUsbAravis::setFPS(double fps){
+    bool CameraUsbAravis::setFPS(double sfps){
 
         if (camera != NULL){
 
-            arv_camera_set_frame_rate(camera, fps);
+            arv_camera_set_frame_rate(camera, sfps);
+
+	    this->fps = arv_camera_get_frame_rate(camera);
+	    BOOST_LOG_SEV(logger, notification) << "Camera frame rate : " << this->fps;
 
             return true;
 
