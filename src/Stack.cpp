@@ -75,7 +75,7 @@ void Stack::addFrame(Frame &i){
 
             i.mImg.convertTo(curr, CV_32FC1);
 
-            accumulate(curr, stack);
+            cv::accumulate(curr, stack);
             curFrames++;
             mDateLastFrame = i.mDate;
 
