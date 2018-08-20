@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2016 Yoan Audureau, Chiara Marmo
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2017-2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      13/05/2016
+*   Last modified:      20/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    CfgParam.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    13/06/2014
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    20/03/2018
 * \brief   Get parameters from configuration file.
 */
 
@@ -82,6 +83,8 @@ CfgParam::CfgParam(string cfgFilePath) {
     param.camInput.ACQ_NIGHT_EXPOSURE = 0;
     param.camInput.ACQ_NIGHT_GAIN = 0;
     param.camInput.ACQ_RES_CUSTOM_SIZE = false;
+    param.camInput.ACQ_STARTX = 0;
+    param.camInput.ACQ_STARTY = 0;
     param.camInput.ACQ_WIDTH = 640;
     param.camInput.ephem.EPHEMERIS_ENABLED = false;
     param.camInput.ephem.SUNRISE_DURATION = 3600;
@@ -245,9 +248,11 @@ void CfgParam::loadDataParam() {
         path p(param.data.DATA_PATH);
 
         if(!fs::exists(p)){
-            if(!fs::create_directory(p)){
-                e = true;
+            try {
+                fs::create_directory(p);
+            } catch (std::exception &ex) {
                 param.data.errormsg.push_back("- DATA_PATH : Can't create Data Path directory.");
+                e = true;
             }
         }
     }
@@ -283,9 +288,11 @@ void CfgParam::loadLogParam() {
         path p(param.log.LOG_PATH);
 
         if(!fs::exists(p)){
-            if(!fs::create_directory(p)){
-                e = true;
+            try {
+                fs::create_directory(p);
+            } catch (std::exception &ex) {
                 param.log.errormsg.push_back("- LOG_PATH : Can't create Log Path directory.");
+                e = true;
             }
         }
     }
@@ -436,6 +443,39 @@ void CfgParam::loadCamParam() {
 
         if(param.camInput.ACQ_RES_CUSTOM_SIZE) {
 
+            string acq_offset;
+            if(!cfg.Get("ACQ_OFFSET", acq_offset)) {
+                param.camInput.errormsg.push_back("- ACQ_OFFSET : Fail to get value.");
+                e = true;
+            }else {
+
+                if(acq_offset.find(",") != std::string::npos) {
+
+                    string offsetx = acq_offset.substr(0,acq_offset.find(","));
+                    string offsety = acq_offset.substr(acq_offset.find(",")+1,string::npos);
+                    int mStartX = atoi(offsetx.c_str());
+                    int mStartY = atoi(offsety.c_str());
+
+                    if(mStartX <= 0) {
+                        param.camInput.errormsg.push_back("- ACQ_OFFSET : X offset value is not correct.");
+                        e = true;
+                    }else{
+                        param.camInput.ACQ_STARTX = mStartX;
+                    }
+
+                    if(mStartY <= 0) {
+                        param.camInput.errormsg.push_back("- ACQ_OFFSET : Y offset value is not correct.");
+                        e = true;
+                    }else{
+                        param.camInput.ACQ_STARTY = mStartY;
+                    }
+
+                }else {
+                    param.camInput.errormsg.push_back("- ACQ_OFFSET : Format is not correct. It must be : X,Y.");
+                    e = true;
+                }
+            }
+
             string acq_res_custome_size;
             if(!cfg.Get("ACQ_RES_SIZE", acq_res_custome_size)) {
                 param.camInput.errormsg.push_back("- ACQ_RES_SIZE : Fail to get value.");
@@ -470,6 +510,8 @@ void CfgParam::loadCamParam() {
             }
         }else {
 
+            param.camInput.ACQ_STARTX = 1;
+            param.camInput.ACQ_STARTY = 1;
             param.camInput.ACQ_HEIGHT = 480;
             param.camInput.ACQ_WIDTH = 640;
 
@@ -1365,9 +1407,11 @@ void CfgParam::loadDetParam() {
                 path p(param.det.DET_DEBUG_PATH);
 
                 if(!fs::exists(p)){
-                    if(!fs::create_directory(p)){
-                        e = true;
+                    try {
+                        fs::create_directory(p);
+                    } catch (std::exception &ex) {
                         param.det.errormsg.push_back("- DET_DEBUG_PATH : Can't create Debug Path. Debug Path must exist as DET_DEBUG_UPDATE_MASK is enabled.");
+                        e = true;
                     }
                 }
             }
@@ -1916,7 +1960,3 @@ bool CfgParam::allParamAreCorrect() {
 
     return true;
 }
-
-
-
-

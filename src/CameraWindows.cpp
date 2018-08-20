@@ -6,7 +6,7 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -27,7 +27,7 @@
 
 /**
 * \file    CameraWindows.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
 * \date    02/10/2015
 */
@@ -76,7 +76,7 @@ vector<pair<int,string>> CameraWindows::getCamerasList() {
 
 }
 
-bool CameraWindows::setSize(int width, int height, bool customSize) {
+bool CameraWindows::setSize(int startx, int starty, int width, int height, bool customSize) {
 
     if(customSize)
         return mVideoInput.setupDevice(mDevNumber,width,height);

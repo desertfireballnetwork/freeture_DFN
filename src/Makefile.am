@@ -7,7 +7,7 @@
 #*	This file part of:	freeture
 #*
 #*	Copyright:		(C) 2014-2015 Yoan Audureau, Chiara Marmo
-#*                              FRIPON-GEOPS-UPSUD-CNRS
+#*                              GEOPS-UPSUD-CNRS
 #*
 #*	License:		GNU General Public License
 #*
@@ -28,7 +28,7 @@
 
 bin_PROGRAMS		= freeture
 freeture_SOURCES	= EImgBitDepth.h EParser.h EParser.cpp ECamSdkType.h \
-			EDetMeth.h Base64.h Camera.h AcqThread.h AcqThread.cpp \
+			EDetMeth.h Base64.h Camera.h AcqThread.h AcqThread.cpp AcqSchedule.h AcqSchedule.cpp \
 			CameraVideo.h CameraGigeAravis.h CameraGigeAravis.cpp \
 			CameraUsbAravis.h CameraUsbAravis.cpp \
 			CameraFrames.h CameraGigePylon.h CameraGigePylon.cpp CameraV4l2.cpp CameraV4l2.h \
@@ -47,5 +47,6 @@ freeture_SOURCES	= EImgBitDepth.h EParser.h EParser.cpp ECamSdkType.h \
 			TimeDate.cpp ExposureControl.cpp ExposureControl.h ETimeMode.h ECamPixFmt.h \
 			SaveImg.cpp ELogSeverityLevel.h ImgProcessing.cpp ImgProcessing.h
 
+EXTRA_DIST		= Doxyfile
 DATE=`date +"%Y-%m-%d"`
 

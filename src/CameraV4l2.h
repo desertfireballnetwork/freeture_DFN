@@ -4,7 +4,9 @@
 *
 *   This file is part of:   freeture
 *
-*   Copyright:      (C) 2014-2015 Yoan Audureau -- FRIPON-GEOPS-UPSUD
+*   Copyright:      (C) 2014-2015 Yoan Audureau
+*                       2018 Chiara Marmo
+*                                     GEOPS-UPSUD
 *
 *   License:        GNU General Public License
 *
@@ -19,15 +21,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      17/08/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    CameraV4l2.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    17/08/2015
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2019
 */
 
 #pragma once
@@ -105,7 +107,7 @@
             int fd;
             double expMin, expMax, exp;
             int gainMin, gainMax, gain;
-            int mWidth, mHeight;
+            int mStartX, mStartY, mWidth, mHeight;
             int mFrameCounter;
             struct v4l2_format mFormat;
             bool mCustomSize;
@@ -132,7 +134,7 @@
 
             bool createDevice(int id);
 
-            bool setSize(int width, int height, bool customSize);
+            bool setSize(int startx, int starty, int width, int height, bool customSize);
 
             bool grabInitialization();
 
@@ -156,7 +158,7 @@
 
             bool getPixelFormat(CamPixFmt &format);
 
-            bool getFrameSize(int &w, int &h);
+            bool getFrameSize(int &x, int &y, int &w, int &h);
 
             bool getFrameSizeEnum();
 

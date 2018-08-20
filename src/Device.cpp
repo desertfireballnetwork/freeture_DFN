@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/07/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    Device.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    02/09/2014
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2018
 * \brief
 */
 
@@ -59,6 +60,8 @@ Device::Device(cameraParam cp, framesParam fp, videoParam vp, int cid) {
     mShiftBits = cp.SHIFT_BITS;
     mFormat = cp.ACQ_FORMAT;
     mCustomSize = cp.ACQ_RES_CUSTOM_SIZE;
+    mStartX = cp.ACQ_STARTX;
+    mStartY = cp.ACQ_STARTY;
     mSizeWidth = cp.ACQ_WIDTH;
     mSizeHeight = cp.ACQ_HEIGHT;
     mDeviceType = UNDEFINED_INPUT_TYPE;
@@ -82,6 +85,8 @@ Device::Device() {
     mCamID          = 0;
     mGenCamID       = 0;
     mCustomSize     = false;
+    mStartX         = 0;
+    mStartY         = 0;
     mSizeWidth      = 640;
     mSizeHeight     = 480;
     mCam            = NULL;
@@ -644,7 +649,7 @@ bool Device::runSingleCapture(Frame &img) {
 
 bool Device::setCameraSize() {
 
-    if(!mCam->setSize(mSizeWidth, mSizeHeight, mCustomSize)) {
+    if(!mCam->setSize(mStartX, mStartY, mSizeWidth, mSizeHeight, mCustomSize)) {
         BOOST_LOG_SEV(logger, fail) << "Fail to set camera size.";
         return false;
     }
@@ -653,9 +658,9 @@ bool Device::setCameraSize() {
 
 }
 
-bool Device::setCameraSize(int w, int h) {
+bool Device::setCameraSize(int x, int y, int w, int h) {
 
-    if(!mCam->setSize(w, h, true)) {
+    if(!mCam->setSize(x, y, w, h, true)) {
         BOOST_LOG_SEV(logger, fail) << "Fail to set camera size.";
         return false;
     }

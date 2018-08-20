@@ -6,7 +6,7 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -27,7 +27,7 @@
 
 /**
 * \file    OpenSSL.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
 * \date    30/05/2015
 */
@@ -82,7 +82,7 @@ OpenSSL::~OpenSSL() {
         rstShutdown = SSL_shutdown(ssl_.get());
     else if(-1 == rstShutdown && SSL_RECEIVED_SHUTDOWN != SSL_get_shutdown(ssl_.get())) {
         BOOST_LOG_SEV(logger,fail) << "Shutdown failed.";
-        throw "Shutdown failed.";
+        //throw "Shutdown failed.";
         //throw runtime_error("shutdown failed.");
     }
 

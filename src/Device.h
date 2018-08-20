@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      21/01/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    Device.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    13/06/2014
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2018
 * \brief
 */
 
@@ -108,6 +109,8 @@ class Device {
         vector<pair<int,pair<int,CamSdkType>>> mDevices;
 
         bool        mCustomSize;
+        int         mStartX;
+        int         mStartY;
         int         mSizeWidth;
         int         mSizeHeight;
         int         mNightExposure;
@@ -209,7 +212,7 @@ class Device {
 
         bool getGainStatus();
 
-        bool setCameraSize(int w, int h);
+        bool setCameraSize(int x, int y, int w, int h);
 
         int getNightExposureTime() {return mNightExposure;};
         int getNightGain() {return mNightGain;};

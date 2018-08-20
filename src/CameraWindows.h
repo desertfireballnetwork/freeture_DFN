@@ -6,7 +6,7 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -27,7 +27,7 @@
 
 /**
 * \file    CameraWindows.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
 * \date    02/10/2015
 */
@@ -50,6 +50,8 @@ class CameraWindows: public Camera {
 
         int mDevNumber;
         videoInput mVideoInput;
+        int mStartX;
+        int mStartY;
         int mWidth;
         int mHeight;
         int mSize;
@@ -106,7 +108,7 @@ class CameraWindows: public Camera {
 
         bool setFPS(double value);
 
-        bool setSize(int width, int height, bool customSize);
+        bool setSize(int startx, int starty, int width, int height, bool customSize);
 
         bool setFpsToLowerValue();
 

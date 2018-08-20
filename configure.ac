@@ -7,8 +7,8 @@
 #*
 #*	This file part of:	FreeTure
 #*
-#*	Copyright:		(C) 2014-2015 Yoan Audureau, Chiara Marmo
-#*                              FRIPON-GEOPS-UPSUD-CNRS
+#*	Copyright:		(C) 2014-2018 Yoan Audureau, Chiara Marmo
+#*                              GEOPS-UPSUD-CNRS
 #*
 #*	License:		GNU General Public License
 #*
@@ -23,7 +23,7 @@
 #*	You should have received a copy of the GNU General Public License
 #*	along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 #*
-#*	Last modified:		27/09/2016
+#*	Last modified:		19/03/2018
 #*
 #*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
@@ -32,7 +32,7 @@ define([AC_CACHE_LOAD],)
 define([AC_CACHE_SAVE],)
 
 AC_PREREQ([2.69])
-AC_INIT([freeture], [1.1-0], [yoan.audureau@u-psud.fr])
+AC_INIT([freeture], [1.2-0], [chiara.marmo@u-psud.fr])
 AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([config.h])
 
@@ -41,7 +41,7 @@ date=`date +%Y-%m-%d`
 date2=`date +"%a %b %d %Y"`
 date3=`date +"%B %Y"`
 AC_DEFINE_UNQUOTED(DATE, "$date", [Archive creation date])
-AC_SUBST(PACKAGER, "Yoan Audureau")
+AC_SUBST(PACKAGER, "Chiara Marmo")
 AC_SUBST(DATE2, "$date2")
 AC_SUBST(DATE3, "$date3")
 
@@ -50,8 +50,6 @@ AC_DEFINE(LINUX, 1, [Linux plateform])
 # Include macros
 sinclude(acx_urbi_resolve_dir.m4)
 sinclude(acx_boost.m4)
-sinclude(acx_opencv.m4)
-sinclude(acx_cfitsio.m4)
 sinclude(acx_pylon.m4)
 
 # Display package and version number
@@ -83,21 +81,34 @@ AC_FUNC_MALLOC
 AC_CHECK_FUNCS([floor memset modf pow sqrt])
 
 # Checks for libraries.
-PKG_CHECK_MODULES(GLIB_2_0, glib-2.0, [LIBS="$GLIB_2_0_LIBS $LIBS"]
+PKG_CHECK_MODULES(GLIB_2_0, [glib-2.0], [LIBS="$GLIB_2_0_LIBS $LIBS"]
 				      [AM_CPPFLAGS="$AM_CPPFLAGS $GLIB_2_0_CFLAGS"],
 				      [AC_MSG_ERROR([$GLIB_2_0_ERROR Exiting.])])
-PKG_CHECK_MODULES(GOBJ_2_0, gobject-2.0, [LIBS="$GOBJ_2_0_LIBS $LIBS"]
+PKG_CHECK_MODULES(GOBJ_2_0, [gobject-2.0], [LIBS="$GOBJ_2_0_LIBS $LIBS"]
 				      [AM_CPPFLAGS="$AM_CPPFLAGS $GOBJ_2_0_CFLAGS"],
 				      [AC_MSG_ERROR([$GOBJ_2_0_ERROR Exiting.])])
-PKG_CHECK_MODULES(UDEV, libudev, [LIBS="$UDEV_LIBS $LIBS"]
+PKG_CHECK_MODULES(GTHREAD_2_0, [gthread-2.0], [LIBS="$GTHREAD_2_0_LIBS $LIBS"]
+				      [AM_CPPFLAGS="$AM_CPPFLAGS $GTHREAD_2_0_CFLAGS"],
+				      [AC_MSG_ERROR([$GTHREAD_2_0_ERROR Exiting.])])
+PKG_CHECK_MODULES(UDEV, [libudev], [LIBS="$UDEV_LIBS $LIBS"]
 				      [AM_CPPFLAGS="$AM_CPPFLAGS $UDEV_CFLAGS"],
 				      [AC_MSG_ERROR([$UDEV_ERROR Exiting.])])
-PKG_CHECK_MODULES(CRYPTO, libcrypto, [LIBS="$CRYPTO_LIBS $LIBS"]
+PKG_CHECK_MODULES(CFITSIO, [cfitsio], [LIBS="$CFITSIO_LIBS $LIBS"]
+				      [AM_CPPFLAGS="$AM_CPPFLAGS $CFITSIO_CFLAGS"])
+PKG_CHECK_MODULES(CRYPTO, [libcrypto], [LIBS="$CRYPTO_LIBS $LIBS"]
 				      [AM_CPPFLAGS="$AM_CPPFLAGS $CRYPTO_CFLAGS"],
 				      [AC_MSG_ERROR([$CRYPTO_ERROR Exiting.])])
-PKG_CHECK_MODULES(V4L2, libv4l2, [LIBS="$V4L2_LIBS $LIBS"]
+PKG_CHECK_MODULES(V4L2, [libv4l2], [LIBS="$V4L2_LIBS $LIBS"]
 				      [AM_CPPFLAGS="$AM_CPPFLAGS $V4L2_CFLAGS"],
 				      [AC_MSG_ERROR([$V4L2_ERROR Exiting.])])
+PKG_CHECK_MODULES(OPENCV, [opencv >= 3.0],
+			  [AC_DEFINE([HAVE_OPENCV], [1], [Using OpenCV])]
+			  [LIBS="-lopencv_core -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_highgui -lopencv_imgproc -lopencv_ml -lopencv_objdetect -lopencv_video -lopencv_videoio -lopencv_imgcodecs $LIBS"],
+			  [PKG_CHECK_MODULES([OPENCV], [opencv < 3.0],
+			  [AC_DEFINE([HAVE_OPENCV], [1], [Using OpenCV])]
+			  [LIBS="-lopencv_core -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_highgui -lopencv_imgproc -lopencv_ml -lopencv_objdetect -lopencv_video -lopencv_contrib -lopencv_legacy $LIBS"],
+			  AC_MSG_WARN([opencv not found. Not using some image processing.]))]
+			  )
 
 # Provide special options for PYLON SDK (Basler Camera)
 AC_MSG_CHECKING([whether we should use the Pylon SDK for Basler Camera])
@@ -120,38 +131,6 @@ AC_ARG_WITH(boost-libdir,
 AC_ARG_WITH(boost-incdir,
         [AS_HELP_STRING([--with-boost-incdir=<BOOST include dir>],
 	[Alternative directory for BOOST include files])])
-
-# Provide special options for OPENCV
-AC_ARG_WITH(opencv-libdir,
-        [AS_HELP_STRING([--with-opencv-libdir=<OPENCV library path>],
-	[Alternative directory for the OPENCV library])])
-AC_ARG_WITH(opencv-incdir,
-        [AS_HELP_STRING([--with-opencv-incdir=<OPENCV include dir>],
-	[Alternative directory for OPENCV include files])])
-
-# Provide special options for OPENSSL
-AC_ARG_WITH(openssl-libdir,
-        [AS_HELP_STRING([--with-openssl-libdir=<OPENSSL library path>],
-        [Alternative directory for the OPENSSL library])])
-AC_ARG_WITH(openssl-incdir,
-        [AS_HELP_STRING([--with-openssl-incdir=<OPENSSL include dir>],
-        [Alternative directory for OPENSSL include files])])
-
-# Provide special options for V4L2
-AC_ARG_WITH(v4l2-libdir,
-        [AS_HELP_STRING([--with-v4l2-libdir=<V4L2 library path>],
-        [Alternative directory for the V4L2 library])])
-AC_ARG_WITH(v4l2-incdir,
-        [AS_HELP_STRING([--with-v4l2-incdir=<V4L2 include dir>],
-        [Alternative directory for V4L2 include files])])
-
-# Provide special options for CFITSIO
-AC_ARG_WITH(cfitsio-libdir,
-        [AS_HELP_STRING([--with-cfitsio-libdir=<CFITSIO library path>],
-	[Alternative directory for the CFITSIO library])])
-AC_ARG_WITH(cfitsio-incdir,
-        [AS_HELP_STRING([--with-cfitsio-incdir=<CFITSIO include dir>],
-	[Alternative directory for CFITSIO include files])])
 
 # Provide a special option for the default config file path
 with_cfg_path=$(URBI_RESOLVE_DIR([$datadir]))"/$PACKAGE_NAME/"
@@ -183,35 +162,11 @@ ACX_BOOST($with_boost_libdir,$with_boost_incdir,
 	fi,
 	AC_MSG_ERROR([$BOOST_ERROR Exiting.]))						
 
-###################### handle the OPENCV library ######################
-ACX_OPENCV($with_opencv_libdir,$with_opencv_incdir,
-    	[AM_CPPFLAGS="$AM_CPPFLAGS $OPENCV_CPPFLAGS"]
-	[LIBS="$OPENCV_LIBS $LIBS"]
-	if test "$OPENCV_WARN" != ""; then
-	  AC_MSG_WARN([$OPENCV_WARN])
-	fi,
-	AC_MSG_ERROR([$OPENCV_ERROR Exiting.]))						
-
-###################### handle the CFITSIO library ######################
-ACX_CFITSIO($with_cfitsio_libdir,$with_cfitsio_incdir,
-    	[AM_CPPFLAGS="$AM_CPPFLAGS $CFITSIO_CFLAGS"]
-	[LIBS="$CFITSIO_LIBS $LIBS"]
-	if test "$CFITSIO_WARN" != ""; then
-	  AC_MSG_WARN([$CFITSIO_WARN])
-	fi,
-	AC_MSG_ERROR([$CFITSIO_ERROR Exiting.]))						
-
 ###################### handle the OPENSSL library ######################
 PKG_CHECK_MODULES(OPENSSL, openssl,
 	[LIBS="$OPENSSL_LIBS $LIBS"]
 	[AM_CPPFLAGS="$AM_CPPFLAGS $OPENSSL_CFLAGS"],
 	[AC_MSG_ERROR([$OPENSSL_ERROR Exiting.])])
-
-###################### handle the GSTREAMER library ######################
-PKG_CHECK_MODULES(GST01, gstreamer-0.10,
-	[LIBS="$GST01_LIBS $LIBS"]
-	[AM_CPPFLAGS="$AM_CPPFLAGS $GST01_CFLAGS"],
-	[AC_MSG_ERROR([$GST_ERROR Exiting.])])
 	
 ###################### handle the ARAVIS library ######################
 PKG_CHECK_MODULES(ARV, aravis-0.6,

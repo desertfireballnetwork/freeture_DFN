@@ -5,7 +5,9 @@
 *
 *   This file is part of:   freeture
 *
-*   Copyright:      (C) 2014-2015 Yoan Audureau -- FRIPON-GEOPS-UPSUD
+*   Copyright:      (C) 2014-2015 Yoan Audureau
+*                       2014-2018 Chiara Marmo
+*                            GEOPS-UPSUD
 *
 *   License:        GNU General Public License
 *
@@ -20,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/10/2014
+*   Last modified:      12/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    DetThread.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
-* \date    03/06/2014
+* \date    12/03/2018
 * \brief   Detection thread.
 */
 
@@ -268,7 +270,8 @@ void DetThread::operator ()(){
                     }
 
                     t = (((double)getTickCount() - t)/getTickFrequency())*1000;
-                    cout <<"\033[11;0H" << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms " << endl;
+                    //cout <<"\033[11;0H" << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms " << endl;
+                    cout << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms " << endl;
                     BOOST_LOG_SEV(logger,normal) << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms ";
 
                 }else{
@@ -307,7 +310,7 @@ void DetThread::operator ()(){
         }else {
 
             // Create Report for videos and frames in input.
-            std::ofstream report;
+            boost::filesystem::ofstream report;
             string reportPath = mdp.DATA_PATH + "detections_report.txt";
             report.open(reportPath.c_str());
 

@@ -5,7 +5,7 @@
 *
 *   This file is part of:   freeture
 
-*   Copyright:      (C) 2014-2015 Yoan Audureau -- FRIPON-GEOPS-UPSUD
+*   Copyright:      (C) 2014-2015 Yoan Audureau -- GEOPS-UPSUD
 *
 *   License:        GNU General Public License
 *
@@ -26,7 +26,7 @@
 
 /**
 * \file    TimeDate.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
 * \date    13/06/2014
 * \brief   Time helpers.

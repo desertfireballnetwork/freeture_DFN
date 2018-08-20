@@ -7,7 +7,7 @@
 #*	This file part of:	FreeTure
 #*
 #*	Copyright:		(C) 2014-2015 Yoan Audureau, Chiara Marmo
-#*                              FRIPON-GEOPS-UPSUD-CNRS
+#*                              GEOPS-UPSUD-CNRS
 #*
 #*	License:		GNU General Public License
 #*
@@ -22,16 +22,16 @@
 #*	You should have received a copy of the GNU General Public License
 #*	along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 #*
-#*	Last modified:		20/01/2015
+#*	Last modified:		13/03/2018
 #*
 #*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 AUTOMAKE_OPTIONS	= foreign no-dependencies
 SUBDIRS			= doc src
 dist_pkgdata_DATA	= share/configuration.cfg
-EXTRA_DIST		= README NEWS INSTALL acx_boost.m4 acx_cfitsio.m4 \
-			acx_opencv.m4 acx_pylon.m4 acx_urbi_resolve_dir.m4 \
-			bootstrap.sh THANKS
+EXTRA_DIST		= README NEWS INSTALL acx_boost.m4 \
+			acx_pylon.m4 acx_urbi_resolve_dir.m4 \
+			autogen.sh THANKS
 #RPM_ROOTDIR		= `rpmbuild --nobuild -E %_topdir`
 #RPM_SRCDIR		= $(RPM_ROOTDIR)/SOURCES
 #dist-hook:

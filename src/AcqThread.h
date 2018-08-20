@@ -5,7 +5,7 @@
 *
 *   This file is part of:   freeture
 *
-*   Copyright:      (C) 2014-2016 Yoan Audureau, Chiara Marmo -- FRIPON-GEOPS-UPSUD
+*   Copyright:      (C) 2014-2016 Yoan Audureau, Chiara Marmo -- GEOPS-UPSUD
 *
 *   License:        GNU General Public License
 *
@@ -26,7 +26,7 @@
 
 /**
 * \file    AcqThread.h
-* \author  Yoan Audureau, Chiara Marmo -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau, Chiara Marmo -- GEOPS-UPSUD
 * \version 1.0
 * \date    03/10/2016
 * \brief   Acquisition thread.

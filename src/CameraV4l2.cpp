@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      17/08/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    CameraV4l2.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    17/08/2015
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2018
 */
 
 #include "CameraV4l2.h"
@@ -76,6 +77,8 @@
         gainMin = 0;
         gainMax = 0;
         mFrameCounter = 0;
+        mStartX = 0;
+        mStartY = 0;
         mWidth = 640;
         mHeight = 480;
         n_buffers = 3;
@@ -338,7 +341,9 @@
 
     }
 
-    bool CameraV4l2::setSize(int width, int height, bool customSize) {
+    bool CameraV4l2::setSize(int startx, int starty, int width, int height, bool customSize) {
+        mStartX = startx;
+        mStartY = starty;
         mWidth = width;
         mHeight = height;
         mCustomSize = customSize;
@@ -1175,8 +1180,10 @@
 
     }
 
-    bool CameraV4l2::getFrameSize(int &w, int &h) {
+    bool CameraV4l2::getFrameSize(int &x, int &y, int &w, int &h) {
 
+        x = 0;
+        y = 0;
         w = 0;
         h = 0;
 

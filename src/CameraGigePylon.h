@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/10/2014
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
  * \file    CameraGigePylon.cpp
- * \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
- * \version 1.0
- * \date    03/07/2014
+ * \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+ * \version 1.2
+ * \date    19/03/2018
  * \brief   Use Pylon library to pilot GigE Cameras.
  */
 
@@ -146,7 +147,7 @@
 
             double getExposureTime();
 
-            bool setSize(int width, int height, bool customSize);
+            bool setSize(int x, int y, int width, int height, bool customSize);
 
             void getAvailablePixelFormats();
 

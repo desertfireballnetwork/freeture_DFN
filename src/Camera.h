@@ -5,7 +5,9 @@
 *
 *   This file is part of:   freeture
 *
-*   Copyright:      (C) 2014-2015 Yoan Audureau -- FRIPON-GEOPS-UPSUD
+*   Copyright:      (C) 2014-2015 Yoan Audureau
+*                       2018 Chiara Marmo
+*                                    GEOPS-UPSUD
 *
 *   License:        GNU General Public License
 *
@@ -20,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      21/01/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    Camera.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    13/06/2014
+* \author  Yoan Audureau -- Chiara Marmo GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2018
 * \brief
 */
 
@@ -51,6 +53,8 @@ class Camera {
         bool                mExposureAvailable;
         bool                mGainAvailable;
         bool                mCamSizeToMax;
+        int                 mCamStartX;
+        int                 mCamStartY;
         int                 mCamSizeWidth;
         int                 mCamSizeHeight;
         InputDeviceType     mInputDeviceType;
@@ -249,7 +253,7 @@ class Camera {
         */
         virtual bool setFPS(double value) {return false;};
 
-        virtual bool setSize(int width, int height, bool customSize) {return false;};
+        virtual bool setSize(int startx, int starty, int width, int height, bool customSize) {return false;};
 
         /**
         * Set device's format.

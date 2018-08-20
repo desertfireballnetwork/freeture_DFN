@@ -8,7 +8,7 @@ dnl*
 dnl*	This file part of:	FreeTure
 dnl*
 dnl*	Copyright:		(C) 2014-2015 Yoan Audureau, Chiara Marmo
-dnl*                            FRIPON-GEOPS-UPSUD-CNRS
+dnl*                            GEOPS-UPSUD-CNRS
 dnl*
 dnl*	License:		GNU General Public License
 dnl*

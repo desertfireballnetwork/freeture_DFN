@@ -1,5 +1,6 @@
 .travis.yml
 *.o
+*~
 aclocal.m4
 autom4te.cache/
 compile
@@ -11,14 +12,16 @@ install-sh
 missing
 config.log
 INSTALL
+Makefile.in
 Makefile
 README
+config.h.in
 config.h
 config.status
-doc/Makefile
+*/Makefile.in
+*/Makefile
 doc/freeture.1
 src/.deps/
-src/Makefile
 stamp-h1
 src/freeture
 

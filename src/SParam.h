@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2016 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/10/2014
+*   Last modified:      20/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    SParam.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    03/06/2014
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    20/03/2018
 * \brief   FreeTure parameters
 */
 
@@ -144,6 +145,8 @@ struct cameraParam{
     int         ACQ_NIGHT_GAIN;
     int         ACQ_DAY_EXPOSURE;
     int         ACQ_DAY_GAIN;
+    int         ACQ_STARTX;
+    int         ACQ_STARTY;
     int         ACQ_HEIGHT;
     int         ACQ_WIDTH;
     int         EXPOSURE_CONTROL_FREQUENCY;

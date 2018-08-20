@@ -6,7 +6,7 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -27,7 +27,7 @@
 
 /**
 * \file    DetectionTemplate.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
 * \date    03/03/2015
 */
@@ -84,7 +84,6 @@ bool DetectionTemplate::runDetection(Frame &c) {
 
         Mat absdiffImg;
         cv::absdiff(currImg, mPrevFrame, absdiffImg);
-        //SaveImg::saveJPEG(Conversion::convertTo8UC1(absdiffImg), "/home/fripon/debug/absdiff/frame_" + Conversion::intToString(c.mFrameNumber));
 
         // ---------------------------------
         //  Dilatation absolute difference.
@@ -93,7 +92,6 @@ bool DetectionTemplate::runDetection(Frame &c) {
         int dilation_size = 2;
         Mat element = getStructuringElement(MORPH_RECT, Size(2*dilation_size + 1, 2*dilation_size+1), Point(dilation_size, dilation_size));
         cv::dilate(absdiffImg, absdiffImg, element);
-        //SaveImg::saveJPEG(Conversion::convertTo8UC1(absdiffImg), "/home/fripon/debug/dilate/frame_" + Conversion::intToString(c.mFrameNumber));
 
         // ----------------------------------
         //   Threshold absolute difference.
@@ -121,8 +119,6 @@ bool DetectionTemplate::runDetection(Frame &c) {
                     }
                 }
             }
-
-            //SaveImg::saveJPEG(absDiffBinaryMap, "/home/fripon/debug/thresh/frame_" + Conversion::intToString(c.mFrameNumber));
 
         }
 

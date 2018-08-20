@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/07/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
-* \file    Frame.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    19/06/2014
+* \file    Frame.h
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2018
 * \brief   Image container.
 */
 
@@ -60,6 +61,8 @@ class Frame {
         int                 mFrameRemaining;     // Define the number of remaining frames if the input source is a video or a set of single frames.
         double              mSaturatedValue;     // Max pixel value in the image.
         int                 mFps;                // Camera's fps.
+        int                 mStartX;
+        int                 mStartY;
         int                 mWidth;
         int                 mHeight;
 

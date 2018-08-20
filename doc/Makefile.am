@@ -6,8 +6,8 @@
 #*
 #*	This file part of:	freeture
 #*
-#*	Copyright:		(C) 2014 Yoan Audureau -- FRIPON-GEOPS-UPSUD
-#*
+#*	Copyright:		(C) 2014 Yoan Audureau -- GEOPS-UPSUD
+#*                                  2018 Chiara Marmo -- GEOPS-UPSUD
 #*	License:		GNU General Public License
 #*
 #*	FreeTure is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 #*	You should have received a copy of the GNU General Public License
 #*	along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 #*
-#*	Last modified:		23/05/2014
+#*	Last modified:		19/03/2018
 #*
 #*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
-dist_man_MANS = freeture.1 freeture.x
+dist_man_MANS = freeture.1

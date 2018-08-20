@@ -4,7 +4,9 @@
 *
 *   This file is part of:   freeture
 *
-*   Copyright:      (C) 2014-2016 Yoan Audureau -- FRIPON-GEOPS-UPSUD
+*   Copyright:      (C) 2014-2016 Yoan Audureau
+*                       2018 Chiara Marmo
+*                                    GEOPS-UPSUD
 *
 *   License:        GNU General Public License
 *
@@ -19,15 +21,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      21/01/2015
+*   Last modified:      19/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    CameraGigeAravis.h
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    21/01/2015
+* \author  Yoan Audureau -- Chiara Marmo GEOPS-UPSUD
+* \version 1.2
+* \date    19/03/2018
 * \brief   Use Aravis library to pilot GigE Cameras.
 *          https://wiki.gnome.org/action/show/Projects/Aravis?action=show&redirect=Aravis
 */
@@ -90,8 +92,10 @@
             ArvCamera       *camera;                // Camera to control.
             ArvPixelFormat  pixFormat;              // Image format.
             ArvStream       *stream;                // Object for video stream reception.
-            int             mWidth;                  // Camera region's width.
-            int             mHeight;                 // Camera region's height.
+            int             mStartX;                // Crop starting X.
+            int             mStartY;                // Crop starting Y.
+            int             mWidth;                 // Camera region's width.
+            int             mHeight;                // Camera region's height.
             double          fps;                    // Camera acquisition frequency.
             double          gainMin;                // Camera minimum gain.
             double          gainMax;                // Camera maximum gain.
@@ -142,7 +146,7 @@
 
             bool getPixelFormat(CamPixFmt &format);
 
-            bool getFrameSize(int &w, int &h);
+            bool getFrameSize(int &x, int &y, int &w, int &h);
 
             bool getFPS(double &value);
 
@@ -156,11 +160,13 @@
 
             bool setFPS(double fps);
 
+            bool setFrameSize(int startx, int starty, int width, int height, bool customSize);
+
             bool setPixelFormat(CamPixFmt depth);
 
             void saveGenicamXml(string p);
 
-            bool setSize(int width, int height, bool customSize);
+            bool setSize(int startx, int starty, int width, int height, bool customSize);
 
             void getAvailablePixelFormats();
 

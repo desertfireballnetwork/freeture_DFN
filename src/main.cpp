@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      02/12/2015
+*   Last modified:      20/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    main.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
-* \version 1.0
-* \date    02/03/2015
+* \author  Yoan Audureau -- Chiara Marmo -- GEOPS-UPSUD
+* \version 1.2
+* \date    20/03/2018
 */
 
 #include "config.h"
@@ -220,8 +221,11 @@ int main(int argc, const char ** argv){
     // Program options.
     po::options_description desc("FreeTure options");
     desc.add_options()
+      ("help,h",                                                                                        "Print FreeTure help.")
       ("mode,m",        po::value<int>(),                                                               "FreeTure modes :\n- MODE 1 : Check configuration file.\n- MODE 2 : Continuous acquisition.\n- MODE 3 : Meteor detection.\n- MODE 4 : Single acquisition.\n- MODE 5 : Clean logs.")
       ("time,t",        po::value<int>(),                                                               "Execution time (s) of meteor detection mode.")
+      ("startx",        po::value<int>(),                                                               "Crop starting x (from left to right): only for aravis cameras yet.")
+      ("starty",        po::value<int>(),                                                               "Crop starting y (from top to bottom): only for aravis cameras yet.")
       ("width",         po::value<int>(),                                                               "Image width.")
       ("height",        po::value<int>(),                                                               "Image height.")
       ("cfg,c",         po::value<string>()->default_value(string(CFG_PATH) + "configuration.cfg"),     "Configuration file's path.")
@@ -250,6 +254,8 @@ int main(int argc, const char ** argv){
         int         acqFormat       = 0;
         int         acqWidth        = 0;
         int         acqHeight       = 0;
+        int         startx          = 0;
+        int         starty          = 0;
         int         gain            = 0;
         double      exp             = 0;
         string      version         = string(VERSION);
@@ -259,6 +265,8 @@ int main(int argc, const char ** argv){
 
         po::store(po::parse_command_line(argc, argv, desc), vm);
 
+
+
         ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ///%%%%%%%%%%%%%%%%%%%%%%% PRINT FREETURE VERSION %%%%%%%%%%%%%%%%%%%%%%%%
         ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -266,6 +274,14 @@ int main(int argc, const char ** argv){
         if(vm.count("version")){
 
             std::cout << "Current version : " << version << endl;
+
+        ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        ///%%%%%%%%%%%%%%%%%%%%%%% PRINT FREETURE HELP %%%%%%%%%%%%%%%%%%%%%%%%
+        ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        }else if(vm.count("help")){
+
+            std::cout << desc;
 
         ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ///%%%%%%%%%%%%%%%%%%%%%%% LIST CONNECTED DEVICES %%%%%%%%%%%%%%%%%%%%%%%%
@@ -344,6 +360,10 @@ int main(int argc, const char ** argv){
                         if(vm.count("format")) acqFormat = vm["format"].as<int>();
                         // Cam id.
                         if(vm.count("id")) devID = vm["id"].as<int>();
+                        // Crop start x
+                        if(vm.count("startx")) startx = vm["startx"].as<int>();
+                        // Crop start y
+                        if(vm.count("starty")) starty = vm["starty"].as<int>();
                         // Cam width size
                         if(vm.count("width")) acqWidth = vm["width"].as<int>();
                         // Cam height size
@@ -374,7 +394,7 @@ int main(int argc, const char ** argv){
                         }
 
                         if(acqWidth != 0 && acqHeight != 0)
-                            device->setCameraSize(acqWidth, acqHeight);
+                            device->setCameraSize(startx, starty, acqWidth, acqHeight);
                         else
                             device->setCameraSize();
 
@@ -737,6 +757,10 @@ int main(int argc, const char ** argv){
                         if(vm.count("savepath")) savePath = vm["savepath"].as<string>();
                         // Acquisition pixel format.
                         if(vm.count("format")) acqFormat = vm["format"].as<int>();
+                        // Crop start x
+                        if(vm.count("startx")) startx = vm["startx"].as<int>();
+                        // Crop start y
+                        if(vm.count("starty")) starty = vm["starty"].as<int>();
                         // Cam width size.
                         if(vm.count("width")) acqWidth = vm["width"].as<int>();
                         // Cam height size
@@ -761,6 +785,7 @@ int main(int argc, const char ** argv){
                         cout << "GAIN      : " << gain << endl;
                         cout << "EXPOSURE  : " << exp << endl;
                         if(acqWidth > 0 && acqHeight > 0) cout << "SIZE      : " << acqWidth << "x" << acqHeight << endl;
+                        if(startx > 0 || starty > 0) cout << "START X,Y : " << startx << "," << starty << endl;
                         cout << "SAVE PATH : " << savePath << endl;
                         cout << "FILENAME  : " << fileName << endl;
                         cout << "------------------------------------------------" << endl << endl;
@@ -814,6 +839,8 @@ int main(int argc, const char ** argv){
                         frame.mExposure = exp;
                         frame.mGain = gain;
                         frame.mFormat = static_cast<CamPixFmt>(acqFormat);
+                        frame.mStartX = startx;
+                        frame.mStartY = starty;
                         frame.mHeight = acqHeight;
                         frame.mWidth = acqWidth;
 
@@ -1029,23 +1056,3 @@ int main(int argc, const char ** argv){
 
 }
 
-/*
-case 6 :
-
-    {
-    vector<string> mMailRecipients, mailAttachments;
-
-    mMailRecipients.push_back("fripon@ceres.geol.u-psud.fr");
-    SMTPClient::sendMail(   "10.8.0.1",
-                            "",
-                            "",
-                            "freeture@sendmail.com",
-                            mMailRecipients,
-                            "ORSAY-20151116T191303",
-                            "message",
-                            mailAttachments,
-                            NO_SECURITY);
-    }
-
-    break;
-*/

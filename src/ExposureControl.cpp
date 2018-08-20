@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2014-2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/07/2015
+*   Last modified:      12/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    ExposureControl.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
-* \date    03/06/2014
+* \date    12/03/2018
 * \brief   Auto Exposure time adjustment.
 */
 
@@ -553,7 +554,7 @@ bool ExposureControl::controlExposureTime(Device *camera, Mat image, TimeDate::D
 
                                 if(checkDataLocation(imageDate)) {
 
-                                    std::ofstream infFile;
+                                    boost::filesystem::ofstream infFile;
                                     string infFilePath = finalDataLocation + "ECInfos.txt";
                                     infFile.open(infFilePath.c_str(),std::ios_base::app);
 

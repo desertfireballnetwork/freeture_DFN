@@ -6,7 +6,7 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -27,7 +27,7 @@
 
 /**
 * \file    Mask.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
 * \date    26/11/2014
 */
@@ -46,7 +46,7 @@ mUpdateInterval(timeInterval), mUpdateMask(updateMask) {
     if(customMask) {
 
         mOriginalMask = imread(customMaskPath, CV_LOAD_IMAGE_GRAYSCALE);
-        SaveImg::saveJPEG(mOriginalMask, "/home/fripon/mOriginalMask");
+        //SaveImg::saveJPEG(mOriginalMask, "/home/mOriginalMask");
         if(!mOriginalMask.data)
             throw "Fail to load the mask from its path.";
 

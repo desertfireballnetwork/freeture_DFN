@@ -6,7 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
-*                               FRIPON-GEOPS-UPSUD-CNRS
+*                       2014-2018 Chiara Marmo
+*                               GEOPS-UPSUD-CNRS
 *
 *   License:        GNU General Public License
 *
@@ -21,15 +22,15 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/07/2015
+*   Last modified:      12/03/2018
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /**
 * \file    DetectionTemporal.cpp
-* \author  Yoan Audureau -- FRIPON-GEOPS-UPSUD
+* \author  Yoan Audureau -- GEOPS-UPSUD
 * \version 1.0
-* \date    03/06/2014
+* \date    12/03/2018
 * \brief   Detection method by temporal movement.
 */
 
@@ -217,7 +218,7 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
     // Save positions.
     if(mdtp.temporal.DET_SAVE_POS) {
 
-        std::ofstream posFile;
+        boost::filesystem::ofstream posFile;
         string posFilePath = p + "positions.txt";
         posFile.open(posFilePath.c_str());
 
@@ -469,10 +470,10 @@ bool DetectionTemporal::runDetection(Frame &c) {
 
             int leNumber = listLocalEvents.size();
 
-            // Liste d'iterators sur la liste des localEvent contenant soit un cluster positif ou négatif.
+            // Iterator list on localEvent list : localEvent contains a positive or negative cluster.
             vector<vector<LocalEvent>::iterator > itLePos, itLeNeg;
 
-            // Association d'un local event à cluster positif avec un local event à cluster negatif.
+            // Association of a positive cluster localEvent with a negative cluster localEvent.
             vector<pair<vector<LocalEvent>::iterator, vector<LocalEvent>::iterator> > itPair;
 
             itLE = listLocalEvents.begin();
