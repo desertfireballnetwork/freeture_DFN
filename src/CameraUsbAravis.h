@@ -91,6 +91,8 @@
             ArvCamera       *camera;                // Camera to control.
             ArvPixelFormat  pixFormat;              // Image format.
             ArvStream       *stream;                // Object for video stream reception.
+            int             mStartX;                // Crop starting X.
+            int             mStartY;                // Crop starting Y.
             int             mWidth;                  // Camera region's width.
             int             mHeight;                 // Camera region's height.
             double          fps;                    // Camera acquisition frequency.
@@ -143,6 +145,7 @@
             bool getPixelFormat(CamPixFmt &format);
 
             bool getFrameSize(int &w, int &h);
+            bool getFrameSize(int &x, int &y, int &w, int &h);
 
             bool getFPS(double &value);
 
@@ -160,7 +163,10 @@
 
             void saveGenicamXml(string p);
 
-            bool setSize(int width, int height, bool customSize);
+            //bool setSize(int width, int height, bool customSize);
+            bool setSize(int startx, int starty, int width, int height, bool customSize);                        
+
+            bool setFrameSize(int startx, int starty, int width, int height, bool customSize);
 
             void getAvailablePixelFormats();
 
