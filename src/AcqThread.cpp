@@ -781,6 +781,8 @@ void AcqThread::runImageCapture(int imgNumber, int imgExposure, int imgGain, Cam
         frame.mFormat = imgFormat;
 
         if(mcp.ACQ_RES_CUSTOM_SIZE) {
+            frame.mStartX = mcp.ACQ_STARTX;
+            frame.mStartY = mcp.ACQ_STARTY;
             frame.mHeight = mcp.ACQ_HEIGHT;
             frame.mWidth = mcp.ACQ_WIDTH;
         }
