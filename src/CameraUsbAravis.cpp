@@ -219,6 +219,7 @@
 
       guint bandwidth;
       gboolean isUV, isGV, isCam;
+      const char * firmwareVer;
 
       // MCu: need to get ArvDevice to be get more complete access to camera features
       ArvDevice *ad;
@@ -236,6 +237,9 @@
       bandwidth = arv_device_get_integer_feature_value (ad, "DeviceLinkThroughputLimit");
       BOOST_LOG_SEV(logger, notification) << "arv device Camera USB bandwidth limit : " << bandwidth;
       //      std::cout << "arv device Camera USB bandwidth limit : " << bandwidth;
+
+      firmwareVer = arv_device_get_string_feature_value (ad, "DeviceFirmwareVersion");
+      BOOST_LOG_SEV(logger, notification) << "arv device Camera Firmware Version : " << firmwareVer;
       
 #if FALSE
       isUV = arv_camera_is_uv_device( camera );
