@@ -1,0 +1,89 @@
+Prerequisites
+=============
+
+FreeTure requires the following packages:
+
+To build aravis/freeture in Debian 9 (DFN EXT)
+----------------------------------------------
+apt-get install git autoconf intltool python-gobject-dev gobject-introspection gtk-doc-tools libxml2-dev libcfitsio-dev libboost-dev libopencv-dev python-opencv v4l-utils libglib2.0-dev libudev1 libssl-dev libusb-dev libaudit-dev libusb-dev libudev-dev libv4l-dev libgstreamer-plugins-base1.0-dev  libnotify-dev  gobject-introspection gtk-doc-tools gobject-introspection gtk-doc-tools gtk-3.0
+
+Note: To build freeture in Ubuntu 16.04, following extra packages are needed (probbaly not included in libboost-dev)
+apt install libboost-thread-dev libboost-system-dev libboost-log-dev libboost-filesystem-dev libboost-date-time-dev libboost-chrono-dev libboost-iostreams-dev
+
+Aravis - build from git
+------------------------
+from version 0.5: Aravis support USB3
+Here is how to build V 0.6
+
+NOTE: to build only aravis lib, not viewer ar gstreamer plugin, only these packages are needed:
+sudo apt install git autoconf intltool gtk-doc-tools v4l-utils libudev1 libaudit
+
+git clone https://github.com/AravisProject/aravis
+cd aravis/
+./autogen.sh
+
+usefull options for ./configure 
+--enable-usb --enable-packet-socket --enable-viewer --enable-gst-plugin
+
+...
+Configuration:
+
+  Compiler:                     gcc
+  Compiler flags:               -pthread -I/usr/include/libxml2 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/libusb-1.0
+  Linker flags:                 -lm -lgio-2.0 -lgobject-2.0 -lxml2 -lgthread-2.0 -pthread -lglib-2.0 -lz -lusb-1.0 -laudit
+
+  Build USB support:            yes
+  Build packet socket support:  yes
+  Build viewer:                 yes
+  Build gstreamer plugin:       yes
+  Build gstreamer-0.10 plugin:  no
+  Build with fast heartbeat:    no
+  Build with address sanatizer: no
+
+make
+sudo make install
+... installs to /usr/local/lib:
+ls /usr/local/lib/libaravis*
+/usr/local/lib/libaravis-0.6.a
+/usr/local/lib/libaravis-0.6.la
+/usr/local/lib/libaravis-0.6.so -> libaravis-0.6.so.0.0.0
+/usr/local/lib/libaravis-0.6.so.0 -> libaravis-0.6.so.0.0.0
+/usr/local/lib/libaravis-0.6.so.0.0.0
+
+arv-test-0.6
+Testing device 'Blackfly BFLY-U3-23S6M' from 'Point Grey Research'
+Genicam: SUCCESS 
+Sensor size read: 1920 1200
+dfn-operator@DFNEXT000:~/src/aravis/src$ arv-tool
+-bash: arv-tool: command not found
+dfn-operator@DFNEXT000:~/src/aravis/src$ arv-tool-0.6 
+PointGrey-00F908E3 (USB3)
+
+Simple install procedure
+========================
+
+git clone https://github.com/desertfireballnetwork/freeture_DFN
+./autogen.sh
+./configure
+make
+
+WARNING: make install overwrites the default config file /usr/local/share/freeture/configuration.cfg with the one from git repo!
+
+sudo make install
+
+NOTE: freeture binary is installed to /usr/local/bin unstripped;
+      strip reduces the file size from 25MB to 1.2MB
+
+The Details
+===========
+
+Complete information about installing FreeTure and related libraries can be found 
+in the file:
+
+ docs/reference/...
+
+Or online at:
+
+ http://
+
+
