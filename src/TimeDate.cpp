@@ -401,11 +401,37 @@ string TimeDate::getYYYYMMDDThhmmss(Date date) {
 
 }
 
-string TimeDate::getYYYYMMDD(Date date) {
+// output : YYYY-MM-DD
+string TimeDate::getYYYY-MM-DD(Date date) {
 
-    string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year) +
-                    Conversion::numbering(2,date.month) + Conversion::intToString(date.month) +
+    string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year) + "-" +
+                    Conversion::numbering(2,date.month) + Conversion::intToString(date.month) + "-" +
                     Conversion::numbering(2,date.day) + Conversion::intToString(date.day);
+
+    return res;
+
+}
+
+// output : YYYY
+string TimeDate::getYYYY(Date date) {
+
+    string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year);
+
+    return res;
+}
+
+// output : MM
+string TimeDate::getMM(Date date) {
+
+    string res =    Conversion::numbering(2,date.month) + Conversion::intToString(date.month);
+
+    return res;
+}
+
+// output : DD
+string TimeDate::getDD(Date date) {
+
+    string res =    Conversion::numbering(2,date.day) + Conversion::intToString(date.day);
 
     return res;
 }

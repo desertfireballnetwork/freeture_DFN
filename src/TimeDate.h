@@ -43,6 +43,7 @@
 #include <boost/date_time/posix_time/posix_time_io.hpp>
 #include <list>
 #include "Conversion.h"
+#include "TimeDate.h"
 
 using namespace std;
 using namespace boost::posix_time;
@@ -171,6 +172,7 @@ class TimeDate {
         * @return YYYYMMJJTHHMMSS.
         */
         static string getYYYYMMDDThhmmss(string date);
+        
 
         /**
         * Get YYYYMMJJTHHMMSS date.
@@ -179,6 +181,14 @@ class TimeDate {
         * @return YYYYMMJJTHHMMSS.
         */
         static string getYYYYMMDDThhmmss(Date date);
+
+        static string getYYYY-MM-DD(Date date);
+
+        static string getYYYY(Date date);
+
+        static string getMM(Date date);
+
+        static string getDD(Date date);
 
         static Date splitIsoExtendedDate(string date);
 

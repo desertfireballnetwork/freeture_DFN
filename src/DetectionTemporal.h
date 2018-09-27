@@ -69,6 +69,7 @@
 #include "Detection.h"
 #include "EParser.h"
 #include "SaveImg.h"
+#include "DataPaths.h"
 #include <vector>
 #include <utility>
 #include <iterator>

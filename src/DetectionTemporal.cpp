@@ -219,12 +219,17 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
     if(mdtp.temporal.DET_SAVE_POS) {
 
         boost::filesystem::ofstream posFile;
+        //string posFilePath = p + "positions.txt";
         string posFilePath = p + "positions.txt";
         posFile.open(posFilePath.c_str());
 
         // Number of the first frame associated to the event.
         int numFirstFrame = -1;
 
+        // write csv header
+        string line = "frame_id,x_fits,y_fits,datetime\n";
+        posFile << line;
+        
         vector<LocalEvent>::iterator itLe;
         for(itLe = (*mGeToSave).LEList.begin(); itLe!=(*mGeToSave).LEList.end(); ++itLe) {
 

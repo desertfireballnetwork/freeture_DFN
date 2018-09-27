@@ -368,7 +368,8 @@ bool DetThread::buildEventDataDirectory(){
     path p(mdp.DATA_PATH);
 
     // Create data directory for the current day.
-    string fp = mdp.DATA_PATH + mStationName + "_" + YYYYMMDD +"/";
+    //string fp = mdp.DATA_PATH + mStationName + "_" + YYYYMMDD +"/";
+    string fp = DataPaths::getSessionPath(mdp.DATA_PATH, mEventDate);
     path p0(fp);
 
     // Events directory.
@@ -376,7 +377,8 @@ bool DetThread::buildEventDataDirectory(){
     path p1(fp + fp1);
 
     // Current event directory with the format : STATION_AAAAMMDDThhmmss_UT
-    string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate) + "_UT/";
+    //string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate) + "_UT/";
+    string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate);
     path p2(fp + fp1 + fp2);
 
     // Final path used by an other function to save event data.
@@ -541,6 +543,8 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
     // Count number of digit on nbTotalFramesToSave.
     int n = nbTotalFramesToSave;
     int nbDigitOnNbTotalFramesToSave = 0;
+    
+    pDetMthdxxxxxxx
 
     while(n!=0){
         n/=10;
