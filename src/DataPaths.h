@@ -38,8 +38,9 @@
 
 #include <string>
 #include <iostream>
-#include <unistd.h>
+//#include <unistd.h>
 #include <list>
+#include <boost/asio.hpp>
 
 #include "TimeDate.h"
 #include "SParam.h"
