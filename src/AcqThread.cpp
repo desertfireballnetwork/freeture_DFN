@@ -617,7 +617,7 @@ void AcqThread::selectNextAcquisitionSchedule(TimeDate::Date date){
 
 }
 
-bool AcqThread::buildAcquisitionDirectory(Date date){
+bool AcqThread::buildAcquisitionDirectory(TimeDate::Date date){
 
     namespace fs = boost::filesystem;
     //string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";

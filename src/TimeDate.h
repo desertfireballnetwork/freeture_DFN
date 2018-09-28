@@ -182,7 +182,7 @@ class TimeDate {
         */
         static string getYYYYMMDDThhmmss(Date date);
 
-        static string getYYYY-MM-DD(Date date);
+        static string getYYYY_MM_DD(Date date);
 
         static string getYYYY(Date date);
 

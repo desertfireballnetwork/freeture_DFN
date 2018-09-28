@@ -402,7 +402,7 @@ string TimeDate::getYYYYMMDDThhmmss(Date date) {
 }
 
 // output : YYYY-MM-DD
-string TimeDate::getYYYY-MM-DD(Date date) {
+string TimeDate::getYYYY_MM_DD(Date date) {
 
     string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year) + "-" +
                     Conversion::numbering(2,date.month) + Conversion::intToString(date.month) + "-" +
