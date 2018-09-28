@@ -382,7 +382,7 @@ bool DetThread::buildEventDataDirectory(){
     // Current event directory with the format : STATION_AAAAMMDDThhmmss_UT
     //string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate) + "_UT/";
     //string fp2 = mStationName + "_" + "detection" + "_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
-    string fp2 = "detection" + "_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
+    string fp2 = "detection_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
     path p2(fp + fp1 + fp2);
 
     // Final path used by an other function to save event data.

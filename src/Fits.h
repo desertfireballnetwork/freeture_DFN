@@ -67,6 +67,7 @@ class Fits {
         double  kSITELONG;
         double  kSITELAT;
         double  kSITEELEV;
+        string  kGPS_LOCK;
         double  kXPIXEL;
         double  kYPIXEL;
         int     kGAINDB;
@@ -119,6 +120,7 @@ class Fits {
         string  cSITELONG;
         string  cSITELAT;
         string  cSITEELEV;
+        string  cGPS_LOCK;
         string  cXPIXEL;
         string  cYPIXEL;
         string  cGAINDB;
