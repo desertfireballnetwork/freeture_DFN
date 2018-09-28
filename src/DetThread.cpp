@@ -545,8 +545,6 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
     // Count number of digit on nbTotalFramesToSave.
     int n = nbTotalFramesToSave;
     int nbDigitOnNbTotalFramesToSave = 0;
-    
-    pDetMthdxxxxxxx
 
     while(n!=0){
         n/=10;
