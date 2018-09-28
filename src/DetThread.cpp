@@ -312,7 +312,7 @@ void DetThread::operator ()(){
             // Create Report for videos and frames in input.
             boost::filesystem::ofstream report;
             //string reportPath = mdp.DATA_PATH + "detections_report.txt";
-            string reportPath = DataPaths::getSessionPath(mdp.DATA_PATH, boost::posix_time::microsec_clock::universal_time()) + "detections_report.txt";
+            string reportPath = DataPaths::getSessionPath(mdp.DATA_PATH, TimeDate::splitIsoExtendedDate(to_iso_extended_string(boost::posix_time::microsec_clock::universal_time()))) + "detections_report.txt";
             
             report.open(reportPath.c_str());
 
