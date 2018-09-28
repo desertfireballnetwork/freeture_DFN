@@ -227,7 +227,7 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
         int numFirstFrame = -1;
 
         // write csv header
-        string line = "frame_id,x_fits,y_fits,datetime\n";
+        string line = "frame_id,datetime,x_fits,y_fits\n";
         posFile << line;
         
         vector<LocalEvent>::iterator itLe;
@@ -248,7 +248,7 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
 
             // NUM_FRAME    POSITIONX     POSITIONY (inversed)
             //string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "               (" + Conversion::intToString(pos.x)  + ";" + Conversion::intToString(positionY) + ")                 " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
-            string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "," + Conversion::intToString(pos.x)  + "," + Conversion::intToString(positionY) + ",              " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
+            string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "," + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate) + "," + Conversion::intToString(pos.x)  + "," + Conversion::intToString(positionY) + "\n";
             posFile << line;
 
         }
