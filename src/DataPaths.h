@@ -41,6 +41,7 @@
 #include <unistd.h>
 #include <list>
 
+#include "TimeDate.h"
 #include "SParam.h"
 
 using namespace std;
@@ -58,7 +59,7 @@ class DataPaths {
         * @param date Vector of date : YYYY, MM, DD, hh, mm, ss.
         * @return path string
         */
-        static string getSessionPath(string data_path, Date date);
+        static string getSessionPath(string data_path, TimeDate::Date date);
 
 
 };
