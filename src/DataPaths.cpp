@@ -37,7 +37,7 @@
 
 
 
-string DataPaths::getSessionPath(string data_path, Date date) {
+string DataPaths::getSessionPath(string data_path, TimeDate::Date date) {
     
     char hostname [1024] = "";
     const int result = gethostname(hostname, sizeof hostname);
