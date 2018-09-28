@@ -51,6 +51,7 @@
 #include <boost/circular_buffer.hpp>
 #include <assert.h>
 #include "SParam.h"
+#include "DataPaths.h"
 
 using namespace boost::filesystem;
 using namespace std;

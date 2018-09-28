@@ -220,7 +220,7 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
 
         boost::filesystem::ofstream posFile;
         //string posFilePath = p + "positions.txt";
-        string posFilePath = p + "positions.txt";
+        string posFilePath = p + "positions.csv";
         posFile.open(posFilePath.c_str());
 
         // Number of the first frame associated to the event.
@@ -247,7 +247,8 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
             }
 
             // NUM_FRAME    POSITIONX     POSITIONY (inversed)
-            string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "               (" + Conversion::intToString(pos.x)  + ";" + Conversion::intToString(positionY) + ")                 " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
+            //string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "               (" + Conversion::intToString(pos.x)  + ";" + Conversion::intToString(positionY) + ")                 " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
+            string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "," + Conversion::intToString(pos.x)  + "," + Conversion::intToString(positionY) + ",              " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
             posFile << line;
 
         }

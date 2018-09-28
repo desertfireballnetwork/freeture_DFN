@@ -617,10 +617,11 @@ void AcqThread::selectNextAcquisitionSchedule(TimeDate::Date date){
 
 }
 
-bool AcqThread::buildAcquisitionDirectory(string YYYYMMDD){
+bool AcqThread::buildAcquisitionDirectory(Date date){
 
     namespace fs = boost::filesystem;
-    string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    //string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    string root = DataPaths::getSessionPath(mdp.DATA_PATH, date);
 
     string subDir = "captures/";
     string finalPath = root + subDir;
@@ -825,9 +826,9 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
 
     if(img.mImg.data) {
 
-        string  YYYYMMDD = TimeDate::getYYYYMMDD(img.mDate);
+        //string  YYYYMMDD = TimeDate::getYYYYMMDD(img.mDate);
 
-        if(buildAcquisitionDirectory(YYYYMMDD)) {
+        if(buildAcquisitionDirectory(img.mDate)) {
 
             string fileName = imgPrefix + "_" + TimeDate::getYYYYMMDDThhmmss(img.mDate) + "_UT-" + Conversion::intToString(imgNum);
 

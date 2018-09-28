@@ -57,6 +57,7 @@
 #include <boost/filesystem.hpp>
 #include "ESmtpSecurity.h"
 #include "SParam.h"
+#include "DataPaths.h"
 
 using namespace boost::filesystem;
 using namespace cv;

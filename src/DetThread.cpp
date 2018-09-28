@@ -311,7 +311,9 @@ void DetThread::operator ()(){
 
             // Create Report for videos and frames in input.
             boost::filesystem::ofstream report;
-            string reportPath = mdp.DATA_PATH + "detections_report.txt";
+            //string reportPath = mdp.DATA_PATH + "detections_report.txt";
+            string reportPath = DataPaths::getSessionPath(mdp.DATA_PATH, boost::posix_time::microsec_clock::universal_time()) + "detections_report.txt";
+            
             report.open(reportPath.c_str());
 
             cout << "--------------- DETECTION REPORT --------------" << endl;
@@ -362,7 +364,7 @@ bool DetThread::buildEventDataDirectory(){
     namespace fs = boost::filesystem;
 
     // eventDate is the date of the first frame attached to the event.
-    string YYYYMMDD = TimeDate::getYYYYMMDD(mEventDate);
+    //string YYYYMMDD = TimeDate::getYYYYMMDD(mEventDate);
 
     // Data location.
     path p(mdp.DATA_PATH);

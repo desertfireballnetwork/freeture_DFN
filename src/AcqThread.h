@@ -51,6 +51,7 @@
 #include "Ephemeris.h"
 #include "Fits2D.h"
 #include "SParam.h"
+#include "DataPaths.h"
 
 using namespace cv;
 using namespace std;
@@ -157,7 +158,7 @@ class AcqThread {
         bool computeSunTimes();
 
         // Build the directory where the data will be saved.
-        bool buildAcquisitionDirectory(string YYYYMMDD);
+        bool buildAcquisitionDirectory(TimeDate::Date date);
 
         // Analyse the scheduled acquisition list to find the next one according to the current time.
         void selectNextAcquisitionSchedule(TimeDate::Date date);
