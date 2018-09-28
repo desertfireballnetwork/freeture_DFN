@@ -387,7 +387,7 @@ string TimeDate::getYYYYMMDDfromDateString(string date){
 
 }
 
-// output : YYYYMMJJTHHMMSS
+// output : YYYYMMDDTHHMMSS
 string TimeDate::getYYYYMMDDThhmmss(Date date) {
 
     string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year) +
@@ -399,6 +399,16 @@ string TimeDate::getYYYYMMDDThhmmss(Date date) {
 
     return res;
 
+}
+
+// output : YYYYMMDD
+string TimeDate::getYYYYMMDD(Date date) {
+
+    string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year) +
+                    Conversion::numbering(2,date.month) + Conversion::intToString(date.month) +
+                    Conversion::numbering(2,date.day) + Conversion::intToString(date.day);
+
+    return res;
 }
 
 // output : YYYY-MM-DD
