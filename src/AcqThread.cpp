@@ -623,7 +623,8 @@ bool AcqThread::buildAcquisitionDirectory(TimeDate::Date date){
     //string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
     string root = DataPaths::getSessionPath(mdp.DATA_PATH, date);
 
-    string subDir = "captures/";
+    //string subDir = "captures/";
+    string subDir = "";
     string finalPath = root + subDir;
 
     mOutputDataPath = finalPath;
@@ -926,7 +927,7 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
                                     }
 
                                     // Create FITS image with BITPIX = SHORT_IMG (16-bits signed integers), pixel with TSHORT (signed short)
-                                    if(newFits.writeFits(newMat, S16, fileName))
+                                    if(newFits.writeFits(newMat, S16, fileName, "", FITS_SUFFIX))
                                         cout << ">> Fits saved in : " << mOutputDataPath << fileName << endl;
 
                                 }
@@ -937,7 +938,7 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
 
                                 {
 
-                                   if(newFits.writeFits(img.mImg, UC8, fileName))
+                                   if(newFits.writeFits(img.mImg, UC8, fileName, "", FITS_SUFFIX))
                                         cout << ">> Fits saved in : " << mOutputDataPath << fileName << endl;
 
                                 }

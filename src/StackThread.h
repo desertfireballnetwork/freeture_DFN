@@ -61,6 +61,8 @@ using namespace boost::posix_time;
 class StackThread {
 
     private :
+        
+        const string FITS_SUFFIX = "stack";
 
         static boost::log::sources::severity_logger< LogSeverityLevel > logger;
 

@@ -422,6 +422,21 @@ string TimeDate::getYYYY_MM_DD(Date date) {
 
 }
 
+// output : YYYY-MM-DD_HHMMSS
+string TimeDate::getYYYY_MM_DD_hhmmss(Date date) {
+
+    string res =    Conversion::numbering(4,date.year) + Conversion::intToString(date.year) + "-" +
+                    Conversion::numbering(2,date.month) + Conversion::intToString(date.month) + "-" +
+                    Conversion::numbering(2,date.day) + Conversion::intToString(date.day) + "_" +
+                    Conversion::numbering(2,date.hours) + Conversion::intToString(date.hours) +
+                    Conversion::numbering(2,date.minutes) + Conversion::intToString(date.minutes) +
+                    Conversion::numbering(2,(int)date.seconds) + Conversion::intToString(date.seconds) ;
+
+    return res;
+
+}
+
+
 // output : YYYY
 string TimeDate::getYYYY(Date date) {
 
@@ -444,6 +459,12 @@ string TimeDate::getDD(Date date) {
     string res =    Conversion::numbering(2,date.day) + Conversion::intToString(date.day);
 
     return res;
+}
+
+string TimeDate::getYYYY_MM_DD_hhmmss(string date){
+    Date dateobj = TimeDate::splitIsoExtendedDate(date);
+    return TimeDate::getYYYY_MM_DD_hhmmss(Date dateobj);
+    
 }
 
 string TimeDate::getYYYYMMDDThhmmss(string date){

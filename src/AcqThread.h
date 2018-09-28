@@ -59,6 +59,8 @@ using namespace std;
 class AcqThread {
 
     private :
+        
+        const string FITS_SUFFIX = "capture";
 
         static boost::log::sources::severity_logger< LogSeverityLevel > logger;
 

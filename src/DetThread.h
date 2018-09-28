@@ -67,6 +67,8 @@ using namespace boost::posix_time;
 class DetThread {
 
     private :
+        
+        const string FITS_SUFFIX = "event";
 
         static boost::log::sources::severity_logger< LogSeverityLevel > logger;
 

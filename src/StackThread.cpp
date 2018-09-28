@@ -119,8 +119,12 @@ bool StackThread::buildStackDataDirectory(TimeDate::Date date){
     //string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
     string root = DataPaths::getSessionPath(mdp.DATA_PATH, date);
     
-    string subDir = "stacks/";
+    
+    //string subDir = "stacks/";
+    // stop making sub-directories
+    string subDir = "";
     string finalPath = root + subDir;
+    
     completeDataPath = finalPath;
 
     if(YYYYMMDD == "00000000")

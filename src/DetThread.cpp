@@ -375,12 +375,14 @@ bool DetThread::buildEventDataDirectory(){
     path p0(fp);
 
     // Events directory.
-    string fp1 = "events/";
+    //string fp1 = "events/";
+    string fp1 = "";
     path p1(fp + fp1);
 
     // Current event directory with the format : STATION_AAAAMMDDThhmmss_UT
     //string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate) + "_UT/";
-    string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate);
+    //string fp2 = mStationName + "_" + "detection" + "_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
+    string fp2 = "detection" + "_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
     path p2(fp + fp1 + fp2);
 
     // Final path used by an other function to save event data.
@@ -680,14 +682,14 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
 
                     case MONO12 :
                         {
-                            newFits.writeFits((*it).mImg, S16, fits2DName, mdp.FITS_COMPRESSION_METHOD);
+                            newFits.writeFits((*it).mImg, S16, fits2DName, mdp.FITS_COMPRESSION_METHOD, "");
                         }
                         break;
 
                     default :
 
                         {
-                            newFits.writeFits((*it).mImg, UC8, fits2DName, mdp.FITS_COMPRESSION_METHOD);
+                            newFits.writeFits((*it).mImg, UC8, fits2DName, mdp.FITS_COMPRESSION_METHOD, "");
                         }
 
                 }

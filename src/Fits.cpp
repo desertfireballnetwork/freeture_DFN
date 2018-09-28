@@ -56,6 +56,7 @@ Fits::Fits() {
     kSITELONG   = 0.0;
     kSITELAT    = 0.0;
     kSITEELEV   = 0.0;
+    kGPS_LOCK   = "N";
     kXPIXEL     = 0.0;
     kYPIXEL     = 0.0;
     kGAINDB     = 0;
@@ -105,7 +106,7 @@ Fits::Fits() {
     cAPERTURE   = "";
     cSITELONG   = "geodetic WGS84 longitude (DD)";
     cSITELAT    = "geodetic WGS84 latitude (DD)";
-    cSITEELEV   = "geodetic WGS84 elevation (m)";
+    cSITEELEV   = "geodetic WGS84 elevation (m A.S.L.)";
     cXPIXEL     = "";
     cYPIXEL     = "";
     cGAINDB     = "detector gain";
