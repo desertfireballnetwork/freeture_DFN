@@ -118,6 +118,7 @@ CfgParam::CfgParam(string cfgFilePath) {
     param.station.SITEELEV = 0.0;
     param.station.SITELAT = 0.0;
     param.station.SITELONG = 0.0;
+    param.station.GPS_LOCK = "N";
 
     // Load parameters.
 
@@ -1585,6 +1586,11 @@ void CfgParam::loadStationParam() {
     if(!cfg.Get("SITEELEV", param.station.SITEELEV)) {
         e = true;
         param.station.errormsg.push_back("- SITEELEV : Fail to load value.");
+    }
+
+    if(!cfg.Get("GPS_LOCK", param.station.GPS_LOCK)) {
+        e = true;
+        param.station.errormsg.push_back("- GPS_LOCK : Fail to load value.");
     }
 
     if(!e) param.station.status = true;

@@ -264,6 +264,7 @@ struct stackParam{
     double SITELONG;
     double SITELAT;
     double SITEELEV;
+    string GPS_LOCK;
     bool status;
     vector<string> errormsg;
 };
