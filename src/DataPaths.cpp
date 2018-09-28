@@ -53,17 +53,3 @@ string DataPaths::getSessionPath(string data_path, TimeDate::Date date) {
 
 
 
-string DataPaths::basenameData(TimeDate::Date date) {
-    
-        
-    string cam_hostname = boost::asio::ip::host_name();
-    
-    string fp = data_path + cam_hostname + "/" + TimeDate::getYYYY(date)  + "/" + TimeDate::getMM(date)  + "/" + TimeDate::getYYYY_MM_DD(date) + "_" + cam_hostname + "_" + "allskyvideo" + "/";
-    
-    // /data0/DFNEXT009/2018/09/2018-09-25_DFNEXT009_allskyvideo/
-    
-    return fp;
-    
-    
-}
-

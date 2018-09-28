@@ -463,7 +463,7 @@ string TimeDate::getDD(Date date) {
 
 string TimeDate::getYYYY_MM_DD_hhmmss(string date){
     Date dateobj = TimeDate::splitIsoExtendedDate(date);
-    return TimeDate::getYYYY_MM_DD_hhmmss(Date dateobj);
+    return TimeDate::getYYYY_MM_DD_hhmmss(dateobj);
     
 }
 

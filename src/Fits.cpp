@@ -107,7 +107,7 @@ Fits::Fits() {
     cSITELONG   = "geodetic WGS84 longitude (DD)";
     cSITELAT    = "geodetic WGS84 latitude (DD)";
     cSITEELEV   = "geodetic WGS84 elevation (m A.S.L.)";
-    cGPS_LOCK   = "Coordinates are from GNSS module"
+    cGPS_LOCK   = "Coordinates are from GNSS module";
     cXPIXEL     = "";
     cYPIXEL     = "";
     cGAINDB     = "detector gain";
