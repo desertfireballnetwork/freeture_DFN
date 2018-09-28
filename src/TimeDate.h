@@ -184,9 +184,9 @@ class TimeDate {
 
         static string getYYYY_MM_DD(Date date);
         
-        static string TimeDate::getYYYY_MM_DD_hhmmss(string date);
+        static string getYYYY_MM_DD_hhmmss(string date);
         
-        static string TimeDate::getYYYY_MM_DD_hhmmss(Date date);
+        static string getYYYY_MM_DD_hhmmss(Date date);
 
         static string getYYYY(Date date);
 

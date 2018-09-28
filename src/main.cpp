@@ -921,11 +921,11 @@ int main(int argc, const char ** argv){
 
                                 if(frame.mFormat == MONO12){
                                     // Create FITS image with BITPIX = SHORT_IMG (16-bits signed integers), pixel with TSHORT (signed short)
-                                    if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum), "", FITS_SUFFIX))
+                                    if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum)))
                                         cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
                                 }else{
                                     // Create FITS image with BITPIX = BYTE_IMG (8-bits unsigned integers), pixel with TBYTE (8-bit unsigned byte)
-                                    if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum), "", FITS_SUFFIX))
+                                    if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum)))
                                         cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
 
                                 }
