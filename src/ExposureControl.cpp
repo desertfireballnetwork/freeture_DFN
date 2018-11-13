@@ -554,7 +554,8 @@ bool ExposureControl::controlExposureTime(Device *camera, Mat image, TimeDate::D
 
                                 if(checkDataLocation(imageDate)) {
 
-                                    boost::filesystem::ofstream infFile;
+				  //boost::filesystem::ofstream infFile;
+				    std::ofstream infFile;
                                     string infFilePath = finalDataLocation + "ECInfos.txt";
                                     infFile.open(infFilePath.c_str(),std::ios_base::app);
 

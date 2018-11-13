@@ -310,7 +310,8 @@ void DetThread::operator ()(){
         }else {
 
             // Create Report for videos and frames in input.
-            boost::filesystem::ofstream report;
+            //boost::filesystem::ofstream report;
+	    std::ofstream report;
             string reportPath = mdp.DATA_PATH + "detections_report.txt";
             report.open(reportPath.c_str());
 
