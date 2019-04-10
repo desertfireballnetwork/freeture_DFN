@@ -218,14 +218,19 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
     // Save positions.
     if(mdtp.temporal.DET_SAVE_POS) {
 
-      //boost::filesystem::ofstream posFile;
-        std::ofstream posFile;
-        string posFilePath = p + "positions.txt";
+        boost::filesystem::ofstream posFile;
+        //string posFilePath = p + "positions.txt";
+        string posFilePath = p + "_positions.csv";
+      
         posFile.open(posFilePath.c_str());
 
         // Number of the first frame associated to the event.
         int numFirstFrame = -1;
 
+        // write csv header
+        string line = "frame_id,datetime,x_fits,y_fits\n";
+        posFile << line;
+        
         vector<LocalEvent>::iterator itLe;
         for(itLe = (*mGeToSave).LEList.begin(); itLe!=(*mGeToSave).LEList.end(); ++itLe) {
 
@@ -243,7 +248,8 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
             }
 
             // NUM_FRAME    POSITIONX     POSITIONY (inversed)
-            string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "               (" + Conversion::intToString(pos.x)  + ";" + Conversion::intToString(positionY) + ")                 " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
+            //string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "               (" + Conversion::intToString(pos.x)  + ";" + Conversion::intToString(positionY) + ")                 " + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate)+ "\n";
+            string line = Conversion::intToString((*itLe).getNumFrame() - numFirstFrame + nbFramesAround) + "," + TimeDate::getIsoExtendedFormatDate((*itLe).mFrameAcqDate) + "," + Conversion::intToString(pos.x)  + "," + Conversion::intToString(positionY) + "\n";
             posFile << line;
 
         }

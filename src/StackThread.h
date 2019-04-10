@@ -51,6 +51,7 @@
 #include <boost/circular_buffer.hpp>
 #include <assert.h>
 #include "SParam.h"
+#include "DataPaths.h"
 
 using namespace boost::filesystem;
 using namespace std;
@@ -60,6 +61,8 @@ using namespace boost::posix_time;
 class StackThread {
 
     private :
+        
+        const string FITS_SUFFIX = "stack";
 
         static boost::log::sources::severity_logger< LogSeverityLevel > logger;
 

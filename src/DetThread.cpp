@@ -248,7 +248,8 @@ void DetThread::operator ()(){
 
                                 // Save event.
                                 BOOST_LOG_SEV(logger, notification) << "Saving event..." << endl;
-                                pDetMthd->saveDetectionInfos(mEventPath, mNbFramesAround);
+                                string eventBase = mstp.TELESCOP + "_detection_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
+                                pDetMthd->saveDetectionInfos(mEventPath + eventBase, mNbFramesAround);
                                 boost::mutex::scoped_lock lock(*frameBuffer_mutex);
                                 if(!saveEventData(pDetMthd->getEventFirstFrameNb(), pDetMthd->getEventLastFrameNb()))
                                     BOOST_LOG_SEV(logger,critical) << "Error saving event data.";
@@ -310,9 +311,10 @@ void DetThread::operator ()(){
         }else {
 
             // Create Report for videos and frames in input.
-            //boost::filesystem::ofstream report;
-	    std::ofstream report;
-            string reportPath = mdp.DATA_PATH + "detections_report.txt";
+            boost::filesystem::ofstream report;
+            //string reportPath = mdp.DATA_PATH + "detections_report.txt";
+            string reportPath = DataPaths::getSessionPath(mdp.DATA_PATH, TimeDate::splitIsoExtendedDate(to_iso_extended_string(boost::posix_time::microsec_clock::universal_time()))) + "detections_report.txt";
+            
             report.open(reportPath.c_str());
 
             cout << "--------------- DETECTION REPORT --------------" << endl;
@@ -363,21 +365,25 @@ bool DetThread::buildEventDataDirectory(){
     namespace fs = boost::filesystem;
 
     // eventDate is the date of the first frame attached to the event.
-    string YYYYMMDD = TimeDate::getYYYYMMDD(mEventDate);
+    //string YYYYMMDD = TimeDate::getYYYYMMDD(mEventDate);
 
     // Data location.
     path p(mdp.DATA_PATH);
 
     // Create data directory for the current day.
-    string fp = mdp.DATA_PATH + mStationName + "_" + YYYYMMDD +"/";
+    //string fp = mdp.DATA_PATH + mStationName + "_" + YYYYMMDD +"/";
+    string fp = DataPaths::getSessionPath(mdp.DATA_PATH, mEventDate);
     path p0(fp);
 
     // Events directory.
-    string fp1 = "events/";
+    //string fp1 = "events/";
+    string fp1 = "";
     path p1(fp + fp1);
 
     // Current event directory with the format : STATION_AAAAMMDDThhmmss_UT
-    string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate) + "_UT/";
+    //string fp2 = mStationName + "_" + TimeDate::getYYYYMMDDThhmmss(mEventDate) + "_UT/";
+    //string fp2 = mStationName + "_" + "detection" + "_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
+    string fp2 = mstp.TELESCOP + "_detection_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate) + "/";
     path p2(fp + fp1 + fp2);
 
     // Final path used by an other function to save event data.
@@ -520,6 +526,8 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
 
     // List of data path to attach to the mail notification.
     vector<string> mailAttachments;
+    
+    string eventBase = mstp.TELESCOP + "_detection_" + TimeDate::getYYYY_MM_DD_hhmmss(mEventDate);
 
     // Number of the first frame to save. It depends of how many frames we want to keep before the event.
     int numFirstFrameToSave = firstEvPosInFB - mNbFramesAround;
@@ -565,7 +573,8 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
     VideoWriter *video = NULL;
 
     if(mdtp.DET_SAVE_AVI) {
-        video = new VideoWriter(mEventPath + "video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 5, Size(static_cast<int>(frameBuffer->front().mImg.cols), static_cast<int>(frameBuffer->front().mImg.rows)), false);
+        // third parameter controls FPS. Might need to change that one (used to be 5 fps).
+        video = new VideoWriter(mEventPath + eventBase + "_video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 30, Size(static_cast<int>(frameBuffer->front().mImg.cols), static_cast<int>(frameBuffer->front().mImg.rows)), false);
     }
 
     // Init fits 3D.
@@ -578,7 +587,7 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
         fits3d.kDATE = to_iso_extended_string(time);
 
         // Name of the fits file.
-        fits3d.kFILENAME = mEventPath + "fitscube.fit";
+        fits3d.kFILENAME = mEventPath + eventBase + "_fitscube.fit";
 
     }
 
@@ -633,8 +642,7 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
 
             // Save fits2D.
             if(mdtp.DET_SAVE_FITS2D) {
-
-                string fits2DPath = mEventPath + "fits2D/";
+                string fits2DPath = mEventPath + eventBase + "_rawframes/";
                 string fits2DName = "frame_" + Conversion::numbering(nbDigitOnNbTotalFramesToSave, c) + Conversion::intToString(c);
                 BOOST_LOG_SEV(logger,notification) << ">> Saving fits2D : " << fits2DName;
 
@@ -677,14 +685,14 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
 
                     case MONO12 :
                         {
-                            newFits.writeFits((*it).mImg, S16, fits2DName, mdp.FITS_COMPRESSION_METHOD);
+                            newFits.writeFits((*it).mImg, S16, fits2DName, mdp.FITS_COMPRESSION_METHOD, "");
                         }
                         break;
 
                     default :
 
                         {
-                            newFits.writeFits((*it).mImg, UC8, fits2DName, mdp.FITS_COMPRESSION_METHOD);
+                            newFits.writeFits((*it).mImg, UC8, fits2DName, mdp.FITS_COMPRESSION_METHOD, "");
                         }
 
                 }
@@ -766,7 +774,8 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
             Conversion::convertTo8UC1(s).copyTo(s);
 
         equalizeHist(s, eqHist);
-        SaveImg::saveJPEG(eqHist,mEventPath+mStationName+"_"+TimeDate::getYYYYMMDDThhmmss(mEventDate)+"_UT");
+        //SaveImg::saveJPEG(eqHist,mEventPath+mStationName+"_"+TimeDate::getYYYYMMDDThhmmss(mEventDate)+"_UT");
+        SaveImg::saveJPEG(eqHist, mEventPath + eventBase);
 
     }
 

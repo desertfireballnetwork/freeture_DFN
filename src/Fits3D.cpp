@@ -422,6 +422,21 @@ bool Fits3D::writeKeywords(){
 
     delete csiteelev;
 
+    /// 23. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% GPS_LOCK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    char * cgpslock = new char[cGPS_LOCK.length()+1];
+    strcpy(cgpslock,cGPS_LOCK.c_str());
+
+    if(fits_write_key(fptr,TSTRING,"GPS_LOCK",&kGPS_LOCK,cgpslock,&status)){
+
+        delete cgpslock;
+        printerror(status, "Error fits_write_key(GPS_LOCK)");
+        return false;
+
+    }
+
+    delete cgpslock;
+
     /// 24. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% XPIXEL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     char * cxpixel = new char[cXPIXEL.length()+1];

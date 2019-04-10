@@ -362,6 +362,21 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     delete csiteelev;
 
+    /// 23. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% GPS_LOCK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    char * cgpslock = new char[cGPS_LOCK.length()+1];
+    strcpy(cgpslock,cGPS_LOCK.c_str());
+
+    if(fits_write_key(fptr,TSTRING,"GPS_LOCK",&kGPS_LOCK,cgpslock,&status)){
+
+        delete cgpslock;
+        printerror(status, "Error fits_write_key(GPS_LOCK)");
+        return false;
+
+    }
+
+    delete cgpslock;
+
     /// 24. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% XPIXEL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     char * cxpixel = new char[cXPIXEL.length()+1];
@@ -778,7 +793,7 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
 }
 
-bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string compression) {
+bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string compression, string imObsType) {
 
     int status = 0;
 
@@ -801,7 +816,14 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
     kDATE = to_iso_extended_string(time);
 
     // Date in the fits filename.
-    string dateFileName = TimeDate::getYYYYMMDDThhmmss(to_iso_string(time));
+    //string dateFileName = TimeDate::getYYYYMMDDThhmmss(to_iso_string(time));
+    
+    // TODO use the start of the exposure in filename instead of current time
+//     '2018-09-28T10:27:11.0148'
+//     char * dateobs = new char[kDATEOBS.length()+1];
+//     strcpy(dateobs,kDATEOBS.c_str());
+    string dateFileName = TimeDate::getYYYY_MM_DD_hhmmss(kDATEOBS);
+    
 
     // Define CRPIX1 and CRPIX2
     kCRPIX1 = (int)naxes[0] / 2;
@@ -817,14 +839,12 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
     string pathAndname = "";
 
     if(fileName != ""){
-
-        pathAndname = mFitsPath + fileName  + ".fit";
-        kFILENAME = fileName + ".fit";
+        kFILENAME = fileName + ".fits.gz";
+        pathAndname = mFitsPath + kFILENAME;
 
     }else{
-
-        pathAndname = mFitsPath + kTELESCOP + "_" + dateFileName + "_UT.fit";
-        kFILENAME = kTELESCOP + "_" +  dateFileName + "_UT.fit";
+        kFILENAME = kTELESCOP + "_" + dateFileName + "_" + kINSTRUME + "_" + imObsType + ".fits.gz";
+        pathAndname = mFitsPath + kFILENAME;
 
     }
 

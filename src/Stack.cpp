@@ -193,7 +193,7 @@ bool Stack::saveStack(string path, StackMeth stackMthd, bool stackReduction){
                             }
 
                             BOOST_LOG_SEV(logger, notification) << "Writing FITS signed short image.";
-                            return newFits.writeFits(newMat, S16, "", mFitsCompressionMethod);
+                            return newFits.writeFits(newMat, S16, "", mFitsCompressionMethod, FITS_SUFFIX);
 
                         }
 
@@ -226,7 +226,7 @@ bool Stack::saveStack(string path, StackMeth stackMthd, bool stackReduction){
 
                             // Create FITS image with BITPIX = BYTE_IMG (8-bits unsigned integers), pixel with TBYTE (8-bit unsigned byte)
                             BOOST_LOG_SEV(logger, notification) << "Writing FITS image with BITPIX = BYTE_IMG (8-bits unsigned integers), pixel with TBYTE (8-bit unsigned byte)";
-                            return newFits.writeFits(newMat, UC8, "" , mFitsCompressionMethod);
+                            return newFits.writeFits(newMat, UC8, "" , mFitsCompressionMethod, FITS_SUFFIX);
 
                         }
 
@@ -277,7 +277,7 @@ bool Stack::saveStack(string path, StackMeth stackMthd, bool stackReduction){
 
                             {
                                 BOOST_LOG_SEV(logger, notification) << "Writting Fits signed short.";
-                                return newFits.writeFits(newMat, S16, "", mFitsCompressionMethod);
+                                return newFits.writeFits(newMat, S16, "", mFitsCompressionMethod, FITS_SUFFIX);
 
                             }
 
@@ -287,7 +287,7 @@ bool Stack::saveStack(string path, StackMeth stackMthd, bool stackReduction){
 
                             {
                                 BOOST_LOG_SEV(logger, notification) << "Writting Fits unsigned char.";
-                                return newFits.writeFits(newMat, UC8, "", mFitsCompressionMethod);
+                                return newFits.writeFits(newMat, UC8, "", mFitsCompressionMethod, FITS_SUFFIX);
 
                             }
 
@@ -297,7 +297,7 @@ bool Stack::saveStack(string path, StackMeth stackMthd, bool stackReduction){
 
                     // Save fits in 32 bits.
                     BOOST_LOG_SEV(logger, notification) << "Writting Fits 32 bits.";
-                    return newFits.writeFits(stack, F32, ""  );
+                    return newFits.writeFits(stack, F32, "", mFitsCompressionMethod, FITS_SUFFIX);
 
                 }
 

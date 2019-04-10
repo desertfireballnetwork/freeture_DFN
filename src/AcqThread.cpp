@@ -85,7 +85,7 @@ AcqThread::AcqThread(   boost::circular_buffer<Frame>       *fb,
     mcp                     = acq;
     mvp                     = vp;
     mfp                     = fp;
-
+    
 }
 
 AcqThread::~AcqThread(void){
@@ -617,12 +617,14 @@ void AcqThread::selectNextAcquisitionSchedule(TimeDate::Date date){
 
 }
 
-bool AcqThread::buildAcquisitionDirectory(string YYYYMMDD){
+bool AcqThread::buildAcquisitionDirectory(TimeDate::Date date){
 
     namespace fs = boost::filesystem;
-    string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    //string root = mdp.DATA_PATH + mstp.STATION_NAME + "_" + YYYYMMDD +"/";
+    string root = DataPaths::getSessionPath(mdp.DATA_PATH, date);
 
-    string subDir = "captures/";
+    //string subDir = "captures/";
+    string subDir = "";
     string finalPath = root + subDir;
 
     mOutputDataPath = finalPath;
@@ -825,11 +827,16 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
 
     if(img.mImg.data) {
 
-        string  YYYYMMDD = TimeDate::getYYYYMMDD(img.mDate);
+        //string  YYYYMMDD = TimeDate::getYYYYMMDD(img.mDate);
 
-        if(buildAcquisitionDirectory(YYYYMMDD)) {
+        if(buildAcquisitionDirectory(img.mDate)) {
 
-            string fileName = imgPrefix + "_" + TimeDate::getYYYYMMDDThhmmss(img.mDate) + "_UT-" + Conversion::intToString(imgNum);
+            //string fileName = imgPrefix + "_" + TimeDate::getYYYYMMDDThhmmss(img.mDate) + "_UT-" + Conversion::intToString(imgNum);
+            
+            string dateFileName = TimeDate::getYYYY_MM_DD_hhmmss(img.mDate);
+            string fileName = mstp.TELESCOP + "_" + dateFileName + "_" + mstp.INSTRUME + "_calibration"; // + imObsType 
+            
+
 
             switch(outputType) {
 
@@ -925,7 +932,7 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
                                     }
 
                                     // Create FITS image with BITPIX = SHORT_IMG (16-bits signed integers), pixel with TSHORT (signed short)
-                                    if(newFits.writeFits(newMat, S16, fileName))
+                                    if(newFits.writeFits(newMat, S16, fileName, "", FITS_SUFFIX))
                                         cout << ">> Fits saved in : " << mOutputDataPath << fileName << endl;
 
                                 }
@@ -936,7 +943,7 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
 
                                 {
 
-                                   if(newFits.writeFits(img.mImg, UC8, fileName))
+                                   if(newFits.writeFits(img.mImg, UC8, fileName, "", FITS_SUFFIX))
                                         cout << ">> Fits saved in : " << mOutputDataPath << fileName << endl;
 
                                 }

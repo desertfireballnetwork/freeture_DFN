@@ -45,7 +45,8 @@ freeture_SOURCES	= EImgBitDepth.h EParser.h EParser.cpp ECamSdkType.h \
 			Frame.cpp GlobalEvent.cpp Histogram.cpp \
 			LocalEvent.cpp main.cpp HistogramRGB.h HistogramRGB.cpp EImgFormat.h \
 			TimeDate.cpp ExposureControl.cpp ExposureControl.h ETimeMode.h ECamPixFmt.h \
-			SaveImg.cpp ELogSeverityLevel.h ImgProcessing.cpp ImgProcessing.h
+			SaveImg.cpp ELogSeverityLevel.h ImgProcessing.cpp ImgProcessing.h \
+			DataPaths.h DataPaths.cpp
 
 EXTRA_DIST		= Doxyfile
 DATE=`date +"%Y-%m-%d"`
