@@ -220,7 +220,7 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
 
         boost::filesystem::ofstream posFile;
         //string posFilePath = p + "positions.txt";
-        string posFilePath = p + "positions.csv";
+        string posFilePath = p + "_positions.csv";
         posFile.open(posFilePath.c_str());
 
         // Number of the first frame associated to the event.

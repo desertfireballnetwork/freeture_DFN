@@ -85,7 +85,7 @@ AcqThread::AcqThread(   boost::circular_buffer<Frame>       *fb,
     mcp                     = acq;
     mvp                     = vp;
     mfp                     = fp;
-
+    
 }
 
 AcqThread::~AcqThread(void){
@@ -831,7 +831,12 @@ void AcqThread::saveImageCaptured(Frame &img, int imgNum, ImgFormat outputType, 
 
         if(buildAcquisitionDirectory(img.mDate)) {
 
-            string fileName = imgPrefix + "_" + TimeDate::getYYYYMMDDThhmmss(img.mDate) + "_UT-" + Conversion::intToString(imgNum);
+            //string fileName = imgPrefix + "_" + TimeDate::getYYYYMMDDThhmmss(img.mDate) + "_UT-" + Conversion::intToString(imgNum);
+            
+            string dateFileName = TimeDate::getYYYY_MM_DD_hhmmss(img.mDate);
+            string fileName = mstp.TELESCOP + "_" + dateFileName + "_" + mstp.INSTRUME + "_calibration"; // + imObsType 
+            
+
 
             switch(outputType) {
 

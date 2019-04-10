@@ -839,11 +839,11 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
     string pathAndname = "";
 
     if(fileName != ""){
-        kFILENAME = fileName + ".fits";
+        kFILENAME = fileName + ".fits.gz";
         pathAndname = mFitsPath + kFILENAME;
 
     }else{
-        kFILENAME = kTELESCOP + "_" + dateFileName + "_" + kINSTRUME + "_" + imObsType + ".fits";
+        kFILENAME = kTELESCOP + "_" + dateFileName + "_" + kINSTRUME + "_" + imObsType + ".fits.gz";
         pathAndname = mFitsPath + kFILENAME;
 
     }
