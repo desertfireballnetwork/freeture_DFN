@@ -20,24 +20,14 @@ fi
 #set -e"
 
 # The daemon will be run as this user
-USER="dfn-operator"
-GROUP="dfn-user"
+ #USER="dfn-operator"
+ #GROUP="dfn-user"
+## need to be root to have write access to the data directories
+USER="root"
+GROUP="root"
 HOME=$(grep "^${USER}:" /etc/passwd | cut -d: -f6)
 UID=$(id -u ${USER})
 GID=$(id -g ${GROUP})
-
-# create pid directory if it does not exist
-[ -d ${PIDDIR} ] || mkdir ${PIDDIR}
-
-# Exit if the package is not installed
-[ -x "${DAEMON}" ] || exit 0
-
-# Read configuration variable file if it is present
-#[ -r ${DEAMON_CFG} ] && . ${DEAMON_CFG}
-
-#
-# Function that starts the daemon/service
-#
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/local/bin/freeture
@@ -49,13 +39,6 @@ SCRIPTNAME=/etc/init.d/${NAME}
 DESC="FreeTure Daemon"
 DAEMON_ARGS="-m 3 -c ${DEAMON_CFG}"
 
-# The daemon will be run as this user
-USER="dfn-operator"
-GROUP="dfn-user"
-HOME=$(grep "^${USER}:" /etc/passwd | cut -d: -f6)
-UID=$(id -u ${USER})
-GID=$(id -g ${GROUP})
-
 # create pid directory if it does not exist
 [ -d ${PIDDIR} ] || mkdir ${PIDDIR}
 
@@ -68,6 +51,7 @@ GID=$(id -g ${GROUP})
 #
 # Function that starts the daemon/service
 #
+
 do_start()
 {
 	export USER HOME
@@ -138,6 +122,8 @@ case "$1" in
         rm -f ${PIDFILE}
         export USER HOME
         start-stop-daemon --start --user ${USER} --make-pidfile --pidfile ${PIDFILE} --background --exec ${DAEMON} --test > /dev/null
+	freetureconf=$(python3 /opt/dfn-software/freeture_preconfig.py | tail -n 1) || return 2
+	DAEMON_ARGS="-m 3 -c ${freetureconf}"        
         start-stop-daemon --chuid ${UID}:${GID} --user ${USER} --start --quiet --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} -- ${DAEMON_ARGS} > /dev/null
         ;;
   *)
