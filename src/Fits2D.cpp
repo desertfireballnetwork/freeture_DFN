@@ -70,15 +70,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr, TSTRING, "FILENAME", filename, cfilename, &status)){
 
-        delete filename;
-        delete cfilename;
+        delete[] filename;
+        delete[] cfilename;
         printerror(status, "Error fits_write_key(FILENAME)");
         return false;
 
     }
 
-    delete cfilename;
-    delete filename;
+    delete[] cfilename;
+    delete[] filename;
 
     /// 8. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% DATE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -90,15 +90,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"DATE",date,cdate,&status)){
 
-        delete date;
-        delete cdate;
+        delete[] date;
+        delete[] cdate;
         printerror(status, "Error fits_write_key(DATE)");
         return false;
 
     }
 
-    delete cdate;
-    delete date;
+    delete[] cdate;
+    delete[] date;
 
     /// 9. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% DATE-OBS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -110,15 +110,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"DATE-OBS",dateobs,cdateobs,&status)){
 
-        delete dateobs;
-        delete cdateobs;
+        delete[] dateobs;
+        delete[] cdateobs;
         printerror(status, "Error fits_write_key(DATE-OBS)");
         return false;
 
     }
 
-    delete cdateobs;
-    delete dateobs;
+    delete[] cdateobs;
+    delete[] dateobs;
 
     /// 10. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% OBS_MODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -130,15 +130,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"OBS_MODE",obsmode,cobsmode,&status)){
 
-        delete cobsmode;
-        delete obsmode;
+        delete[] cobsmode;
+        delete[] obsmode;
         printerror(status, "Error fits_write_key(OBS_MODE)");
         return false;
 
     }
 
-    delete cobsmode;
-    delete obsmode;
+    delete[] cobsmode;
+    delete[] obsmode;
 
     /// 11. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% ELAPTIME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -147,13 +147,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"ELAPTIME",&kELAPTIME,celaptime,&status)){
 
-        delete celaptime;
+        delete[] celaptime;
         printerror(status, "Error fits_write_key(ELAPTIME)");
         return false;
 
     }
 
-    delete celaptime;
+    delete[] celaptime;
 
     /// 12. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXPOSURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -162,13 +162,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"EXPOSURE",&kEXPOSURE,ceposure,&status)){
 
-        delete ceposure;
+        delete[] ceposure;
         printerror(status, "Error fits_write_key(EXPOSURE)");
         return false;
 
     }
 
-    delete ceposure;
+    delete[] ceposure;
 
     /// 13. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% ONTIME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -177,13 +177,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"ONTIME",&kONTIME,contime,&status)){
 
-        delete contime;
+        delete[] contime;
         printerror(status, "Error fits_write_key(ONTIME)");
         return false;
 
     }
 
-    delete contime;
+    delete[] contime;
 
 
     /// 14. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FILTER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,15 +196,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"FILTER",f,cfilter,&status)){
 
-        delete cfilter;
-        delete f;
+        delete[] cfilter;
+        delete[] f;
         printerror(status, "Error fits_write_key(FILTER)");
         return false;
 
     }
 
-    delete cfilter;
-    delete f;
+    delete[] cfilter;
+    delete[] f;
 
 
     /// 15. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% TELESCOP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -217,15 +217,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"TELESCOP",t,ctelescop,&status)){
 
-        delete ctelescop;
-        delete t;
+        delete[] ctelescop;
+        delete[] t;
         printerror(status, "Error fits_write_key(TELESCOP)");
         return false;
 
     }
 
-    delete ctelescop;
-    delete t;
+    delete[] ctelescop;
+    delete[] t;
 
     /// 16. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% OBSERVER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -237,15 +237,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"OBSERVER",o,cobserver,&status)){
 
-        delete cobserver;
-        delete o;
+        delete[] cobserver;
+        delete[] o;
         printerror(status, "Error fits_write_key(OBSERVER)");
         return false;
 
     }
 
-    delete cobserver;
-    delete o;
+    delete[] cobserver;
+    delete[] o;
 
     /// 17. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% INSTRUME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -257,15 +257,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"INSTRUME",i,cinstrume,&status)){
 
-        delete cinstrume;
-        delete i;
+        delete[] cinstrume;
+        delete[] i;
         printerror(status, "Error fits_write_key(OBSERVER)");
         return false;
 
     }
 
-    delete cinstrume;
-    delete i;
+    delete[] cinstrume;
+    delete[] i;
 
     /// 18. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CAMERA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -277,15 +277,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"CAMERA",cam,ccamera,&status)){
 
-        delete ccamera;
-        delete cam;
+        delete[] ccamera;
+        delete[] cam;
         printerror(status, "Error fits_write_key(CAMERA)");
         return false;
 
     }
 
-    delete ccamera;
-    delete cam;
+    delete[] ccamera;
+    delete[] cam;
 
     /// 19. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FOCAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -294,13 +294,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"FOCAL",&kFOCAL,cfocal,&status)){
 
-        delete cfocal;
+        delete[] cfocal;
         printerror(status, "Error fits_write_key(FOCAL)");
         return false;
 
     }
 
-    delete cfocal;
+    delete[] cfocal;
 
     /// 20. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% APERTURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -309,13 +309,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"APERTURE",&kAPERTURE,caperture,&status)){
 
-        delete caperture;
+        delete[] caperture;
         printerror(status, "Error fits_write_key(APERTURE)");
         return false;
 
     }
 
-    delete caperture;
+    delete[] caperture;
 
     /// 21. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SITELONG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -324,13 +324,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"SITELONG",&kSITELONG,csitelong,&status)){
 
-        delete csitelong;
+        delete[] csitelong;
         printerror(status, "Error fits_write_key(APERTURE)");
         return false;
 
     }
 
-    delete csitelong;
+    delete[] csitelong;
 
     /// 22. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SITELAT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -339,13 +339,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"SITELAT",&kSITELAT,csitelat,&status)){
 
-        delete csitelat;
+        delete[] csitelat;
         printerror(status, "Error fits_write_key(SITELAT)");
         return false;
 
     }
 
-    delete csitelat;
+    delete[] csitelat;
 
     /// 23. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SITEELEV %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -354,13 +354,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"SITEELEV",&kSITEELEV,csiteelev,&status)){
 
-        delete csiteelev;
+        delete[] csiteelev;
         printerror(status, "Error fits_write_key(SITEELEV)");
         return false;
 
     }
 
-    delete csiteelev;
+    delete[] csiteelev;
 
     /// 23. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% GPS_LOCK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -369,13 +369,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"GPS_LOCK",&kGPS_LOCK,cgpslock,&status)){
 
-        delete cgpslock;
+        delete[] cgpslock;
         printerror(status, "Error fits_write_key(GPS_LOCK)");
         return false;
 
     }
 
-    delete cgpslock;
+    delete[] cgpslock;
 
     /// 24. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% XPIXEL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -384,13 +384,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"XPIXEL",&kXPIXEL,cxpixel,&status)){
 
-        delete cxpixel;
+        delete[] cxpixel;
         printerror(status, "Error fits_write_key(XPIXEL)");
         return false;
 
     }
 
-    delete cxpixel;
+    delete[] cxpixel;
 
     /// 25. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% YPIXEL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -399,13 +399,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"YPIXEL",&kYPIXEL,cypixel,&status)){
 
-        delete cypixel;
+        delete[] cypixel;
         printerror(status, "Error fits_write_key(YPIXEL)");
         return false;
 
     }
 
-    delete cypixel;
+    delete[] cypixel;
 
     /// 26. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAINDB %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -414,13 +414,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TINT,"GAINDB",&kGAINDB,cgaindb,&status)){
 
-        delete cgaindb;
+        delete[] cgaindb;
         printerror(status, "Error fits_write_key(GAINDB)");
         return false;
 
     }
 
-    delete cgaindb;
+    delete[] cgaindb;
 
     /// 27. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SATURATE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -429,13 +429,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"SATURATE",&kSATURATE,csaturate,&status)){
 
-        delete csaturate;
+        delete[] csaturate;
         printerror(status, "Error fits_write_key(SATURATE)");
         return false;
 
     }
 
-    delete csaturate;
+    delete[] csaturate;
 
     /// 28. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -447,15 +447,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"PROGRAM",p,cprograme,&status)){
 
-        delete cprograme;
-        delete p;
+        delete[] cprograme;
+        delete[] p;
         printerror(status, "Error fits_write_key(PROGRAM)");
         return false;
 
     }
 
-    delete cprograme;
-    delete p;
+    delete[] cprograme;
+    delete[] p;
 
     /// 29. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CREATOR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -467,15 +467,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"CREATOR",c,ccreator,&status)){
 
-        delete ccreator;
-        delete c;
+        delete[] ccreator;
+        delete[] c;
         printerror(status, "Error fits_write_key(CREATOR)");
         return false;
 
     }
 
-    delete ccreator;
-    delete c;
+    delete[] ccreator;
+    delete[] c;
 
     /// 30. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% BZERO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -484,13 +484,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"BZERO",&kBZERO,cbzero,&status)){
 
-        delete cbzero;
+        delete[] cbzero;
         printerror(status, "Error fits_write_key(BZERO)");
         return false;
 
     }
 
-    delete cbzero;
+    delete[] cbzero;
 
     /// 31. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% BSCALE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -499,13 +499,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"BSCALE",&kBSCALE,cbscale,&status)){
 
-        delete cbscale;
+        delete[] cbscale;
         printerror(status, "Error fits_write_key(BSCALE)");
         return false;
 
     }
 
-    delete cbscale;
+    delete[] cbscale;
 
     /// 32. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% RADESYS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -517,15 +517,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"RADESYS",radesys,cradesys,&status)){
 
-        delete cradesys;
-        delete radesys;
+        delete[] cradesys;
+        delete[] radesys;
         printerror(status, "Error fits_write_key(RADESYS)");
         return false;
 
     }
 
-    delete cradesys;
-    delete radesys;
+    delete[] cradesys;
+    delete[] radesys;
 
     /// 33. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIMESYS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -537,15 +537,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"TIMESYS",timesys,ctimesys,&status)){
 
-        delete ctimesys;
-        delete timesys;
+        delete[] ctimesys;
+        delete[] timesys;
         printerror(status, "Error fits_write_key(TIMESYS)");
         return false;
 
     }
 
-    delete ctimesys;
-    delete timesys;
+    delete[] ctimesys;
+    delete[] timesys;
 
 
     /// 34. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% EQUINOX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -555,13 +555,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"EQUINOX",&kEQUINOX,cequinox,&status)){
 
-        delete cequinox;
+        delete[] cequinox;
         printerror(status, "Error fits_write_key(EQUINOX)");
         return false;
 
     }
 
-    delete cequinox;
+    delete[] cequinox;
 
     /// 35. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CTYPE1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -573,15 +573,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"CTYPE1",ktype1,ctype1,&status)){
 
-        delete ctype1;
-        delete ktype1;
+        delete[] ctype1;
+        delete[] ktype1;
         printerror(status, "Error fits_write_key(CTYPE1)");
         return false;
 
     }
 
-    delete ctype1;
-    delete ktype1;
+    delete[] ctype1;
+    delete[] ktype1;
 
     /// 36. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CTYPE2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -593,15 +593,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"CTYPE2",ktype2,ctype2,&status)){
 
-        delete ctype2;
-        delete ktype2;
+        delete[] ctype2;
+        delete[] ktype2;
         printerror(status, "Error fits_write_key(CTYPE2)");
         return false;
 
     }
 
-    delete ctype2;
-    delete ktype2;
+    delete[] ctype2;
+    delete[] ktype2;
 
     /// 37. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIMEUNIT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -613,15 +613,15 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TSTRING,"TIMEUNIT",ktimeunit,ctimeunit,&status)){
 
-        delete ctimeunit;
-        delete ktimeunit;
+        delete[] ctimeunit;
+        delete[] ktimeunit;
         printerror(status, "Error fits_write_key(TIMEUNIT)");
         return false;
 
     }
 
-    delete ctimeunit;
-    delete ktimeunit;
+    delete[] ctimeunit;
+    delete[] ktimeunit;
 
     /// 38. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CD1_1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -630,13 +630,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CD1_1",&kCD1_1,ccd1_1,&status)){
 
-        delete ccd1_1;
+        delete[] ccd1_1;
         printerror(status, "Error fits_write_key(CD1_1)");
         return false;
 
     }
 
-    delete ccd1_1;
+    delete[] ccd1_1;
 
     /// 39. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CD1_2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -645,13 +645,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CD1_2",&kCD1_2,ccd1_2,&status)){
 
-        delete ccd1_2;
+        delete[] ccd1_2;
         printerror(status, "Error fits_write_key(CD1_2)");
         return false;
 
     }
 
-    delete ccd1_2;
+    delete[] ccd1_2;
 
     /// 40. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CD2_1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -660,13 +660,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CD2_1",&kCD2_1,ccd2_1,&status)){
 
-        delete ccd2_1;
+        delete[] ccd2_1;
         printerror(status, "Error fits_write_key(CD2_1)");
         return false;
 
     }
 
-    delete ccd2_1;
+    delete[] ccd2_1;
 
     /// 41. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CD2_2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -675,13 +675,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CD2_2",&kCD2_2,ccd2_2,&status)){
 
-        delete ccd2_2;
+        delete[] ccd2_2;
         printerror(status, "Error fits_write_key(CD2_2)");
         return false;
 
     }
 
-    delete ccd2_2;
+    delete[] ccd2_2;
 
     /// 42. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CD3_3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -690,13 +690,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CD3_3",&kCD3_3,ccd3_3,&status)){
 
-        delete ccd3_3;
+        delete[] ccd3_3;
         printerror(status, "Error fits_write_key(CD3_3)");
         return false;
 
     }
 
-    delete ccd3_3;
+    delete[] ccd3_3;
 
     /// 43. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CRPIX1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -705,13 +705,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TINT,"CRPIX1",&kCRPIX1,ccrpix1,&status)){
 
-        delete ccrpix1;
+        delete[] ccrpix1;
         printerror(status, "Error fits_write_key(CRPIX1)");
         return false;
 
     }
 
-    delete ccrpix1;
+    delete[] ccrpix1;
 
     /// 44. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CRPIX2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -720,13 +720,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TINT,"CRPIX2",&kCRPIX2,ccrpix2,&status)){
 
-        delete ccrpix2;
+        delete[] ccrpix2;
         printerror(status, "Error fits_write_key(CRPIX2)");
         return false;
 
     }
 
-    delete ccrpix2;
+    delete[] ccrpix2;
 
     /// 45. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CRVAL1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -735,13 +735,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CRVAL1",&kCRVAL1,ccrval1,&status)){
 
-        delete ccrval1;
+        delete[] ccrval1;
         printerror(status, "Error fits_write_key(CRVAL1)");
         return false;
 
     }
 
-    delete ccrval1;
+    delete[] ccrval1;
 
     /// 46. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% CRVAL2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -750,13 +750,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"CRVAL2",&kSITELAT,ccrval2,&status)){
 
-        delete ccrval2;
+        delete[] ccrval2;
         printerror(status, "Error fits_write_key(CRVAL2)");
         return false;
 
     }
 
-    delete ccrval2;
+    delete[] ccrval2;
 
     /// 47. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% K1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -765,13 +765,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"K1",&kK1,ck1,&status)){
 
-        delete ck1;
+        delete[] ck1;
         printerror(status, "Error fits_write_key(K1)");
         return false;
 
     }
 
-    delete ck1;
+    delete[] ck1;
 
     /// 48. %%%%%%%%%%%%%%%%%%%%%%%%%%%%% K2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -780,13 +780,13 @@ bool Fits2D::writeKeywords(fitsfile *fptr){
 
     if(fits_write_key(fptr,TDOUBLE,"K2",&kK2,ck2,&status)){
 
-        delete ck2;
+        delete[] ck2;
         printerror(status, "Error fits_write_key(K2)");
         return false;
 
     }
 
-    delete ck2;
+    delete[] ck2;
 
     return true;
 
@@ -1338,7 +1338,7 @@ bool Fits2D::readFits32F(Mat &img){
     if(fits_read_img(fptr, TFLOAT, fpixel, nbuffer, &nullval,buffer, &anynull, &status)){
 
         printerror(status);
-        delete buffer;
+        delete[] buffer;
         return false;
 
     }
@@ -1362,7 +1362,7 @@ bool Fits2D::readFits32F(Mat &img){
     }
 
     loadImg.copyTo(img);
-    delete buffer;
+    delete[] buffer;
 
     if(fits_close_file(fptr, &status)){
 
@@ -1421,7 +1421,7 @@ bool Fits2D::readFits16US(Mat &img){
     if(fits_read_img(fptr, TUSHORT, fpixel, nbuffer, &nullval,buffer, &anynull, &status)){
 
         printerror(status);
-        delete buffer;
+        delete[] buffer;
         return false;
 
     }
@@ -1445,7 +1445,7 @@ bool Fits2D::readFits16US(Mat &img){
     }
 
     loadImg.copyTo(img);
-    delete buffer;
+    delete[] buffer;
 
     if(fits_close_file(fptr, &status)){
 
@@ -1501,7 +1501,7 @@ bool Fits2D::readFits16S(Mat &img){
     if(fits_read_img(fptr, TSHORT, fpixel, nbuffer, &nullval,buffer, &anynull, &status)){
 
         printerror(status);
-        delete buffer;
+        delete[] buffer;
         return false;
     }
 
@@ -1524,7 +1524,7 @@ bool Fits2D::readFits16S(Mat &img){
     }
 
     loadImg.copyTo(img);
-    delete buffer;
+    delete[] buffer;
     if(fits_close_file(fptr, &status)){
 
         printerror(status);
@@ -1580,7 +1580,7 @@ bool Fits2D::readFits8UC(Mat &img){
     if(fits_read_img(fptr, TBYTE, fpixel, nbuffer, &nullval,buffer, &anynull, &status)){
 
         printerror(status);
-        delete buffer;
+        delete[] buffer;
         return false;
     }
 
@@ -1604,7 +1604,7 @@ bool Fits2D::readFits8UC(Mat &img){
 
     loadImg.copyTo(img);
 
-    delete buffer;
+    delete[] buffer;
 
     if(fits_close_file(fptr, &status)){
 
@@ -1660,7 +1660,7 @@ bool Fits2D::readFits8C(Mat &img){
     if(fits_read_img(fptr, TSBYTE, fpixel, nbuffer, &nullval,buffer, &anynull, &status)){
 
         printerror(status);
-        delete buffer;
+        delete[] buffer;
         return false;
     }
 
@@ -1683,7 +1683,7 @@ bool Fits2D::readFits8C(Mat &img){
     }
 
     loadImg.copyTo(img);
-    delete buffer;
+    delete[] buffer;
 
     if(fits_close_file(fptr, &status)){
 
@@ -1719,11 +1719,11 @@ bool Fits2D::readIntKeyword(string keyword, int &value){
     if(fits_read_key(fptr, TINT, key, &value, NULL, &status)){
 
         printerror(status);
-        delete key;
+        delete[] key;
         return false;
     }
 
-    delete key;
+    delete[] key;
 
     if(fits_close_file(fptr, &status)){
 
@@ -1763,14 +1763,14 @@ bool Fits2D::readStringKeyword(string keyword, string &value){
 
 
         printerror(status);
-        delete key;
+        delete[] key;
         return false;
 
     }
 
     value = string(v);
 
-    delete key;
+    delete[] key;
 
     if(fits_close_file(fptr, &status)){
 
@@ -1806,11 +1806,11 @@ bool Fits2D::readDoubleKeyword(string keyword, double &value){
     if(fits_read_key(fptr, TDOUBLE, key, &value, NULL, &status)){
 
         printerror(status);
-        delete key;
+        delete[] key;
         return false;
     }
 
-    delete key;
+    delete[] key;
 
     if(fits_close_file(fptr, &status)){
 
