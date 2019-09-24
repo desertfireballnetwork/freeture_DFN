@@ -876,6 +876,7 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
             }
 
+	    // !@#$%^& MC: this is useless
             for( int a = 1; a<naxes[1]; a++ ){
 
                 tab[a] = tab[a-1] + naxes[0];
@@ -889,6 +890,7 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
                  printerror(status);
                  free(tab[0]);
+                 free( tab );
                  return false;
 
             }
@@ -897,6 +899,7 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
                  printerror(status);
                  free(tab[0]);
+                 free( tab );
                  return false;
 
             }
@@ -919,12 +922,14 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
                  printerror(status);
                  free(tab[0]);
+                 free( tab );
                  return false;
 
             }
 
             // Free previously allocated memory.
             free(tab[0]);
+            free( tab );
 
             break;
         }
@@ -963,6 +968,7 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
                  printerror(status);
                  free(tab[0]);
+                 free( tab );
                  return false;
 
             }
@@ -972,6 +978,7 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
                  printerror(status);
                  free(tab[0]);
+                 free( tab );
                  return false;
 
             }
@@ -994,12 +1001,14 @@ bool Fits2D::writeFits(Mat img, ImgBitDepth imgType, string fileName, string com
 
                  printerror(status);
                  free(tab[0]);
+                 free( tab );
                  return false;
 
             }
 
             // Free previously allocated memory.
             free(tab[0]);
+            free( tab );
 
             break;
         }
