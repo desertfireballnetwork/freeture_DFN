@@ -9,7 +9,7 @@ Type=simple
 #User=root
 #Group=root
 #commands that were not prefixed with a "-" exit successfully.
-#ExecStartPre=-/usr/bin/python3 /opt/dfn-software/freeture_preconfig.py > /data0/log/freeture/preconfig/freeture_preconfig
+ExecStartPre=-/usr/local/bin/freeture_preconfig_wrapper.sh
 ExecStartPre=/usr/local/bin/freeture -m 1 -c /usr/local/etc/dfn/freeture.cfg
 ExecStart=/usr/local/bin/freeture -m 3 -c /usr/local/etc/dfn/freeture.cfg 
 ExecStop=
