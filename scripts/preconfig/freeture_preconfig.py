@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # 
 # This file is part of the Desert Fireball Network camera control system.
-# It creates an up to date config file for freeture (https://github.com/desertfireballnetwork/freeture_DFN)
-# Notes:
+# It creates an up to date config file for freeture
+# (https://github.com/desertfireballnetwork/freeture_DFN)
 
+# Notes:
 # freetureconf=$(python3 /opt/dfn-software/freeture_preconfig.py | tail -n 1)
 # /usr/local/bin/freeture -m 3 -c ${freetureconf}
 
@@ -20,7 +21,7 @@ import datetime
 import dfn_functions as dfn
 import leostick as micro
 import config_handler as cfg
-
+import location_file as loc
 
 
 INSTRUMENT_TYPE = 'allskyvideo'
@@ -70,31 +71,31 @@ def prepare_intrument_data_folder(instrument=INSTRUMENT_TYPE):
     data_path = dfn.make_data_path(config_dict['internal']['data_directory'],
                                    secs=False,
                                    instrument=instrument)
+
+
+    # Load lon, lat, alt from dedicated config file dropped by the interval service
+    # rather than talking straight to microcontroller
+    #location_file = os.path.join(prog_dir, r'location.cfg')
+    location_file = loc.CONST_LOCATION_FNAME_DFN
     
-    
-    # try to update config file from GPS
+    # try to update config file from location.cfg file
     try:
-        # Initialise microcontroller
-        ser = micro.connect_to_leostick()
-        
-        # Get new gps location, if available and report lock
-        (config_dict['station']['lon'],
-        config_dict['station']['lat'],
-        config_dict['station']['altitude'],
-        config_dict['station']['gps_lock']) = micro.update_GPS_location(
-                                            config_dict['station']['lon'],
-                                            config_dict['station']['lat'],
-                                            config_dict['station']['altitude'])
-        
-        ser.close()
+        location_dict = loc.load_location_file(location_file)
+
+        if location_dict['internal']['currenttime'] == '0.0':
+            print('Warning: failed to get location from ', location_file, ', using values from default config file ', config_file, sep='', file=sys.stderr)
+            config_dict['station']['gps_lock'] = 'N'
+
+        else:
+            config_dict['station']['lon'] = location_dict['station']['lon'] 
+            config_dict['station']['lat'] = location_dict['station']['lat']
+            config_dict['station']['altitude'] = location_dict['station']['altitude']
+            config_dict['station']['gps_lock'] = location_dict['station']['gps_lock']
+
     except (Exception, SystemExit) as e:
-        print('Problem talking to microcontroller, using config values from default file', file=sys.stderr)
+        print('Fatal problem reading file ', location_file, ', using config values from default config file ', config_file, sep='', file=sys.stderr)
         config_dict['station']['gps_lock'] = 'N'
         
-        
-     
-     
-     
     # Save a local copy of the config file
     session_config_fname = os.path.join(data_path, 'dfnstation.cfg')
     #cfg.save_config_file(session_config_fname, config_dict)
