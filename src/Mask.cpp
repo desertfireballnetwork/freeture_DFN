@@ -42,6 +42,8 @@ mUpdateInterval(timeInterval), mUpdateMask(updateMask) {
     refDate = to_simple_string(boost::posix_time::second_clock::universal_time());
     satMap = boost::circular_buffer<Mat>(2);
 
+    printFrameStats = false;
+    
     // Load a mask from file.
     if(customMask) {
 
@@ -138,7 +140,10 @@ bool Mask::applyMask(Mat &currFrame) {
 
         }
 
-        cout <<"\033[20;0H" << "NEXT MASK : " << (mUpdateInterval - (int)diffTime) << "s" << endl;
+        if( printFrameStats )
+	  {
+	    cout <<"\033[20;0H" << "NEXT MASK : " << (mUpdateInterval - (int)diffTime) << "s" << endl;
+	  }
 
     }
 
@@ -162,4 +167,7 @@ void Mask::resetMask() {
 
 }
 
-
+void Mask::setFrameStats( bool frameStats )
+{
+  printFrameStats = frameStats;
+}

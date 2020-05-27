@@ -130,6 +130,8 @@ class DetectionTemporal : public Detection {
 
         ~DetectionTemporal();
 
+	void setMaskFrameStats( bool frameStats );
+
         void initMethod(string cfgPath);
 
         bool runDetection(Frame &c);

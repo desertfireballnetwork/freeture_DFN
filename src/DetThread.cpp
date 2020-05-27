@@ -826,4 +826,5 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
 void DetThread::setFrameStats( bool frameStats )
 {
   printFrameStats = frameStats;
+  pDetMthd-> setMaskFrameStats( frameStats );
 }

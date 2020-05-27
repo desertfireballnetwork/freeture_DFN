@@ -117,6 +117,8 @@ class DetectionTemplate : public Detection {
 
         ~DetectionTemplate();
 
+	void setMaskFrameStats( bool frameStats );
+
         void initMethod(string cfgPath);
 
         bool runDetection(Frame &c);

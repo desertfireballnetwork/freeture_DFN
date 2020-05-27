@@ -95,6 +95,12 @@ DetectionTemporal::~DetectionTemporal() {
 
 }
 
+void DetectionTemporal::setMaskFrameStats( bool frameStats )
+{
+  if(mMaskManager != NULL)
+    mMaskManager-> setFrameStats( frameStats );
+}
+
 void DetectionTemporal::resetDetection(bool loadNewDataSet){
 
     BOOST_LOG_SEV(logger, notification) << "Clear global events list.";
@@ -218,7 +224,7 @@ void DetectionTemporal::saveDetectionInfos(string p, int nbFramesAround){
     // Save positions.
     if(mdtp.temporal.DET_SAVE_POS) {
 
-        boost::filesystem::ofstream posFile;
+        std::ofstream posFile;
         //string posFilePath = p + "positions.txt";
         string posFilePath = p + "_positions.csv";
       
@@ -1285,7 +1291,6 @@ msg = msg
     + Conversion::intToString(nbRoiAttachedToLE) + "\n";
 
 }
-
 
 /*
 

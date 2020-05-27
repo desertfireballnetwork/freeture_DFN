@@ -51,6 +51,12 @@ DetectionTemplate::~DetectionTemplate() {
         delete mMaskControl;
 }
 
+void DetectionTemplate::setMaskFrameStats( bool frameStats )
+{
+  if(mMaskControl != NULL)
+    mMaskControl-> setFrameStats( frameStats );
+}
+
 void DetectionTemplate::createDebugDirectories(bool cleanDebugDirectory) {
 
 }

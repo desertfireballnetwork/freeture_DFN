@@ -63,6 +63,8 @@ class Mask {
         int saturatedValue;
         boost::circular_buffer<Mat> satMap;
 
+	bool printFrameStats;
+
     public :
 
         Mask(int timeInterval, bool customMask, string customMaskPath, bool downsampleMask, CamPixFmt format, bool updateMask);
@@ -71,6 +73,7 @@ class Mask {
 
         void resetMask();
 
+	void setFrameStats( bool frameStats );
 };
 
 

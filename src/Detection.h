@@ -93,6 +93,8 @@ class Detection {
 
         virtual ~Detection() {};
 
+	virtual void setMaskFrameStats( bool frameStats );
+	
         /**
         * Run meteor detection method.
         *
