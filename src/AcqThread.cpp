@@ -385,6 +385,7 @@ void AcqThread::operator()(){
 
                                         BOOST_LOG_SEV(logger, notification) << "Run regular acquisition.";
 
+                                        // MC: this is calibration image
                                         runImageCapture(    mcp.regcap.ACQ_REGULAR_CFG.rep,
                                                             mcp.regcap.ACQ_REGULAR_CFG.exp,
                                                             mcp.regcap.ACQ_REGULAR_CFG.gain,
@@ -790,6 +791,7 @@ void AcqThread::runImageCapture(int imgNumber, int imgExposure, int imgGain, Cam
         }
 
         // Run single capture.
+        // MC: this looks like the calibration image
         BOOST_LOG_SEV(logger, notification) << "Run single capture.";
         if(mDevice->runSingleCapture(frame)) {
 
@@ -809,7 +811,9 @@ void AcqThread::runImageCapture(int imgNumber, int imgExposure, int imgGain, Cam
         Sleep(1000);
     #else
         #ifdef LINUX
-            sleep(1);
+        // MC: 1s + imgExposure may be long wait. consider other trigger mode
+        //     so that we do net have to wait that long after each calib image.
+        sleep(1 + (imgExposure/1000000));
         #endif
     #endif
 

@@ -195,7 +195,8 @@ class Device {
         bool setCameraGain(int value);
 
         bool setCameraFPS();
-
+        bool setCameraFPS(double fps);
+          
         bool setCameraSize();
 
         bool getCameraFPS(double &fps);
@@ -219,6 +220,8 @@ class Device {
         int getDayExposureTime() {return mDayExposure;};
         int getDayGain() {return mDayGain;};
 
+        // bool setArvCameraAcquisitionMode( ArvAcquisitionMode acquisition_mode );
+        
         void setVerbose(bool status);
 
     private :
