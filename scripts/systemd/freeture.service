@@ -8,7 +8,7 @@ After=syslog.target interval.service
 Type=simple
 #User=root
 #Group=root
-#commands that were not prefixed with a "-" exit successfully.
+#commands that were not prefixed with a "-" must exit successfully.
 ExecStartPre=-/usr/local/bin/freeture_preconfig_wrapper.sh
 ExecStartPre=/usr/local/bin/freeture -m 1 -c /usr/local/etc/dfn/freeture.cfg
 ExecStart=/usr/local/bin/freeture -m 3 -c /usr/local/etc/dfn/freeture.cfg 
