@@ -246,7 +246,7 @@ int main(int argc, const char ** argv){
       ("filename,n",    po::value<string>()->default_value("snap"),                                     "Name to use when a single frame is captured.")
       ("sendbymail,s",                                                                                  "Send single capture by mail. Require -c option.")
       ("savepath,p",    po::value<string>()->default_value("./"),                                       "Save path.")
-      ("framestats",                                                                                    "Print frame stats in Acq thread.");
+      ("framestats",                                                                                    "Print frame stats in various threads. Useful when running in foreground, disabled by default.");
     po::variables_map vm;
 	
     try{
@@ -287,6 +287,7 @@ int main(int argc, const char ** argv){
         }else if(vm.count("help")){
 
             std::cout << desc;
+	    
 
         ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ///%%%%%%%%%%%%%%%%%%%%%%% LIST CONNECTED DEVICES %%%%%%%%%%%%%%%%%%%%%%%%
@@ -325,7 +326,7 @@ int main(int argc, const char ** argv){
 	      // print framestats in Acq thread
 	      frameStats = true;
 	    }
-
+	  else
 	  if(vm.count("mode")){
 
             mode = vm["mode"].as<int>();
