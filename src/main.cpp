@@ -312,7 +312,7 @@ int main(int argc, const char ** argv){
 	    else
 	      {
 		device->getSupportedPixelFormats();
-		// delete device; MC: commented out - there must be some bug in destructor.
+		// delete device; MC: TODO !@#$%^& commented out - there must be some bug in destructor.
 		// it shouts like: (process:11022): GLib-GObject-CRITICAL **: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
 	      }
 
