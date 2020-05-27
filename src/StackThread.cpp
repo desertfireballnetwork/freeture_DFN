@@ -68,6 +68,7 @@ StackThread::StackThread(   bool                            *sS,
     mfkp = fkp;
     mPixfmt = pfmt;
 
+    printFrameStats = false;
 }
 
 StackThread::~StackThread(void){

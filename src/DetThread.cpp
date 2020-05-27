@@ -73,6 +73,8 @@ DetThread::DetThread(   boost::circular_buffer<Frame>  *fb,
     mstp = sp;
     mNbFramesAround = 0;
 
+    printFrameStats = false;
+    
     mFitsHeader.loadKeys(fkp, sp);
 
     switch(dtp.DET_METHOD){
