@@ -8,6 +8,8 @@
 *   Copyright:      (C) 2014-2015 Yoan Audureau
 *                       2018 Chiara Marmo
 *                               GEOPS-UPSUD-CNRS
+*                       2020 Martin Cupak
+*                             DFN - GFO - SSTC - Curtin university
 *
 *   License:        GNU General Public License
 *
@@ -22,7 +24,7 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      20/03/2018
+*   Last modified:      27/05/2020
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
@@ -243,10 +245,11 @@ int main(int argc, const char ** argv){
       ("id,d",          po::value<int>(),                                                               "Camera to use. List devices to get IDs.")
       ("filename,n",    po::value<string>()->default_value("snap"),                                     "Name to use when a single frame is captured.")
       ("sendbymail,s",                                                                                  "Send single capture by mail. Require -c option.")
-      ("savepath,p",    po::value<string>()->default_value("./"),                                       "Save path.");
+      ("savepath,p",    po::value<string>()->default_value("./"),                                       "Save path.")
+      ("framestats",                                                                                    "Print frame stats in Acq thread.");
 
     po::variables_map vm;
-
+	
     try{
 
         int         mode            = -1;
@@ -264,6 +267,7 @@ int main(int argc, const char ** argv){
         int         devID           = 0;
         string      fileName        = "snap";
         bool        listFormats     = false;
+        bool        frameStats      = false;
 
         po::store(po::parse_command_line(argc, argv, desc), vm);
 
@@ -316,7 +320,14 @@ int main(int argc, const char ** argv){
 		// it shouts like: (process:11022): GLib-GObject-CRITICAL **: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
 	      }
 
-        }else if(vm.count("mode")){
+        }else
+	  if(vm.count("framestats"))
+	    {
+	      // print framestats in Acq thread
+	      frameStats = true;
+	    }
+
+	  if(vm.count("mode")){
 
             mode = vm["mode"].as<int>();
             if(vm.count("cfg")) configPath = vm["cfg"].as<string>();
@@ -613,6 +624,7 @@ int main(int argc, const char ** argv){
                                                         cfg.getFramesParam(),
                                                         cfg.getVidParam(),
                                                         cfg.getFitskeysParam());
+			    acqThread->setFrameStats(frameStats);
 
                             if(!acqThread->startThread()) {
 

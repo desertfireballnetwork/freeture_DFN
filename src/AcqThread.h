@@ -6,6 +6,8 @@
 *   This file is part of:   freeture
 *
 *   Copyright:      (C) 2014-2016 Yoan Audureau, Chiara Marmo -- GEOPS-UPSUD
+*                       2020 Martin Cupak
+*                             DFN - GFO - SSTC - Curtin university
 *
 *   License:        GNU General Public License
 *
@@ -20,7 +22,7 @@
 *   You should have received a copy of the GNU General Public License
 *   along with FreeTure. If not, see <http://www.gnu.org/licenses/>.
 *
-*   Last modified:      03/10/2016
+*   Last modified:      27/05/2020
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
@@ -120,6 +122,8 @@ class AcqThread {
         boost::mutex *detSignal_mutex;
         boost::condition_variable *detSignal_condition;
 
+	bool printFrameStats;
+
     public :
 
         AcqThread(  boost::circular_buffer<Frame>   *fb,
@@ -154,6 +158,8 @@ class AcqThread {
         // Return activity status.
         bool getThreadStatus();
 
+	void setFrameStats( bool frameStats );
+	
     private :
 
         // Compute in seconds the sunrise start/stop times and the sunset start/stop times.
