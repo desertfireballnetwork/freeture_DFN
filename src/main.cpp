@@ -247,7 +247,6 @@ int main(int argc, const char ** argv){
       ("sendbymail,s",                                                                                  "Send single capture by mail. Require -c option.")
       ("savepath,p",    po::value<string>()->default_value("./"),                                       "Save path.")
       ("framestats",                                                                                    "Print frame stats in Acq thread.");
-
     po::variables_map vm;
 	
     try{
@@ -332,6 +331,10 @@ int main(int argc, const char ** argv){
             mode = vm["mode"].as<int>();
             if(vm.count("cfg")) configPath = vm["cfg"].as<string>();
             if(vm.count("time")) executionTime = vm["time"].as<int>();
+            
+            /// ------------------------------------------------------------------
+            /// --------------------- LOAD FREETURE PARAMETERS -------------------
+            /// ------------------------------------------------------------------
             CfgParam cfg(configPath);
 
             switch(mode){
@@ -490,14 +493,6 @@ int main(int argc, const char ** argv){
                         std::cout << "======= FREETURE - Meteor detection mode =======" << endl;
                         std::cout << "================================================" << endl << endl;
 
-                        /// ------------------------------------------------------------------
-                        /// --------------------- LOAD FREETURE PARAMETERS -------------------
-                        /// ------------------------------------------------------------------
-
-                        cfg.showErrors = true;
-                        if(!cfg.allParamAreCorrect())
-                            throw "Configuration file is not correct. Fail to launch detection mode.";
-
                         vector<string> logFiles;
                         logFiles.push_back("MAIN_THREAD.log");
                         logFiles.push_back("ACQ_THREAD.log");
@@ -528,6 +523,17 @@ int main(int argc, const char ** argv){
                         BOOST_LOG_SEV(slg,notification) << "==============================================";
                         BOOST_LOG_SEV(slg,notification) << "====== FREETURE - Meteor detection mode ======";
                         BOOST_LOG_SEV(slg,notification) << "==============================================";
+
+                        /// ------------------------------------------------------------------
+                        /// --------------------- CHECK FREETURE PARAMETERS -------------------
+                        /// ------------------------------------------------------------------
+
+                        cfg.showErrors = true;
+                        if(!cfg.allParamAreCorrect())
+                          {                            
+                            BOOST_LOG_SEV(slg,warning) << "No camera detected?";
+                            throw "Configuration file is not correct. Fail to launch detection mode.";                       
+                          }
 
                         /// ------------------------------------------------------------------
                         /// ------------------------- SHARED RESSOURCES ----------------------

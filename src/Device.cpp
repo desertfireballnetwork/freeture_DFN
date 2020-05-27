@@ -595,6 +595,18 @@ bool Device::setCameraFPS() {
 
 }
 
+bool Device::setCameraFPS(double fps) {
+
+    if(!mCam->setFPS(fps)) {
+        BOOST_LOG_SEV(logger, fail) << "Fail to set FPS to " << mFPS;
+        mCam->grabCleanse();
+        return false;
+    }
+
+    return true;
+
+}
+
 bool Device::initializeCamera() {
 
     if(!mCam->grabInitialization()){
@@ -709,3 +721,11 @@ bool Device::getGainStatus() {
     return mCam->mGainAvailable;
 
 }
+
+//bool Device::setArvCameraAcquisitionMode( ArvAcquisitionMode acquisition_mode )
+//{
+  // in CfgParam.cpp: device->getDeviceSdk(param.DEVICE_ID.first.first))
+  //getDeviceSdk(mDevices.at(id).first;
+  // Set acquisition mode to single frame.
+  //          arv_camera_set_acquisition_mode(mCam, ARV_ACQUISITION_MODE_SINGLE_FRAME);
+//}

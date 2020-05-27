@@ -650,7 +650,7 @@ bool ExposureControl::controlExposureTime(Device *camera, Mat image, TimeDate::D
     frameSkippedCounter = 0;
 
     return false;
-}
+} // controlExposureTime()
 
 bool ExposureControl::checkDataLocation(TimeDate::Date date){
 

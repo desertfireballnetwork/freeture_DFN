@@ -48,6 +48,7 @@
     #include "TimeDate.h"
     #include "Camera.h"
     #include "arv.h"
+    #include "arvtypes.h"
     #include "arvinterface.h"
     #include <time.h>
     #include <algorithm>
@@ -170,6 +171,7 @@
 
             void getAvailablePixelFormats();
 
+            void deviceReset();
     };
 
 #endif

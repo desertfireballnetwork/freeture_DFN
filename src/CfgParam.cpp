@@ -371,7 +371,7 @@ void CfgParam::loadVidParam() {
 
     string input_video_path;
     if(!cfg.Get("INPUT_VIDEO_PATH", input_video_path)) {
-        param.vidInput.errormsg.push_back("- INPUT_VIDEO_PATH : Fail to get value.");
+        param.vidInput.errormsg.push_back("- INPUT_VIDEO_PATH : Fail to get value.");        
         e = true;
     }
 
@@ -529,10 +529,12 @@ void CfgParam::loadCamParam() {
     int ming= -1, maxg = -1;
     double mine = -1, maxe = -1;
     device->getCameraGainBounds(ming, maxg);
-    device->getCameraExposureBounds(mine, maxe);
 
     //-------------------------------------------------------------------
 
+    device->setCameraFPS();
+    device->getCameraExposureBounds(mine, maxe);
+    
     if(!cfg.Get("ACQ_NIGHT_EXPOSURE", param.camInput.ACQ_NIGHT_EXPOSURE)) {
         param.camInput.errormsg.push_back("- ACQ_NIGHT_EXPOSURE : Fail to get value.");
         e = true;
@@ -835,6 +837,8 @@ void CfgParam::loadCamParam() {
                     // Get regular acquisition exposure time.
                     param.camInput.regcap.ACQ_REGULAR_CFG.exp = atoi(res1.at(3).c_str());
 
+                    device->setCameraFPS(1.0);
+
                     if(mine != -1 && maxe != -1) {
                         if(param.camInput.regcap.ACQ_REGULAR_CFG.exp < mine || param.camInput.regcap.ACQ_REGULAR_CFG.exp > maxe) {
                             param.camInput.errormsg.push_back("- ACQ_REGULAR_CFG : Exposure value <" +
@@ -842,9 +846,11 @@ void CfgParam::loadCamParam() {
                                 "> is not correct. \nAvailable range is from " +
                                 Conversion::intToString(mine) + " to " +
                                 Conversion::intToString(maxe));
-                            e = true;
+                            //e = true;
                         }
                     }
+
+                    device->setCameraFPS();
 
                     // Get regular acquisition gain.
                     param.camInput.regcap.ACQ_REGULAR_CFG.gain = atoi(res1.at(4).c_str());
@@ -959,6 +965,8 @@ void CfgParam::loadCamParam() {
                                 }
                                 spa.exp = atoi(sp.at(3).c_str());
 
+                                device->setCameraFPS(1.0);
+
                                 if(mine != -1 && maxe != -1) {
                                     if(spa.exp < mine || spa.exp > maxe) {
                                         param.camInput.errormsg.push_back("- ACQ_SCHEDULE : In " + sch1.at(i) + ". Exposure value <" +
@@ -970,6 +978,7 @@ void CfgParam::loadCamParam() {
                                         status = false;
                                     }
                                 }
+                                device->setCameraFPS();
 
                                 spa.gain = atoi(sp.at(4).c_str());
 
@@ -1235,6 +1244,7 @@ void CfgParam::loadDetParam() {
 
                             case CAMERA :
                                 {
+                                  // MC:  why nothing here?
                                     /*if(camParamIsCorrect()) {
 
                                     }*/
