@@ -582,6 +582,7 @@ int main(int argc, const char ** argv){
                                                             cfg.getFitskeysParam(),
                                                             cfg.getCamParam().ACQ_FORMAT);
 
+				detThread->setFrameStats(frameStats);
                                 if(!detThread->startThread())
                                     throw "Fail to start detection thread.";
 
@@ -604,6 +605,7 @@ int main(int argc, const char ** argv){
                                                                 cfg.getCamParam().ACQ_FORMAT,
                                                                 cfg.getFitskeysParam());
 
+				stackThread->setFrameStats(frameStats);
                                 if(!stackThread->startThread())
                                     throw "Fail to start stack thread.";
 

@@ -116,7 +116,8 @@ class DetThread {
         stationParam                    mstp;
         int                             mNbFramesAround; // Number of frames to keep around an event.
 
-
+	bool printFrameStats;
+	
     public :
 
          DetThread(  boost::circular_buffer<Frame>   *fb,
@@ -186,6 +187,8 @@ class DetThread {
             mCurrentDataSetLocation = location;
 
         };
+
+	void setFrameStats( bool frameStats );
 
 };
 

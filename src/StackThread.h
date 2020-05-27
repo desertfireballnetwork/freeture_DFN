@@ -100,6 +100,8 @@ class StackThread {
 
         string completeDataPath;
 
+	bool printFrameStats;
+	
     public :
 
         StackThread(    bool                            *sS,
@@ -125,6 +127,8 @@ class StackThread {
         bool getRunStatus();
 
         bool interruptThread();
+	
+	void setFrameStats( bool frameStats );
 
     private :
 

@@ -272,7 +272,10 @@ void DetThread::operator ()(){
 
                     t = (((double)getTickCount() - t)/getTickFrequency())*1000;
                     //cout <<"\033[11;0H" << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms " << endl;
-                    cout << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms " << endl;
+		    if( printFrameStats )
+		      {
+			cout << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms " << endl;
+		      }
                     BOOST_LOG_SEV(logger,normal) << " [ TIME DET ] : " << std::setprecision(3) << std::fixed << t << " ms ";
 
                 }else{
@@ -311,7 +314,7 @@ void DetThread::operator ()(){
         }else {
 
             // Create Report for videos and frames in input.
-            boost::filesystem::ofstream report;
+            std::ofstream report;
             //string reportPath = mdp.DATA_PATH + "detections_report.txt";
             string reportPath = DataPaths::getSessionPath(mdp.DATA_PATH, TimeDate::splitIsoExtendedDate(to_iso_extended_string(boost::posix_time::microsec_clock::universal_time()))) + "detections_report.txt";
             
@@ -816,4 +819,9 @@ bool DetThread::saveEventData(int firstEvPosInFB, int lastEvPosInFB){
 
     return true;
 
+}
+
+void DetThread::setFrameStats( bool frameStats )
+{
+  printFrameStats = frameStats;
 }
