@@ -270,7 +270,11 @@ int main(int argc, const char ** argv){
 
         po::store(po::parse_command_line(argc, argv, desc), vm);
 
-
+        if(vm.count("framestats"))
+          {
+            // print framestats in Acq thread
+            frameStats = true;
+          }
 
         ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ///%%%%%%%%%%%%%%%%%%%%%%% PRINT FREETURE VERSION %%%%%%%%%%%%%%%%%%%%%%%%
@@ -320,14 +324,7 @@ int main(int argc, const char ** argv){
 		// it shouts like: (process:11022): GLib-GObject-CRITICAL **: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
 	      }
 
-        }else
-	  if(vm.count("framestats"))
-	    {
-	      // print framestats in Acq thread
-	      frameStats = true;
-	    }
-	  else
-	  if(vm.count("mode")){
+        }else if(vm.count("mode")){
 
             mode = vm["mode"].as<int>();
             if(vm.count("cfg")) configPath = vm["cfg"].as<string>();
