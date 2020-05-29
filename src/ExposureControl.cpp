@@ -100,6 +100,13 @@ ExposureControl::ExposureControl(int timeInterval,
     mRefDate = cDate.substr(0, cDate.find(dateDelimiter));
     mSecTime = 0;
     mNbFramesControlled = 0;
+
+    printFrameStats = false;
+}
+
+void ExposureControl::setFrameStats( bool frameStats )
+{
+  printFrameStats = frameStats;
 }
 
 bool ExposureControl::calculate(Mat& image, Mat &mask){
@@ -611,7 +618,10 @@ bool ExposureControl::controlExposureTime(Device *camera, Mat image, TimeDate::D
 
         }else{
 
-            cout << "EXPOSURE CONTROL : " << mSecTime << "/" << autoExposureTimeInterval <<  endl;
+	  if( printFrameStats )
+	    {
+	      cout << "EXPOSURE CONTROL : " << mSecTime << "/" << autoExposureTimeInterval <<  endl;
+	    }
             return false;
         }
 

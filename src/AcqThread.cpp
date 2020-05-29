@@ -178,6 +178,7 @@ void AcqThread::operator()(){
                                             mcp.EXPOSURE_CONTROL_SAVE_INFOS,
                                             mdp.DATA_PATH,
                                             mstp.STATION_NAME);
+	    pExpCtrl-> setFrameStats( this->printFrameStats );
         }
 
         TimeMode previousTimeMode = NONE;

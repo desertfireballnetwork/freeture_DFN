@@ -105,6 +105,8 @@ class ExposureControl {
         string mRefDate;
         long mSecTime;
 
+	bool printFrameStats;
+
     public:
 
         /**
@@ -125,6 +127,8 @@ class ExposureControl {
         bool controlExposureTime(Device *camera, Mat image, TimeDate::Date imageDate, Mat mask, double minExposureTime, double fps);
 
         bool checkDataLocation(TimeDate::Date date);
+
+	void setFrameStats( bool frameStats );
 
     private :
 
