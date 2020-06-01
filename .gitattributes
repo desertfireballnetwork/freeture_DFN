@@ -1,0 +1,15 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+	
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.cfg text
+*.sh text
+*.md text
+*.in text
+*.m4 text
+*.cmake text
+*.txt text
+*.service text
+*.py text
+*.am text
