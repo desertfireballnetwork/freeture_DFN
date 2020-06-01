@@ -416,7 +416,7 @@ int main(int argc, const char ** argv){
                             delete device;
                             throw "Fail to set format";
                         }
-                        device->setCameraFPS();
+                        device->setCameraFPS(cfg.getCamParam().ACQ_FPS);
                         device->setCameraExposureTime(exp);
                         device->setCameraGain(gain);
                         device->initializeCamera();
