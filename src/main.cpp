@@ -397,6 +397,8 @@ int main(int argc, const char ** argv){
                         cout << "FORMAT    : " << fstring << endl;
                         cout << "GAIN      : " << gain << endl;
                         cout << "EXPOSURE  : " << exp << endl;
+                        cout << "WIDTH     : " << acqWidth << endl; 
+                        cout << "HEIGHT    : " << acqHeight << endl; 
                         cout << "------------------------------------------------" << endl << endl;
 
                         Device *device = new Device();
