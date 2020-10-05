@@ -424,7 +424,7 @@ int main(int argc, const char ** argv){
                         device->initializeCamera();
                         device->startCamera();
                         if(vm.count("display"))
-                            namedWindow("FreeTure (ESC to stop)", WINDOW_NORMAL);
+                            cv::namedWindow("FreeTure (ESC to stop)", WINDOW_NORMAL);
 
                         #ifdef LINUX
                         nonblock(1);
@@ -443,8 +443,8 @@ int main(int argc, const char ** argv){
                                 std::cout << " >> [ TIME ACQ ] : " << tacq << " ms" << endl;
 
                                 if(vm.count("display")) {
-                                    imshow("FreeTure (ESC to stop)", frame.mImg);
-                                    waitKey(1);
+                                    cv::imshow("FreeTure (ESC to stop)", frame.mImg);
+                                    cv::waitKey(1);
                                 }
                             }
 
@@ -987,9 +987,9 @@ int main(int argc, const char ** argv){
                                     temp = ImgProcessing::correctGammaOnMono8(temp1,2.2);
                                 }
 
-                                namedWindow("FreeTure (Press a key to close)", WINDOW_NORMAL);
-                                imshow("FreeTure (Press a key to close)", temp);
-                                waitKey(0);
+                                cv::namedWindow("FreeTure (Press a key to close)", WINDOW_NORMAL);
+                                cv::imshow("FreeTure (Press a key to close)", temp);
+                                cv::waitKey(0);
 
                             }
                         }
