@@ -387,6 +387,11 @@ int main(int argc, const char ** argv){
                         // Exposure value.
                         if(vm.count("exposure")) exp = vm["exposure"].as<double>();
 
+                        // Path where to save files.
+                        if(vm.count("savepath")) savePath = vm["savepath"].as<string>();
+                        // Filename.
+                        if(vm.count("filename")) fileName = vm["filename"].as<string>();
+
                         EParser<CamPixFmt> fmt;
                         string fstring = fmt.getStringEnum(static_cast<CamPixFmt>(acqFormat));
                         if(fstring == "")
@@ -397,7 +402,11 @@ int main(int argc, const char ** argv){
                         cout << "FORMAT    : " << fstring << endl;
                         cout << "GAIN      : " << gain << endl;
                         cout << "EXPOSURE  : " << exp << endl;
-                        cout << "WIDTH     : " << acqWidth << endl; 
+                        cout << "WIDTH     : " << acqWidth << endl;
+                        if(startx > 0 || starty > 0)
+                          {
+                            cout << "START X,Y : " << startx << "," << starty << endl;
+                          }
                         cout << "HEIGHT    : " << acqHeight << endl; 
                         cout << "------------------------------------------------" << endl << endl;
 
@@ -426,6 +435,51 @@ int main(int argc, const char ** argv){
                         if(vm.count("display"))
                             cv::namedWindow("FreeTure (ESC to stop)", WINDOW_NORMAL);
 
+                        /// ------------------------------------------------------------------
+                        /// ----------------------- MANAGE FILE NAME -------------------------
+                        /// ------------------------------------------------------------------
+
+                        int filenum = 0;
+                        bool increment = false;
+                        path p(savePath);
+
+                        // Search previous captures in the directory.
+                        for(directory_iterator file(p);file!= directory_iterator(); ++file) {
+
+                            path curr(file->path());
+
+                            if(is_regular_file(curr)) {
+
+                                list<string> ch;
+                                string fname = curr.filename().string();
+                                Conversion::stringTok(ch, fname.c_str(), "-");
+
+                                int i = 0;
+                                int n = 0;
+
+                                if(ch.front() == fileName && ch.size() == 2) {
+
+                                    list<string> ch_;
+                                    Conversion::stringTok(ch_, ch.back().c_str(), ".");
+
+                                    int nn = atoi(ch_.front().c_str());
+
+                                    if(nn >= filenum){
+
+                                        filenum = nn;
+                                        increment = true;
+
+                                    }
+                                }
+                            }
+                        }
+
+                        if(increment) filenum++;
+
+                        /// ------------------------------------------------------------------
+                        /// ---------------------- START CAPTURE of FRAMES -------------------
+                        /// ------------------------------------------------------------------
+                        
                         #ifdef LINUX
                         nonblock(1);
                         #endif
@@ -438,16 +492,87 @@ int main(int argc, const char ** argv){
                             Frame frame;
 
                             double tacq = (double)getTickCount();
-                            if(device->runContinuousCapture(frame)){
+                            if(device->runContinuousCapture(frame))
+                              {
                                 tacq = (((double)getTickCount() - tacq)/getTickFrequency())*1000;
                                 std::cout << " >> [ TIME ACQ ] : " << tacq << " ms" << endl;
 
+                                /// ------------- DISPLAY CURRENT FRAME --------------------
+                                
                                 if(vm.count("display")) {
                                     cv::imshow("FreeTure (ESC to stop)", frame.mImg);
                                     cv::waitKey(1);
                                 }
-                            }
+                                
+                                /// ------------- SAVE CURRENT FRAME TO FILE ---------------
 
+                                // Save the frame in BMP.
+                                if(vm.count("bmp")) {
+
+                                cout << ">> Saving bmp file ..." << endl;
+
+                                Mat temp1, newMat;
+                                frame.mImg.copyTo(temp1);
+
+                                if(frame.mFormat == MONO12){
+                                    newMat = ImgProcessing::correctGammaOnMono12(temp1, 2.2);
+                                    Mat temp = Conversion::convertTo8UC1(newMat);
+                                }else {
+                                    newMat = ImgProcessing::correctGammaOnMono8(temp1, 2.2);
+                                }
+
+                                SaveImg::saveBMP(newMat, savePath + fileName + "-" + Conversion::intToString(filenum));
+                                cout << ">> Bmp saved : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".bmp" << endl;
+
+                                }
+
+                                // Save the frame in Fits 2D.
+                                if(vm.count("fits")) {
+
+                                cout << ">> Saving fits file ..." << endl;
+
+                                Fits fh;
+                                bool useCfg = false;
+                                Fits2D newFits(savePath);
+
+                                cfg.showErrors = true;
+                                if(cfg.stationParamIsCorrect() && cfg.fitskeysParamIsCorrect()) {
+                                    useCfg = true;
+                                    double  debObsInSeconds = frame.mDate.hours*3600 + frame.mDate.minutes*60 + frame.mDate.seconds;
+                                    double  julianDate      = TimeDate::gregorianToJulian(frame.mDate);
+                                    double  julianCentury   = TimeDate::julianCentury(julianDate);
+                                    double  sideralT        = TimeDate::localSideralTime_2(julianCentury, frame.mDate.hours, frame.mDate.minutes, (int)frame.mDate.seconds, fh.kSITELONG);
+                                    newFits.kCRVAL1 = sideralT;
+                                    newFits.loadKeys(cfg.getFitskeysParam(), cfg.getStationParam());
+
+                                }
+
+                                newFits.kGAINDB = (int)gain;
+                                newFits.kELAPTIME = exp/1000000.0;
+                                newFits.kEXPOSURE = exp/1000000.0;
+                                newFits.kONTIME = exp/1000000.0;
+                                newFits.kDATEOBS = TimeDate::getIsoExtendedFormatDate(frame.mDate);
+                                newFits.kCTYPE1 = "RA---ARC";
+                                newFits.kCTYPE2 = "DEC--ARC";
+                                newFits.kEQUINOX = 2000.0;
+
+                                if(frame.mFormat == MONO12){
+                                    // Create FITS image with BITPIX = SHORT_IMG (16-bits signed integers), pixel with TSHORT (signed short)
+                                    if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum)))
+                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
+                                }else{
+                                    // Create FITS image with BITPIX = BYTE_IMG (8-bits unsigned integers), pixel with TBYTE (8-bit unsigned byte)
+                                    if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum)))
+                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
+
+                                }
+                                
+                                }
+
+                                filenum++;
+
+                              }
+                                
                             /// Stop freeture if escape is pressed.
                             #ifdef WINDOWS
 
@@ -468,7 +593,7 @@ int main(int argc, const char ** argv){
 
                             #endif
                             #endif
-                        }
+                              }
 
                         #ifdef LINUX
                         nonblock(0);
@@ -477,7 +602,7 @@ int main(int argc, const char ** argv){
                         device->stopCamera();
                         delete device;
 
-                    }
+                        }
 
                     break;
 
