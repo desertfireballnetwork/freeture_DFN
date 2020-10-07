@@ -369,7 +369,7 @@ int main(int argc, const char ** argv){
                         std::cout << "================================================" << endl << endl;
 
                         /// --------------------- Manage program options -----------------------
-
+			
                         // Acquisition format.
                         if(vm.count("format")) acqFormat = vm["format"].as<int>();
                         // Cam id.
@@ -386,13 +386,17 @@ int main(int argc, const char ** argv){
                         if(vm.count("gain")) gain = vm["gain"].as<int>();
                         // Exposure value.
                         if(vm.count("exposure")) exp = vm["exposure"].as<double>();
-
+		
                         // Path where to save files.
                         if(vm.count("savepath")) savePath = vm["savepath"].as<string>();
                         // Filename.
                         if(vm.count("filename")) fileName = vm["filename"].as<string>();
 
-                        EParser<CamPixFmt> fmt;
+			// default execution time is 1h in mode 2
+			executionTime = 3600;
+			if(vm.count("time")) executionTime = vm["time"].as<int>();
+
+			EParser<CamPixFmt> fmt;
                         string fstring = fmt.getStringEnum(static_cast<CamPixFmt>(acqFormat));
                         if(fstring == "")
                             throw ">> Pixel format specified not found.";
@@ -487,6 +491,9 @@ int main(int argc, const char ** argv){
                         char hitKey;
                         int interruption = 0;
 
+			time_t t0, t1;
+			time(&t0);	
+			
                         while(!interruption) {
 
                             Frame frame;
@@ -591,6 +598,12 @@ int main(int argc, const char ** argv){
                                 else interruption = 0;
                             }
 
+			    time(&t1);
+			    if( (int)(difftime(t1, t0)) > executionTime )
+			      {
+				interruption = 1;
+			      }
+ 
                             #endif
                             #endif
                               }
