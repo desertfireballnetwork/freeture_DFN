@@ -521,8 +521,8 @@ int main(int argc, const char ** argv){
                                     newMat = ImgProcessing::correctGammaOnMono8(temp1, 2.2);
                                 }
 
-                                SaveImg::saveBMP(newMat, savePath + fileName + "-" + Conversion::intToString(filenum));
-                                cout << ">> Bmp saved : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".bmp" << endl;
+                                SaveImg::saveBMP(newMat, savePath + fileName + "-" + Conversion::intToString(filenum, 6));
+                                cout << ">> Bmp saved : " << savePath << fileName << "-" << Conversion::intToString(filenum, 6) << ".bmp" << endl;
 
                                 }
 
@@ -558,12 +558,12 @@ int main(int argc, const char ** argv){
 
                                 if(frame.mFormat == MONO12){
                                     // Create FITS image with BITPIX = SHORT_IMG (16-bits signed integers), pixel with TSHORT (signed short)
-                                    if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum)))
-                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
+                                  if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum, 6)))
+                                    cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum, 6) << ".fits" << endl;
                                 }else{
                                     // Create FITS image with BITPIX = BYTE_IMG (8-bits unsigned integers), pixel with TBYTE (8-bit unsigned byte)
-                                    if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum)))
-                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
+                                  if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum, 6)))
+                                    cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum, 6) << ".fits" << endl;
 
                                 }
                                 
@@ -1029,8 +1029,8 @@ int main(int argc, const char ** argv){
                                     newMat = ImgProcessing::correctGammaOnMono8(temp1, 2.2);
                                 }
 
-                                SaveImg::saveBMP(newMat, savePath + fileName + "-" + Conversion::intToString(filenum));
-                                cout << ">> Bmp saved : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".bmp" << endl;
+                                SaveImg::saveBMP(newMat, savePath + fileName + "-" + Conversion::intToString(filenum, 6));
+                                cout << ">> Bmp saved : " << savePath << fileName << "-" << Conversion::intToString(filenum, 6) << ".bmp" << endl;
 
                             }
 
@@ -1066,12 +1066,12 @@ int main(int argc, const char ** argv){
 
                                 if(frame.mFormat == MONO12){
                                     // Create FITS image with BITPIX = SHORT_IMG (16-bits signed integers), pixel with TSHORT (signed short)
-                                    if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum)))
-                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
+                                    if(newFits.writeFits(frame.mImg, S16, fileName + "-" + Conversion::intToString(filenum, 6)))
+                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum, 6) << ".fits" << endl;
                                 }else{
                                     // Create FITS image with BITPIX = BYTE_IMG (8-bits unsigned integers), pixel with TBYTE (8-bit unsigned byte)
-                                    if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum)))
-                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum) << ".fits" << endl;
+                                    if(newFits.writeFits(frame.mImg, UC8, fileName + "-" + Conversion::intToString(filenum, 6)))
+                                        cout << ">> Fits saved in : " << savePath << fileName << "-" << Conversion::intToString(filenum, 6) << ".fits" << endl;
 
                                 }
 
@@ -1081,14 +1081,14 @@ int main(int argc, const char ** argv){
                                     if(cfg.mailParamIsCorrect()) {
 
                                         vector<string> mailAttachments;
-                                        mailAttachments.push_back(savePath + fileName + "-" + Conversion::intToString(filenum) + ".fits");
+                                        mailAttachments.push_back(savePath + fileName + "-" + Conversion::intToString(filenum, 6) + ".fits");
 
                                         SMTPClient::sendMail(cfg.getMailParam().MAIL_SMTP_SERVER,
                                                             cfg.getMailParam().MAIL_SMTP_LOGIN,
                                                             cfg.getMailParam().MAIL_SMTP_PASSWORD,
                                                             "freeture@snap",
                                                             cfg.getMailParam().MAIL_RECIPIENTS,
-                                                            fileName + "-" + Conversion::intToString(filenum) + ".fits",
+                                                            fileName + "-" + Conversion::intToString(filenum, 6) + ".fits",
                                                             " Exposure time : " + Conversion::intToString((int)exp) + "\n Gain : " + Conversion::intToString((int)gain),
                                                             mailAttachments,
                                                             cfg.getMailParam().MAIL_CONNECTION_TYPE);
