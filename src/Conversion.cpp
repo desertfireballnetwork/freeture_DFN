@@ -7,6 +7,8 @@
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
 *                               GEOPS-UPSUD-CNRS
+*                       2020 Martin Cupak
+*                             DFN - GFO - SSTC - Curtin university
 *
 *   License:        GNU General Public License
 *
@@ -65,6 +67,17 @@ string Conversion::matTypeToString(int type) {
 string Conversion::intToString(int nb){
 
     ostringstream oss;
+    oss << nb;
+    string result = oss.str();
+    return result;
+
+}
+
+string Conversion::intToString(int nb, int zeroFill){
+
+    ostringstream oss;
+    oss.width(zeroFill);
+    oss.fill('0');
     oss << nb;
     string result = oss.str();
     return result;

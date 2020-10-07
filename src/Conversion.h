@@ -7,6 +7,8 @@
 *
 *   Copyright:      (C) 2014-2015 Yoan Audureau
 *                               GEOPS-UPSUD-CNRS
+*                       2020 Martin Cupak
+*                             DFN - GFO - SSTC - Curtin university
 *
 *   License:        GNU General Public License
 *
@@ -64,6 +66,15 @@ class Conversion {
         */
         static string intToString(int nb);
 
+        /**
+        * Convert an int value to string and fill with insignificant zeros 
+        *
+        * @param nb Integer value.
+        * @param zeroFill Length of string with insignificant zeros
+        * @return String value.
+        */
+        static string intToString(int nb, int zeroFill);
+        
         /**
         * Convert a float value to string.
         *
