@@ -5,7 +5,7 @@
 
 systemctl stop freeture.service
 
-folderNameDate=$(date -u +"%Y-%m-%d")
+folderNameDate=$(date -u +"%Y_%m_%d")
 fileNameTime=$(date -u +"%Y-%m-%dT%H%M%S")
 
 baseFolder=/data0/video_frames
@@ -19,8 +19,16 @@ logFolder=${baseFolder}/log
 
 logFName=${logFolder}/${fileNameTime}_continuous_capture.log
 
-dataFileName=$(hostname)_${folderNameDate}_allskyvideo_frame_
+dataFileName=$(hostname)_${folderNameDate}_allskyvideo_frame
 
-echo "freeture -m 2 --gain 29 --exposure 33000 --width 1080 --height 1080 --startx 420 --starty 60 --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t 1800 -c /usr/local/etc/dfn/freeture.cfg > ${logFName}" >> ${logFName}
+runTimeSeconds=2
+videoGain=29
+expTime=33000
+imgWidth=1080
+imgHeight=1080
+imgStartX=420
+imgStartY=60
+
+echo "freeture -m 2 --gain ${videoGain} --exposure ${expTime} --width ${imgWidth} --height ${imgHeight} --startx ${imgStartX} --starty ${imgStartY} --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t ${runTimeSeconds} -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}" >> ${logFName}
 echo "=============================================" >> ${logFName}
-freeture -m 2 --gain 29 --exposure 33000 --width 1080 --height 1080 --startx 420 --starty 60 --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t 1800 -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}
+freeture -m 2 --gain ${videoGain} --exposure ${expTime} --width ${imgWidth} --height ${imgHeight} --startx ${imgStartX} --starty ${imgStartY} --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t ${runTimeSeconds} -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}
