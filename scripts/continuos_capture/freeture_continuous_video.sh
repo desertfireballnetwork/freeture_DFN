@@ -21,7 +21,7 @@ logFName=${logFolder}/${fileNameTime}_continuous_capture.log
 
 dataFileName=$(hostname)_${folderNameDate}_allskyvideo_frame
 
-runTimeSeconds=2
+runTimeSeconds=1800
 videoGain=29
 expTime=33000
 imgWidth=1080
