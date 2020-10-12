@@ -3,8 +3,6 @@
 # DFNEXT freeture video continuous capture script
 ############################################################
 
-systemctl stop freeture.service
-
 folderNameDate=$(date -u +"%Y_%m_%d")
 fileNameTime=$(date -u +"%Y-%m-%dT%H%M%S")
 
@@ -29,6 +27,10 @@ imgHeight=1080
 imgStartX=420
 imgStartY=60
 
-echo "freeture -m 2 --gain ${videoGain} --exposure ${expTime} --width ${imgWidth} --height ${imgHeight} --startx ${imgStartX} --starty ${imgStartY} --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t ${runTimeSeconds} -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}" >> ${logFName}
+systemctl stop freeture.service
+
+echo "nice -15 freeture -m 2 --gain ${videoGain} --exposure ${expTime} --width ${imgWidth} --height ${imgHeight} --startx ${imgStartX} --starty ${imgStartY} --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t ${runTimeSeconds} -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}" >> ${logFName}
 echo "=============================================" >> ${logFName}
-freeture -m 2 --gain ${videoGain} --exposure ${expTime} --width ${imgWidth} --height ${imgHeight} --startx ${imgStartX} --starty ${imgStartY} --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t ${runTimeSeconds} -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}
+nice -15 freeture -m 2 --gain ${videoGain} --exposure ${expTime} --width ${imgWidth} --height ${imgHeight} --startx ${imgStartX} --starty ${imgStartY} --savepath ${todayFolder}/ --filename ${dataFileName} --fits -t ${runTimeSeconds} -c /usr/local/etc/dfn/freeture.cfg >> ${logFName}
+
+systemctl start freeture.service
