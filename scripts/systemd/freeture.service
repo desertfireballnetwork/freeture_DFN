@@ -1,7 +1,7 @@
 [Unit]
 Description=freerure - free software to capture meteors using video camera
 #Documentation=
-After=syslog.target interval.service
+After=syslog.target interval.service data0.mount
 
 [Service]
 # see man systemd.service 
