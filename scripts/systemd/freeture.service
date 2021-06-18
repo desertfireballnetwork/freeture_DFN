@@ -14,6 +14,8 @@ ExecStartPre=/usr/local/bin/freeture -m 1 -c /usr/local/etc/dfn/freeture.cfg
 ExecStart=/usr/local/bin/freeture -m 3 -c /usr/local/etc/dfn/freeture.cfg 
 ExecStop=
 #StandardOutput=journal
+StandardOutput=null
+#StandardError=null
 Restart=on-failure
 
 [Install]
